@@ -1,0 +1,6 @@
+开发编辑器
+前台：vscode
+	插件：Prettier格式化代码、Snippets代码片段
+后台：phpstrom
+	插件：chinise汉化、.env
+
