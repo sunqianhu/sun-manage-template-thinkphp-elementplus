@@ -1,9 +1,7 @@
 <?php
-namespace app\api\controller;
+namespace app\admin\controller;
 
-use app\BaseController;
-
-class Index extends BaseController
+class Test extends Base
 {
     public function index()
     {
@@ -12,6 +10,5 @@ class Index extends BaseController
 
     public function test()
     {
-        return 'test2';
     }
 }
