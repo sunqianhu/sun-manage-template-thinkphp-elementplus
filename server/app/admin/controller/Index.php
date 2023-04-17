@@ -10,13 +10,10 @@ class Index extends BaseController
         return 'index';
     }
 
-    public function hello()
-    {
-        return 'hello';
-    }
-
     public function test()
     {
-        return 'test';
+//return json(["xxxx"],1);
+  //throw new \think\Exception('异常消息', 10006);
+  abort(404, "sss");
     }
 }

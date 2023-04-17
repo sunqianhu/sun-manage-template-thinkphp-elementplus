@@ -10,11 +10,6 @@ class Index extends BaseController
         return 'index';
     }
 
-    public function hello()
-    {
-        return 'hello';
-    }
-
     public function test()
     {
         return 'test2';

@@ -1,4 +1,4 @@
-<template><div>home</div></template>
+<template><div>test</div></template>
 
 <script setup>
 import { loginApi } from "../api/login";
