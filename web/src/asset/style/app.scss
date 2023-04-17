@@ -1,0 +1,60 @@
+:root {
+  // 主题颜色
+  --color-primary: #409eff;
+
+  // 字体
+  --font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    "微软雅黑", Arial, sans-serif;
+
+  // 字号
+  --font-size: 14px;
+  --font-size-extra-small: 12px;
+  --font-size-small: 13px;
+  --font-size-medium: 16px;
+  --font-size-large: 18px;
+  --font-size-extra-large: 18px;
+
+  // 字色
+  --text-color: #303133;
+  --text-gray-color: #909399;
+
+  // 边框颜色
+  --border-color: #dcdfe6;
+  --border-color-light: #e4e7ed;
+  --border-color-dark: #d4d7de;
+
+  // 填充颜色
+  --fill-color: #f0f2f5;
+  --fill-color-light: #f5f7fa;
+  --fill-color-dark: #ebedf0;
+  --fill-color-blank: #ffffff;
+
+  // 圆角
+  --border-radius: 4px;
+  --border-radius-small: 2px;
+  --border-radius-big: 8px;
+  --border-radius-round: 20px;
+  --border-radius-circle: 100%;
+
+  // 阴影
+  --box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.08);
+  --box-shadow-light: 0px 0px 12px rgba(0, 0, 0, 0.12);
+  --box-shadow-dark: 0px 8px 16px -8px rgba(0, 0, 0, 0.16);
+
+  // 遮罩
+  --overlay-color: rgba(0, 0, 0, 0.8);
+  --mask-color: rgba(255, 255, 255, 0.9);
+}
+
+html {
+  margin: 0px;
+  padding: 0px;
+  body {
+    margin: 0px;
+    padding: 0px;
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    line-height: 150%;
+    color: var(text-color);
+  }
+}
