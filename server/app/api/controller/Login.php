@@ -12,7 +12,7 @@ class Login extends Base
      */
     public function login()
     {
-        return 'index';
+        return $this->error("账号已停用");
     }
 
 }

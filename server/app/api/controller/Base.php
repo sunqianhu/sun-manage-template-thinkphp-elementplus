@@ -34,7 +34,7 @@ class Base extends BaseController
     {
         $result = [
             'code' => 0,
-            'msg' => $message,
+            'message' => $message,
             'data' => $data
         ];
         return Response::create($result, 'json', 200);

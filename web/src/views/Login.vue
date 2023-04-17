@@ -61,7 +61,7 @@ const onSubmit = () => {
       return;
     }
 
-    const res = loginApi(form.value);
+    const res = await loginApi(form.value);
     if (res.code != 1) {
       ElMessage({
         message: res.message,
