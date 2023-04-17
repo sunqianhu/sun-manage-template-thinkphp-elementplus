@@ -3,10 +3,10 @@
     <div class="main">
       <div class="header">
         <div class="title">
-          <img src="@/assets/image/logo.svg" class="logo" alt="logo" />
+          <img src="@/asset/image/logo.svg" class="logo" alt="logo" />
           <span class="name">管理后台</span>
         </div>
-        <div class="desc">基于vue的一个渐进式组件化管理后台</div>
+        <div class="desc">基于thinkphp和vue的组件化管理后台框架</div>
       </div>
       <el-form :model="form" :rules="rules" ref="formRef" class="form">
         <el-form-item prop="account">
@@ -27,7 +27,7 @@
             v-model="form.password"
           />
         </el-form-item>
-        <el-form-item>
+        <el-form-item class="button-wrap">
           <el-button type="primary" size="large" @click="onSubmit" class="button">登录</el-button>
         </el-form-item>
       </el-form>
@@ -42,7 +42,11 @@
 
 <script setup>
 import { ref } from "vue";
+import { User, Lock } from "@element-plus/icons-vue";
+import { useRouter } from "vue-router";
+import { loginApi } from "@/api/login";
 
+const router = useRouter();
 const form = ref({});
 const formRef = ref(null);
 const rules = {
@@ -57,7 +61,7 @@ const onSubmit = () => {
       return;
     }
 
-    const res = await axios.post("/auth/login", form.value);
+    const res = loginApi(form.value);
     if (res.code != 1) {
       ElMessage({
         message: res.message,
@@ -67,8 +71,8 @@ const onSubmit = () => {
     }
 
     // 存储
-    store.commit("setToken", res.data.token);
-    store.commit("setExpiresIn", res.data.expires_in);
+    //store.commit("setToken", res.data.token);
+    //store.commit("setExpiresIn", res.data.expires_in);
 
     // 导航
     router.push("/home");
@@ -91,7 +95,9 @@ html {
 <style lang="scss" scoped>
 .page-login {
   height: 100%;
-  background: #f0f2f5 url(@/assets/images/login/background.svg) no-repeat 50%;
+  background-color: #f0f2f5;
+  background-image: url(@/asset/image/login/background.svg);
+  background-repeat: no-repeat;
   background-size: 100%;
   position: relative;
 
@@ -103,6 +109,7 @@ html {
     z-index: 2;
     margin-left: -175px;
     margin-top: -200px;
+
     .header {
       text-align: center;
       .title {
@@ -114,6 +121,7 @@ html {
         }
         .name {
           font-size: 30px;
+          font-weight: bold;
         }
       }
       .desc {
@@ -125,9 +133,13 @@ html {
     }
 
     .form {
-      margin-top: 30px;
-      .button {
-        width: 100%;
+      margin-top: 50px;
+
+      .button-wrap {
+        margin-top: 30px;
+        .button {
+          width: 100%;
+        }
       }
     }
   }
@@ -139,7 +151,7 @@ html {
     z-index: 1;
     text-align: center;
     font-size: 12px;
-    color: #919191;
+    color: var(--text-color-gray);
   }
 }
 </style>

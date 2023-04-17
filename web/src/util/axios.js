@@ -13,6 +13,10 @@ request.interceptors.request.use(
   },
   function (error) {
     // 对请求错误做些什么
+    ElMessage({
+      message: error,
+      type: "error"
+    });
     return Promise.reject(error);
   }
 );
