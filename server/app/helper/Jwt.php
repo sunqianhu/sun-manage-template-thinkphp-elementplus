@@ -16,7 +16,7 @@ class Jwt
 
     /**
      * 得到token
-     * @param $payload 载荷
+     * @param array $payload 载荷
      * @return string token
      */
     function getToken($payload)
@@ -27,7 +27,7 @@ class Jwt
 
     /**
      * 解析token
-     * @param $token jwt token
+     * @param string $token jwt token
      * @return JwtUser jwtUser对象
      * @expectedException
      */
