@@ -1,6 +1,6 @@
 <?php
 
-namespace app\api\controller;
+namespace app\admin\controller;
 
 use think\exception\ValidateException;
 use app\validate\Login as LoginValidate;

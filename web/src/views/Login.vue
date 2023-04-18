@@ -65,7 +65,7 @@ const onSubmit = () => {
     if (res.code != 1) {
       ElMessage({
         message: res.message,
-        type: "warning"
+        type: "error"
       });
       return;
     }
