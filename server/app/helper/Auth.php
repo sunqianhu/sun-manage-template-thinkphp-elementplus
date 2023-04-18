@@ -2,6 +2,7 @@
 
 namespace app\helper;
 
+use think\Exception;
 use think\facade\Request;
 
 /**
@@ -26,6 +27,10 @@ class Auth
         }
 
         $token = Request::header('token', '');
+        if(empty($token)){
+            throw new \Exception('没有获取到token');
+        }
+
         $jwt = new Jwt();
         $this->jwtUser = $jwt->resolverToken($token);
 
