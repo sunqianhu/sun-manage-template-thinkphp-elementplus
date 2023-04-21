@@ -7,8 +7,22 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "index",
-      component: Index
+      component: () => import("../layout/main/Index.vue"),
+      meta: {
+        name: "首页",
+        permission: "all"
+      },
+      redirect: "/index",
+      children: [
+        {
+          path: "index",
+          name: "index",
+          component: () => import("../views/Index.vue"),
+          meta: {
+            name: "工作台"
+          }
+        }
+      ]
     },
     {
       path: "/login",
