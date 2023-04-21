@@ -74,7 +74,7 @@ const onSubmit = () => {
     localStorage.setItem("token", res.data.token);
 
     // 导航
-    router.push("/home");
+    router.push("/");
   });
 };
 </script>

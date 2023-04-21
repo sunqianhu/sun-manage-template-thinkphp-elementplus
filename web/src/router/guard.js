@@ -10,10 +10,19 @@ import "nprogress/nprogress.css";
 export const beforeEachGuard = async (to, from) => {
   NProgress.start();
 
-  // 白名单
-  const writeList = ["/login", "/404"];
-  if (writeList.includes(to.path)) {
-    return true;
+  // 登录
+  const token = localStorage.getItem("token");
+  if (!token) {
+    const writeList = ["/login", "/404"];
+    if (writeList.includes(to.path)) {
+      return true;
+    } else {
+      return "/login";
+    }
+  } else {
+    if (to.path == "/login") {
+      return "/";
+    }
   }
 };
 
