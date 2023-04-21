@@ -26,19 +26,23 @@ class Base extends BaseController
         $auth = new Auth();
 
         // 登录
-        if(!$auth->isLogin()){
+        if (!$auth->isLogin()) {
             $this->error('请登录系统')->send();
             exit;
         }
 
         // 权限
-        if(!$auth->isPermission()){
+        if (!$auth->isPermission()) {
             $this->error('无权限')->send();
             exit;
         }
 
-        $jwtUser = $auth->getJwtUser();
-        $this->userId = $jwtUser->id;
+        try {
+            $jwtUser = $auth->getJwtUser();
+            $this->userId = $jwtUser->id;
+        } catch (\Exception $e) {
+
+        }
     }
 
     /**

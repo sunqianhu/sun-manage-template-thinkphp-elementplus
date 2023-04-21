@@ -71,8 +71,7 @@ const onSubmit = () => {
     }
 
     // 存储
-    //store.commit("setToken", res.data.token);
-    //store.commit("setExpiresIn", res.data.expires_in);
+    localStorage.setItem("token", res.data.token);
 
     // 导航
     router.push("/home");

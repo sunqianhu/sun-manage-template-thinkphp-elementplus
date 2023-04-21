@@ -42,14 +42,14 @@ class Login extends Base
         $jwt = new Jwt();
         $payload = [
             'id' => $userModel->id,
-            'name' => $userModel->name
+            'name' => $userModel->name,
+            'time' => time()
         ];
         $token = $jwt->getToken($payload);
 
         $data = [
-            'token'=>$token
+            'token' => $token
         ];
-
         return $this->success("登录成功", $data);
     }
 }

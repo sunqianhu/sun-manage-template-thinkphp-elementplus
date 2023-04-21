@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { beforeEachGuard, afterEachGuard } from "./guard";
 import HomeView from "../views/Home.vue";
 
 const router = createRouter({
@@ -21,5 +22,11 @@ const router = createRouter({
     }
   ]
 });
+
+// 前置守卫
+router.beforeEach(beforeEachGuard);
+
+// 后置钩子
+router.afterEach(afterEachGuard);
 
 export default router;

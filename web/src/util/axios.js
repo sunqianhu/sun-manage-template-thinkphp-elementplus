@@ -8,7 +8,12 @@ const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use(
   function (config) {
-    // 在发送请求之前做些什么
+    // token
+    let token = localStorage.getItem("token");
+    if (token) {
+      config.headers.token = token;
+    }
+
     return config;
   },
   function (error) {
@@ -28,7 +33,7 @@ request.interceptors.response.use(
   },
   function (error) {
     ElMessage({
-      message: error,
+      message: error.message,
       type: "error"
     });
     return Promise.reject(error);
