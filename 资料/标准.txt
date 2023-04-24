@@ -4,6 +4,9 @@
 后台：phpstrom
 	插件：chinise汉化、.env
 
+命名：
+	事件处理函数：onXxxClick
+
 间距：
 	小：4px
 	中：12px
