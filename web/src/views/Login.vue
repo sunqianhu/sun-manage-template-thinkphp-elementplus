@@ -28,7 +28,7 @@
           />
         </el-form-item>
         <el-form-item class="button-wrap">
-          <el-button type="primary" size="large" @click="onSubmit" class="button">登录</el-button>
+          <el-button type="primary" size="large" @click="submitForm" class="button">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -54,8 +54,10 @@ const rules = {
   password: [{ required: true, message: "请输入密码", trigger: "blur" }]
 };
 
-// 提交
-const onSubmit = () => {
+/**
+ * 提交表单
+ */
+const submitForm = () => {
   formRef.value.validate(async (valid) => {
     if (!valid) {
       return;

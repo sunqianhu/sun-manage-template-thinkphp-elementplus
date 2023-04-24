@@ -1,5 +1,5 @@
 <template>
-  <div class="hamburger" @click="onHamburgerClick">
+  <div class="hamburger" @click="toggleHamburger">
     <component :is="icon" class="icon"></component>
   </div>
 </template>
@@ -17,9 +17,9 @@ const icon = computed(() => {
 });
 
 /**
- * 汉堡点击
+ * 切换汉堡宝
  */
-const onHamburgerClick = () => {
+const toggleHamburger = () => {
   appStore.toggleSiderStatus();
 };
 </script>

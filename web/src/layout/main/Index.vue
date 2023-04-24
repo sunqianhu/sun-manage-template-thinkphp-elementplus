@@ -12,7 +12,7 @@
         <el-header class="header">
           <Hamburger></Hamburger>
           <div class="right">
-            <Fullscreen class="fullscreen"></Fullscreen>
+            <FullScreen class="full-screen"></FullScreen>
             <Avatar></Avatar>
           </div>
         </el-header>
@@ -29,7 +29,7 @@ import { computed } from "vue";
 import { useAppStore } from "@/store/app";
 import Menu from "./Menu.vue";
 import Hamburger from "./Hamburger.vue";
-import Fullscreen from "./Fullscreen.vue";
+import FullScreen from "./FullScreen.vue";
 import Avatar from "./Avatar.vue";
 
 const appStore = useAppStore();
@@ -96,7 +96,7 @@ html {
         background-color: #ffffff;
         box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
         padding: 0px;
-        .fullscreen {
+        .full-screen {
           margin-right: 16px;
         }
         .right {

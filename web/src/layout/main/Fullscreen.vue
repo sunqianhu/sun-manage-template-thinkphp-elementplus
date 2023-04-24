@@ -1,5 +1,5 @@
 <template>
-  <div class="fullscreen" @click="onFullscreenClick">
+  <div class="fullscreen" @click="toggleFullScreen">
     <el-tooltip effect="dark" content="切换全屏" placement="bottom">
       <FullScreen class="icon" />
     </el-tooltip>
@@ -11,9 +11,9 @@ import { FullScreen } from "@element-plus/icons-vue";
 import screenfull from "screenfull";
 
 /**
- * 全屏
+ * 切换全屏
  */
-const onFullscreenClick = () => {
+const toggleFullScreen = () => {
   if (screenfull.isEnabled) {
     screenfull.toggle();
   }
