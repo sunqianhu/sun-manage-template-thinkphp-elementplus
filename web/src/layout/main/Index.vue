@@ -6,11 +6,11 @@
           <img src="@/asset/image/logo.svg" class="logo" />
           <span class="name">管理后台</span>
         </div>
+        <Menu></Menu>
       </el-aside>
       <el-container class="right-container">
         <el-header class="header">
-          <Hamburger></Hamburger>
-          <div class="right"><Avatar></Avatar></div>
+          <div class="right"></div>
         </el-header>
         <el-main class="main">
           <router-view />
@@ -22,8 +22,7 @@
 
 <script setup>
 import { computed } from "vue";
-import Avatar from "./Avatar.vue";
-import Hamburger from "./Hamburger.vue";
+import Menu from "./Menu.vue";
 </script>
 
 <style lang="scss">

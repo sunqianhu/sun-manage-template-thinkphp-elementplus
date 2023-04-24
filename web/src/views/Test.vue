@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { loginApi } from "../api/login";
+import { login as loginApi } from "../api/login";
 
 const login = async () => {
   const res = await loginApi();

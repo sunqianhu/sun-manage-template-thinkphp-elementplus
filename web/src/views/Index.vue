@@ -1,14 +1,5 @@
-<template><div>home</div></template>
+<template><div>系统首页</div></template>
 
-<script setup>
-import { loginApi } from "../api/login";
-
-const login = async () => {
-  const res = await loginApi();
-  console.log(res);
-};
-
-login();
-</script>
+<script setup></script>
 
 <style scoped></style>

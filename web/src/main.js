@@ -6,9 +6,10 @@ import router from "./router";
 
 import "./asset/style/app.scss";
 
+const pinia = createPinia();
 const app = createApp(App);
 
-app.use(createPinia());
+app.use(pinia);
 app.use(router);
 
 app.mount("#app");

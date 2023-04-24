@@ -44,7 +44,7 @@
 import { ref } from "vue";
 import { User, Lock } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
-import { loginApi } from "@/api/login";
+import { login } from "@/api/login";
 
 const router = useRouter();
 const form = ref({});
@@ -61,7 +61,7 @@ const onSubmit = () => {
       return;
     }
 
-    const res = await loginApi(form.value);
+    const res = await login(form.value);
     if (res.code != 1) {
       ElMessage({
         message: res.message,
