@@ -1,6 +1,8 @@
 <template>
   <div class="fullscreen" @click="onFullscreenClick">
-    <FullScreen class="icon" />
+    <el-tooltip effect="dark" content="切换全屏" placement="bottom">
+      <FullScreen class="icon" />
+    </el-tooltip>
   </div>
 </template>
 
