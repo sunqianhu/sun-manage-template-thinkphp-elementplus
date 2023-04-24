@@ -61,5 +61,4 @@ class Menu extends Base
         ];
         return $this->success('获取成功', $menus);
     }
-
 }

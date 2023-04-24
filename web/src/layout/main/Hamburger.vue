@@ -1,7 +1,6 @@
 <template>
   <div class="hamburger" @click="toggleSider">
-    <Fold class="icon" v-if="siderStatus" />
-    <Expand class="icon" v-if="!siderStatus" />
+    <component :is="icon" class="icon"></component>
   </div>
 </template>
 
@@ -13,8 +12,8 @@ import { Fold, Expand } from "@element-plus/icons-vue";
 const appStore = useAppStore();
 
 // 侧边状态
-const siderStatus = computed(() => {
-  return appStore.siderStatus;
+const icon = computed(() => {
+  return appStore.siderStatus ? Fold : Expand;
 });
 
 // 切换侧边
@@ -25,14 +24,16 @@ const toggleSider = () => {
 
 <style lang="scss" scoped>
 .hamburger {
-  display: flex;
-  height: 60px;
-  padding: 0px 16px;
+  height: 50px;
+  width: 50px;
   cursor: pointer;
+  display: flex;
   align-items: center;
+  justify-content: center;
   .icon {
     width: 25px;
     height: 25px;
+    font-size: 25px;
   }
   &:hover {
     background: rgba(0, 0, 0, 0.025);

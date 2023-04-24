@@ -67,8 +67,8 @@ html {
       transition: all 0.5s;
       z-index: 2;
       .system-name {
-        height: 60px;
-        line-height: 64px;
+        height: 50px;
+        line-height: 50px;
         overflow-y: hidden;
         padding-left: 18px;
         .logo {
@@ -86,19 +86,20 @@ html {
     }
 
     .right-container {
-      background-color: #f0f2f5;
+      background-color: var(--fill-color);
       .header {
         display: flex;
         align-items: center;
-        height: 60px;
+        height: 50px;
         background-color: #ffffff;
         box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-        padding: 0px 16px 0px 0px;
+        padding: 0px;
         .right {
           flex: 1;
           display: flex;
           align-items: center;
           justify-content: flex-end;
+          margin-right: 16px;
         }
       }
     }

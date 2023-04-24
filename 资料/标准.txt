@@ -4,3 +4,10 @@
 后台：phpstrom
 	插件：chinise汉化、.env
 
+间距：
+	小：4px
+	中：12px
+	一般：16px
+
+
+
