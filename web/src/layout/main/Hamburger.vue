@@ -1,5 +1,5 @@
 <template>
-  <div class="hamburger" @click="toggleSider">
+  <div class="hamburger" @click="onHamburgerClick">
     <component :is="icon" class="icon"></component>
   </div>
 </template>
@@ -16,8 +16,10 @@ const icon = computed(() => {
   return appStore.siderStatus ? Fold : Expand;
 });
 
-// 切换侧边
-const toggleSider = () => {
+/**
+ * 汉堡点击
+ */
+const onHamburgerClick = () => {
   appStore.toggleSiderStatus();
 };
 </script>
@@ -33,10 +35,12 @@ const toggleSider = () => {
   .icon {
     width: 25px;
     height: 25px;
-    font-size: 25px;
   }
   &:hover {
     background: rgba(0, 0, 0, 0.025);
+    .icon {
+      opacity: var(--opacity-hover);
+    }
   }
 }
 </style>

@@ -15,6 +15,7 @@
     "nprogress": "^0.2.0",
     "pinia": "^2.0.32",
     "sass": "^1.62.0",
+    "screenfull": "^6.0.2",
     "unplugin-auto-import": "^0.15.3",
     "unplugin-vue-components": "^0.24.1",
     "vue": "^3.2.47",

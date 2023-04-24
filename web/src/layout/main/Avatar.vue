@@ -10,7 +10,9 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item :icon="SwitchButton" @click="logout"> 退出登录 </el-dropdown-item>
+          <el-dropdown-item :icon="SwitchButton" @click="onLogoutClick">
+            退出登录
+          </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -23,8 +25,10 @@ import { SwitchButton } from "@element-plus/icons-vue";
 
 const router = useRouter();
 
-// 退出登录
-const logout = () => {
+/**
+ * 退出登录
+ */
+const onLogoutClick = () => {
   localStorage.removeItem("token");
   router.replace("/login");
 };
