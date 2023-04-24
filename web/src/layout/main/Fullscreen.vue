@@ -25,7 +25,7 @@ const onFullscreenClick = () => {
     height: 20px;
     cursor: pointer;
     &:hover {
-      opacity: var(--opacity-hover);
+      opacity: var(--hover-opacity);
     }
   }
 }

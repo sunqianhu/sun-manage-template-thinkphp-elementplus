@@ -39,7 +39,7 @@ const onHamburgerClick = () => {
   &:hover {
     background: rgba(0, 0, 0, 0.025);
     .icon {
-      opacity: var(--opacity-hover);
+      opacity: var(--hover-opacity);
     }
   }
 }
