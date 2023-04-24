@@ -5,7 +5,7 @@
     text-color="rgba(255, 255, 255, 0.65)"
     :default-active="defaultActive"
     active-text-color="#ffffff"
-    :collapse="!siderState"
+    :collapse="!siderStatus"
     :unique-opened="true"
     :router="true"
   >
@@ -24,7 +24,9 @@ const appStore = useAppStore();
 const route = useRoute();
 const defaultActive = route.fullPath; // 默认活跃项
 const menus = ref([]);
-const siderState = appStore.siderStatus;
+const siderStatus = computed(() => {
+  return appStore.siderStatus;
+});
 
 /**
  * 初始化

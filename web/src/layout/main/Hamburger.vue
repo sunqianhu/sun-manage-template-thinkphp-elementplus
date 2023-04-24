@@ -1,26 +1,26 @@
 <template>
   <div class="hamburger" @click="toggleSider">
-    <Fold class="icon" v-if="siderState" />
-    <Expand class="icon" v-if="!siderState" />
+    <Fold class="icon" v-if="siderStatus" />
+    <Expand class="icon" v-if="!siderStatus" />
   </div>
 </template>
 
 <script setup>
 import { computed } from "vue";
-// import { useStore } from "vuex";
+import { useAppStore } from "@/store/app";
 import { Fold, Expand } from "@element-plus/icons-vue";
 
-//const store = useStore();
+const appStore = useAppStore();
 
 // 侧边状态
-// const siderState = computed(() => {
-//   return store.getters.sider;
-// });
+const siderStatus = computed(() => {
+  return appStore.siderStatus;
+});
 
-// // 切换侧边
-// const toggleSider = () => {
-//   store.commit("toggleSider");
-// };
+// 切换侧边
+const toggleSider = () => {
+  appStore.toggleSiderStatus();
+};
 </script>
 
 <style lang="scss" scoped>

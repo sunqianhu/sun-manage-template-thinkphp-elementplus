@@ -1,6 +1,6 @@
 <template>
   <div class="page-main">
-    <el-container class="container">
+    <el-container :class="{ container: true, close: !siderStatus }">
       <el-aside class="aside">
         <div class="system-name">
           <img src="@/asset/image/logo.svg" class="logo" />
@@ -10,7 +10,10 @@
       </el-aside>
       <el-container class="right-container">
         <el-header class="header">
-          <div class="right"></div>
+          <Hamburger></Hamburger>
+          <div class="right">
+            <Avatar></Avatar>
+          </div>
         </el-header>
         <el-main class="main">
           <router-view />
@@ -22,7 +25,17 @@
 
 <script setup>
 import { computed } from "vue";
+import { useAppStore } from "@/store/app";
 import Menu from "./Menu.vue";
+import Hamburger from "./Hamburger.vue";
+import Avatar from "./Avatar.vue";
+
+const appStore = useAppStore();
+
+// 侧边状态
+const siderStatus = computed(() => {
+  return appStore.siderStatus;
+});
 </script>
 
 <style lang="scss">
@@ -47,7 +60,7 @@ html {
     height: 100%;
 
     .aside {
-      width: 250px;
+      width: 220px;
       box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
       background-color: #001529;
       color: #ffffff;
@@ -56,10 +69,10 @@ html {
       .system-name {
         height: 60px;
         line-height: 64px;
-        padding-left: 16px;
         overflow-y: hidden;
+        padding-left: 18px;
         .logo {
-          height: 30px;
+          height: 24px;
           vertical-align: middle;
         }
         .name {
@@ -92,9 +105,6 @@ html {
     &.close {
       .aside {
         width: 64px;
-        .system {
-          padding-left: 16px;
-        }
       }
     }
   }
