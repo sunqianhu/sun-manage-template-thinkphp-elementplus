@@ -2,10 +2,11 @@
 
 namespace app\admin\controller;
 
+use think\Exception;
 use think\exception\ValidateException;
 use app\validate\Login as LoginValidate;
 use app\model\User as UserModel;
-use app\helper\Jwt;
+use app\library\Jwt;
 
 /**
  * 登录

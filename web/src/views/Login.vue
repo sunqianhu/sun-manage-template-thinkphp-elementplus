@@ -28,7 +28,14 @@
           />
         </el-form-item>
         <el-form-item class="button-wrap">
-          <el-button type="primary" size="large" @click="submitForm" class="button">登录</el-button>
+          <el-button
+            type="primary"
+            size="large"
+            @click="submitForm"
+            class="button"
+            :loading="loading"
+            >登录</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -44,7 +51,7 @@
 import { ref } from "vue";
 import { User, Lock } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
-import { login } from "@/api/login";
+import axios from "@/util/axios";
 
 const router = useRouter();
 const form = ref({});
@@ -53,6 +60,7 @@ const rules = {
   account: [{ required: true, message: "请输入账号", trigger: "blur" }],
   password: [{ required: true, message: "请输入密码", trigger: "blur" }]
 };
+const loading = ref(false);
 
 /**
  * 提交表单
@@ -63,7 +71,11 @@ const submitForm = () => {
       return;
     }
 
-    const res = await login(form.value);
+    loading.value = true;
+    const res = await axios.post("admin/login/login", form.value).catch((error) => {
+      loading.value = false;
+    });
+    loading.value = false;
     if (res.code != 1) {
       ElMessage({
         message: res.message,

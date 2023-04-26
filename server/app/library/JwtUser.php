@@ -1,7 +1,10 @@
 <?php
 
-namespace app\object;
+namespace app\library;
 
+/**
+ * jwt用户
+ */
 class JwtUser
 {
     public $id = 0;

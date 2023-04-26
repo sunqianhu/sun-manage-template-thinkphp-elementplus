@@ -1,8 +1,7 @@
 <?php
 
-namespace app\helper;
+namespace app\library;
 
-use think\Exception;
 use think\facade\Request;
 
 /**
@@ -19,7 +18,7 @@ class Auth
 
     /**
      * 得到jwt用户
-     * @return \app\object\JwtUser
+     * @return \app\library\JwtUser
      */
     function getJwtUser(){
         if(!empty($this->jwtUser)){

@@ -1,13 +1,12 @@
 <?php
 
-namespace app\helper;
+namespace app\library;
 
 use Firebase\JWT\JWT as FirebaseJWT;
 use Firebase\JWT\Key;
-use app\object\JwtUser;
 
 /**
- * json web token
+ * jwt
  */
 class Jwt
 {

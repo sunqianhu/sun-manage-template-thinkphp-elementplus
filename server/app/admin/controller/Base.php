@@ -5,8 +5,8 @@ namespace app\admin\controller;
 use think\App;
 use think\Response;
 use app\BaseController;
-use app\helper\Auth;
-use app\helper\Jwt;
+use app\library\Auth;
+use app\library\Jwt;
 
 /**
  * 基控制器
