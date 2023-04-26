@@ -17,7 +17,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useAppStore } from "@/store/app";
-import { getMenus } from "@/api/get_menus.js";
+import axios from "@/util/axios";
 import MenuItem from "./MenuItem.vue";
 
 const appStore = useAppStore();
@@ -32,8 +32,7 @@ const siderStatus = computed(() => {
  * 初始化
  */
 const init = async () => {
-  let res = await getMenus();
-
+  let res = await axios.get("admin/menu/getMenus");
   menus.value = res.data;
 };
 
