@@ -27,8 +27,7 @@ class Login extends Base
         } catch (ValidateException $e) {
             return $this->error($e->getError());
         }
-        throw new Exception('ssss');
-        exit;
+        
         $wheres = [
             ['account', '=', $post['account']],
             ['password', '=', md5($post['password'])]

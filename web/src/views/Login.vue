@@ -71,16 +71,15 @@ const submitForm = () => {
       return;
     }
 
-    loading.value = true;
     let res;
+    loading.value = true;
     try {
       res = await axios.post("admin/login/login", form.value);
-    } catch (e) {
-      console.log(222222);
-      console.log(res);
-
-      console.log(e);
+    } catch (error) {
+      loading.value = false;
+      return;
     }
+
     loading.value = false;
     if (res.code != 1) {
       ElMessage({

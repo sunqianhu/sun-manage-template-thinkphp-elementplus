@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const request = axios.create({
+const instance = axios.create({
   baseURL: "/api",
   timeout: 1000 * 15
 });
 
 // 请求拦截器
-request.interceptors.request.use(
+instance.interceptors.request.use(
   function (config) {
     // token
     let token = localStorage.getItem("token");
@@ -19,7 +19,7 @@ request.interceptors.request.use(
   function (error) {
     // 对请求错误做些什么
     ElMessage({
-      message: error,
+      message: error.message,
       type: "error"
     });
     return Promise.reject(error);
@@ -27,7 +27,7 @@ request.interceptors.request.use(
 );
 
 // 响应拦截器
-request.interceptors.response.use(
+instance.interceptors.response.use(
   function (response) {
     return response.data;
   },
@@ -40,4 +40,4 @@ request.interceptors.response.use(
   }
 );
 
-export default request;
+export default instance;

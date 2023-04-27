@@ -13,7 +13,7 @@ export const beforeEachGuard = async (to, from) => {
   // 登录
   const token = localStorage.getItem("token");
   if (!token) {
-    const writeList = ["/login", "/404"];
+    const writeList = ["/login", "/test", "/404"];
     if (writeList.includes(to.path)) {
       return true;
     } else {

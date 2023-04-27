@@ -13,14 +13,7 @@
 </template>
 
 <script setup>
-import { login as loginApi } from "../api/login";
-
-const login = async () => {
-  const res = await loginApi();
-  console.log(res);
-};
-
-login();
+import axios from "@/util/axios";
 </script>
 
 <style scoped></style>
