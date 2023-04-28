@@ -4,16 +4,18 @@ export const useAppStore = defineStore("app", {
   state: () => {
     return {
       siderStatus: localStorage.getItem("app_sider_status") == "1" ? 1 : 0, // 左边状态
-      routers: [] // 路由
+      isSetRoute: false, // 是否设置路由
+      routes: [] // 路由
     };
   },
   actions: {
     /**
      * 设置路由
-     * @param {string} routers
+     * @param {string} routes
      */
-    setRouters(routers) {
-      this.routers = routers;
+    setRoutes(routes) {
+      this.isSetRoute = true;
+      this.routes = routes;
     },
 
     /**
