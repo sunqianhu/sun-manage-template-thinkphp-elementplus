@@ -63,7 +63,6 @@ router.beforeEach(async (to, from) => {
     // 变量
     let allRoutes = router.getRoutes();
     let mainRoute = allRoutes.find((route) => route.name == "admin");
-    let componentPath = "";
     let dynamicRoutes = [];
 
     // 主布局
@@ -71,8 +70,7 @@ router.beforeEach(async (to, from) => {
       dynamicRoutes = res.data.main;
       if (dynamicRoutes.length > 0) {
         dynamicRoutes.forEach((dynamicRoute) => {
-          componentPath = "../views/" + dynamicRoute.component;
-          dynamicRoute.component = () => import(componentPath);
+          dynamicRoute.component = import("../views/" + dynamicRoute.component);
           mainRoute.children.push(dynamicRoute);
         });
         mainRoute.redirect = mainRoute.children[0].path;
@@ -85,15 +83,13 @@ router.beforeEach(async (to, from) => {
       dynamicRoutes = res.data.blank;
       if (dynamicRoutes.length > 0) {
         dynamicRoutes.forEach((dynamicRoute) => {
-          componentPath = "../views/" + dynamicRoute.component;
-          dynamicRoute.component = () => import(componentPath);
+          dynamicRoute.component = import("../views/" + dynamicRoute.component);
           router.addRoute(dynamicRoute);
         });
       }
-      return to.path;
     }
 
-    return true;
+    return to.path;
   }
 
   // 权限指令

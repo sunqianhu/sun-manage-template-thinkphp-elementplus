@@ -34,7 +34,7 @@ class Route extends Base
                 [
                     'path'=>'/system/role',
                     //'name'=>'system_role',
-                    'component'=>'Index.vue',
+                    'component'=>'Index2.vue',
                     'meta'=>[
                         'name'=>'角色管理'
                     ]
