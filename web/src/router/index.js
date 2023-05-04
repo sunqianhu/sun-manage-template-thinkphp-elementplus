@@ -9,7 +9,7 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "admin",
+      name: "main",
       component: () => import("../layout/main/Index.vue"),
       meta: {
         name: "主布局"
@@ -52,7 +52,7 @@ router.beforeEach(async (to, from) => {
 
   // 动态路由
   const appStore = useAppStore();
-  let res;
+  let res; // 接口响应
   if (!appStore.isSetRoute) {
     res = await axios.get("admin/route/getRoutes");
     if (res.code == 0) {
@@ -62,7 +62,7 @@ router.beforeEach(async (to, from) => {
 
     // 变量
     let allRoutes = router.getRoutes();
-    let mainRoute = allRoutes.find((route) => route.name == "admin");
+    let mainRoute = allRoutes.find((route) => route.name == "main");
     let dynamicRoutes = [];
 
     // 主布局
