@@ -34,7 +34,7 @@ router.beforeEach(async (to, from) => {
   NProgress.start();
 
   // 白名单
-  const writeList = ["/login", "/test", "/404"];
+  const writeList = ["/login", "/404"];
   if (writeList.includes(to.path)) {
     return true;
   }
@@ -50,9 +50,19 @@ router.beforeEach(async (to, from) => {
     return "/";
   }
 
-  // 动态路由
   const appStore = useAppStore();
   let res; // 接口响应
+
+  // 权限
+  if (!appStore.isSetPermission) {
+    res = await axios.get("admin/permission/getPermissions");
+    if (res.code == 0) {
+      return "/login";
+    }
+    appStore.setPermissions(res.data);
+  }
+
+  // 动态路由
   if (!appStore.isSetRoute) {
     res = await axios.get("admin/route/getRoutes");
     if (res.code == 0) {
@@ -91,8 +101,6 @@ router.beforeEach(async (to, from) => {
 
     return to.path;
   }
-
-  // 权限指令
 
   return true;
 });

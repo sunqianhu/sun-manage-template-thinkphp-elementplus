@@ -20,6 +20,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { SwitchButton } from "@element-plus/icons-vue";
+import { useAppStore } from "../../store/app";
 
 const router = useRouter();
 
@@ -28,6 +29,10 @@ const router = useRouter();
  */
 const logout = () => {
   localStorage.removeItem("token");
+  let appStore = useAppStore();
+  appStore.clearRoutes();
+  appStore.clearPermissions();
+
   router.replace("/login");
 };
 </script>

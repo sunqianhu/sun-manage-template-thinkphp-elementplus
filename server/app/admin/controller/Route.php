@@ -20,7 +20,7 @@ class Route extends Base
                     'name'=>'index',
                     'component'=>'Index.vue',
                     'meta'=>[
-                        'name'=>'工作台'
+                        'name'=>'首页'
                     ]
                 ],
                 [
@@ -34,7 +34,7 @@ class Route extends Base
                 [
                     'path'=>'/system/role',
                     //'name'=>'system_role',
-                    'component'=>'Index2.vue',
+                    'component'=>'Index.vue',
                     'meta'=>[
                         'name'=>'角色管理'
                     ]
