@@ -70,33 +70,18 @@ router.beforeEach(async (to, from) => {
     }
     appStore.setRoutes(res.data);
 
-    // 变量
     let allRoutes = router.getRoutes();
     let mainRoute = allRoutes.find((route) => route.name == "main");
     let dynamicRoutes = [];
 
-    // 主布局
-    if (res.data.main) {
-      dynamicRoutes = res.data.main;
-      if (dynamicRoutes.length > 0) {
-        dynamicRoutes.forEach((dynamicRoute) => {
-          dynamicRoute.component = import("../views/" + dynamicRoute.component);
-          mainRoute.children.push(dynamicRoute);
-        });
-        mainRoute.redirect = mainRoute.children[0].path;
-        router.addRoute(mainRoute);
-      }
-    }
-
-    // 空白布局
-    if (res.data.blank) {
-      dynamicRoutes = res.data.blank;
-      if (dynamicRoutes.length > 0) {
-        dynamicRoutes.forEach((dynamicRoute) => {
-          dynamicRoute.component = import("../views/" + dynamicRoute.component);
-          router.addRoute(dynamicRoute);
-        });
-      }
+    if (res.data && res.data.length > 0) {
+      dynamicRoutes = res.data;
+      dynamicRoutes.forEach((dynamicRoute) => {
+        dynamicRoute.component = import("../views/" + dynamicRoute.component);
+        mainRoute.children.push(dynamicRoute);
+      });
+      mainRoute.redirect = mainRoute.children[0].path;
+      router.addRoute(mainRoute);
     }
 
     return to.path;
