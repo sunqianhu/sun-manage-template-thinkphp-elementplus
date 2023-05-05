@@ -20,6 +20,14 @@ export const useAppStore = defineStore("app", {
     },
 
     /**
+     * 设置左边状态
+     */
+    setSiderStatus(value) {
+      this.siderStatus = value;
+      localStorage.setItem("app_sider_status", this.siderStatus);
+    },
+
+    /**
      * 设置路由
      * @param {Array} routes
      */

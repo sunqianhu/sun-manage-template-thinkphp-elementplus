@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useAppStore } from "@/store/app";
 import Menu from "./Menu.vue";
 import Hamburger from "./Hamburger.vue";
@@ -34,9 +34,20 @@ import Avatar from "./Avatar.vue";
 
 const appStore = useAppStore();
 
+// 初始化
+const init = () => {
+  if (document.body.clientWidth < 768) {
+    appStore.setSiderStatus(0);
+  }
+};
+
 // 侧边状态
 const siderStatus = computed(() => {
   return appStore.siderStatus;
+});
+
+onMounted(() => {
+  init();
 });
 </script>
 
@@ -111,6 +122,16 @@ html {
     &.close {
       .aside {
         width: 64px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      &.close {
+        .aside {
+          width: 0px;
+        }
       }
     }
   }
