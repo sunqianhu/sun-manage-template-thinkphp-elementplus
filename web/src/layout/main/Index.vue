@@ -33,18 +33,18 @@ import FullScreen from "./FullScreen.vue";
 import Avatar from "./Avatar.vue";
 
 const appStore = useAppStore();
+const siderStatus = computed(() => {
+  return appStore.siderStatus;
+});
 
-// 初始化
+/**
+ * 初始化
+ */
 const init = () => {
   if (document.body.clientWidth < 768) {
     appStore.setSiderStatus(0);
   }
 };
-
-// 侧边状态
-const siderStatus = computed(() => {
-  return appStore.siderStatus;
-});
 
 onMounted(() => {
   init();

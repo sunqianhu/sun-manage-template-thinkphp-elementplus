@@ -22,6 +22,11 @@ const router = createRouter({
       component: () => import("../views/Login.vue")
     },
     {
+      path: "/test",
+      name: "test",
+      component: () => import("../views/Test.vue")
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "404",
       component: () => import("../views/404.vue")
@@ -39,14 +44,11 @@ router.beforeEach(async (to, from) => {
     return true;
   }
 
-  // 未登录
+  // 登录
   const token = localStorage.getItem("token");
   if (!token) {
     return "/login";
-  }
-
-  // 已登录
-  if (to.path == "/login") {
+  } else if (to.path == "/login") {
     return "/";
   }
 

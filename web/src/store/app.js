@@ -21,6 +21,7 @@ export const useAppStore = defineStore("app", {
 
     /**
      * 设置左边状态
+     * @param {number} value
      */
     setSiderStatus(value) {
       this.siderStatus = value;
@@ -29,7 +30,7 @@ export const useAppStore = defineStore("app", {
 
     /**
      * 设置路由
-     * @param {Array} routes
+     * @param {array} routes 路由数组
      */
     setRoutes(routes) {
       this.isSetRoute = true;
@@ -46,7 +47,7 @@ export const useAppStore = defineStore("app", {
 
     /**
      * 设置权限
-     * @param {Array} permissions
+     * @param {array} permissions 权限数组
      */
     setPermissions(permissions) {
       this.isSetPermission = true;

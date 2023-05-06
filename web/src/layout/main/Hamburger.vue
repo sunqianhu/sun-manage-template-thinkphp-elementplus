@@ -1,5 +1,5 @@
 <template>
-  <div class="hamburger" @click="toggleHamburger">
+  <div class="hamburger" @click="toggleSider">
     <component :is="icon" class="icon"></component>
   </div>
 </template>
@@ -10,16 +10,14 @@ import { useAppStore } from "@/store/app";
 import { Fold, Expand } from "@element-plus/icons-vue";
 
 const appStore = useAppStore();
-
-// 侧边状态
 const icon = computed(() => {
   return appStore.siderStatus ? Fold : Expand;
-});
+}); // 图标
 
 /**
- * 切换汉堡宝
+ * 切换左边
  */
-const toggleHamburger = () => {
+const toggleSider = () => {
   appStore.toggleSiderStatus();
 };
 </script>

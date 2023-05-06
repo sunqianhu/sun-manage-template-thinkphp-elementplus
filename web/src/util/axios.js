@@ -17,7 +17,6 @@ instance.interceptors.request.use(
     return config;
   },
   function (error) {
-    // 对请求错误做些什么
     ElMessage({
       message: error.message,
       type: "error"
