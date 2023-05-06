@@ -1,5 +1,5 @@
 <template>
-  <div class="page-login">
+  <div class="login">
     <div class="main">
       <div class="header">
         <div class="title">
@@ -111,7 +111,7 @@ html {
 </style>
 
 <style lang="scss" scoped>
-.page-login {
+.login {
   height: 100%;
   background-color: #f0f2f5;
   background-image: url(@/asset/image/login/background.svg);
@@ -169,7 +169,7 @@ html {
     z-index: 1;
     text-align: center;
     font-size: 12px;
-    color: var(--text-color-gray);
+    color: var(--gray-font-color);
   }
 }
 </style>

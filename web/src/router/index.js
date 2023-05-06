@@ -79,7 +79,8 @@ router.beforeEach(async (to, from) => {
     if (res.data && res.data.length > 0) {
       dynamicRoutes = res.data;
       dynamicRoutes.forEach((dynamicRoute) => {
-        dynamicRoute.component = import(/* @vite-ignore */ "../views/" + dynamicRoute.component);
+        let componentPath = "../views/" + dynamicRoute.component;
+        dynamicRoute.component = () => import(/* @vite-ignore */ componentPath);
         mainRoute.children.push(dynamicRoute);
       });
       mainRoute.redirect = mainRoute.children[0].path;

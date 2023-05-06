@@ -1,6 +1,6 @@
 <template>
-  <div class="page-main">
-    <el-container :class="{ container: true, close: !siderStatus }">
+  <div class="layout">
+    <el-container :class="{ 'layout-container': true, close: !siderStatus }">
       <el-aside class="aside">
         <div class="system-name">
           <img src="@/asset/image/logo.svg" class="logo" />
@@ -8,7 +8,7 @@
         </div>
         <Menu></Menu>
       </el-aside>
-      <el-container class="right-container">
+      <el-container class="content-container">
         <el-header class="header">
           <Hamburger></Hamburger>
           <div class="right">
@@ -66,10 +66,10 @@ html {
 </style>
 
 <style lang="scss" scoped>
-.page-main {
+.layout {
   height: 100%;
 
-  .container {
+  .layout-container {
     height: 100%;
 
     .aside {
@@ -98,7 +98,7 @@ html {
       }
     }
 
-    .right-container {
+    .content-container {
       background-color: var(--fill-color);
       .header {
         display: flex;
@@ -127,7 +127,7 @@ html {
   }
 
   @media (max-width: 768px) {
-    .container {
+    .layout-container {
       &.close {
         .aside {
           width: 0px;

@@ -1,49 +1,50 @@
-:root {
-  // 主题颜色
-  --color-primary: #409eff;
+@import "element_plus.scss";
 
-  // 文字字体
+:root {
+  // 颜色
+  --primary-color: #409eff;
+
+  // 文字
   --font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
     "微软雅黑", Arial, sans-serif;
 
-  // 文字大小
   --font-size: 14px;
-  --font-size-extra-small: 12px;
-  --font-size-small: 13px;
-  --font-size-medium: 16px;
-  --font-size-large: 18px;
-  --font-size-extra-large: 18px;
+  --extra-small-font-size: 12px;
+  --small-font-size: 13px;
+  --medium-font-size: 16px;
+  --large-font-size: 18px;
+  --extra-large-font-size: 20px;
 
-  // 文字颜色
-  --text-color: #303133;
-  --text-color-gray: #909399;
+  --font-color: #303133;
+  --gray-font-color: #909399;
 
   // 边框颜色
   --border-color: #dcdfe6;
-  --border-color-light: #e4e7ed;
-  --border-color-dark: #d4d7de;
+  --light-border-color: #e4e7ed;
+  --dark-border-color: #d4d7de;
 
   // 填充颜色
   --fill-color: #f0f2f5;
-  --fill-color-light: #f5f7fa;
-  --fill-color-dark: #ebedf0;
-  --fill-color-blank: #ffffff;
-
-  // 圆角
-  --border-radius: 4px;
-  --border-radius-small: 2px;
-  --border-radius-big: 8px;
-  --border-radius-round: 20px;
-  --border-radius-circle: 100%;
-
-  // 阴影
-  --box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.08);
-  --box-shadow-light: 0px 0px 12px rgba(0, 0, 0, 0.12);
-  --box-shadow-dark: 0px 8px 16px -8px rgba(0, 0, 0, 0.16);
+  --light-fill-color: #f5f7fa;
+  --dark-fill-color: #ebedf0;
+  --blank-fill-color: #ffffff;
+  --section-fill-color: #ffffff;
 
   // 遮罩
   --overlay-color: rgba(0, 0, 0, 0.8);
   --mask-color: rgba(255, 255, 255, 0.9);
+
+  // 圆角
+  --border-radius: 4px;
+  --small-border-radius: 2px;
+  --big-border-radius: 8px;
+  --round-border-radius: 20px;
+  --circle-border-radius: 100%;
+
+  // 阴影
+  --box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.08);
+  --light-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
+  --dark-box-shadow: 0px 8px 16px -8px rgba(0, 0, 0, 0.16);
 
   // 透明度
   --hover-opacity: 0.7;
@@ -58,6 +59,6 @@ html {
     font-family: var(--font-family);
     font-size: var(--font-size);
     line-height: 150%;
-    color: var(text-color);
+    color: var(font-color);
   }
 }
