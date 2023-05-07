@@ -1,20 +1,24 @@
 <template>
   <div class="index">
-    <div class="page-name">部门管理</div>
+    <div class="page-name">菜单管理</div>
     <div class="search">
-      <el-form :model="query" :inline="true">
-        <el-form-item label="部门名称">
-          <el-input v-model="query.name" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search"
-            >搜索</el-button
-          >
-        </el-form-item>
+      <el-form :model="query">
+        <el-row :gutter="16">
+          <el-col :md="8" :sm="24">
+            <el-form-item label="菜单名称">
+              <el-input v-model="query.name" />
+            </el-form-item>
+          </el-col>
+          <el-col :md="8" :sm="24">
+            <el-button type="primary" :icon="Search" @click="search"
+              >查询</el-button
+            >
+          </el-col>
+        </el-row>
       </el-form>
     </div>
 
-    <div class="toolbar">
+    <div class="tool">
       <el-button type="primary" :icon="Plus" @click="showAddDialog"
         >添加</el-button
       >
@@ -24,12 +28,21 @@
       <el-table
         :data="data"
         v-loading="loading"
+        max-height="500"
         stripe
         row-key="id"
         default-expand-all
         style="width: 100%"
       >
-        <el-table-column prop="name" label="部门名称" />
+        <el-table-column prop="name" label="菜单名称" />
+        <el-table-column
+          v-slot="{ row }"
+          prop="type_id"
+          label="类型"
+          width="100"
+        >
+          <TypeTag :type="row.type_id"></TypeTag>
+        </el-table-column>
         <el-table-column prop="sort" label="排序" width="100" />
         <el-table-column
           v-slot="{ row }"
@@ -48,6 +61,7 @@
         </el-table-column>
       </el-table>
     </div>
+
     <Add
       :show="addTag"
       @hide="addTag = false"
@@ -70,9 +84,10 @@ import { Search, Plus } from "@element-plus/icons-vue";
 import axios from "@/util/axios";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
+import TypeTag from "./TypeTag.vue";
 
 const rowId = ref(0);
-const query = ref({});
+let query = ref({});
 const data = ref([]);
 const loading = ref(true);
 const addTag = ref(false);
@@ -83,7 +98,7 @@ const editTag = ref(false);
  */
 const loadData = async () => {
   loading.value = true;
-  const res = await axios.get("/admin/system.department/index", {
+  const res = await axios.get("/admin/system.menu/index", {
     params: query.value,
   });
   data.value = res.data;
@@ -117,11 +132,9 @@ const showEditDialog = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const data = {
+  const res = await axios.post("/admin/system.menu/delete", {
     id: id,
-  };
-
-  const res = await axios.post("/admin/system.department/delete", data);
+  });
   if (res.code != 1) {
     ElMessage({
       message: res.message,
@@ -153,12 +166,11 @@ onMounted(() => {
   .search {
     margin-top: 16px;
   }
+
   .toolbar {
   }
+
   .data {
-    margin-top: 16px;
-  }
-  .pagination {
     margin-top: 16px;
   }
 }

@@ -6,7 +6,6 @@ use think\App;
 use think\Response;
 use app\BaseController;
 use app\library\Auth;
-use app\library\Jwt;
 
 /**
  * 基控制器
@@ -41,7 +40,6 @@ class Base extends BaseController
             $jwtUser = $auth->getJwtUser();
             $this->userId = $jwtUser->id;
         } catch (\Exception $e) {
-
         }
     }
 
@@ -54,7 +52,7 @@ class Base extends BaseController
     {
         $result = [
             'code' => 1,
-            'msg' => $message,
+            'message' => $message,
             'data' => $data
         ];
         return Response::create($result, 'json', 200);

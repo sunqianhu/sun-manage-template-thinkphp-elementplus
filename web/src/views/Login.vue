@@ -41,7 +41,9 @@
     </div>
 
     <div class="footer">
-      <div class="browser">浏览器支持：Edge ≥ 79 Firefox≥78 Chrome≥64 Safari≥12</div>
+      <div class="browser">
+        浏览器支持：Edge ≥ 79 Firefox≥78 Chrome≥64 Safari≥12
+      </div>
       <div class="copyright">Copyright &copy; 2023 asun</div>
     </div>
   </div>
@@ -58,7 +60,7 @@ const form = ref({});
 const formRef = ref(null);
 const rules = {
   account: [{ required: true, message: "请输入账号", trigger: "blur" }],
-  password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+  password: [{ required: true, message: "请输入密码", trigger: "blur" }],
 };
 const loading = ref(false);
 
@@ -84,7 +86,7 @@ const submitForm = () => {
     if (res.code != 1) {
       ElMessage({
         message: res.message,
-        type: "error"
+        type: "error",
       });
       return;
     }

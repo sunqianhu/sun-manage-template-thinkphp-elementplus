@@ -49,7 +49,7 @@ class Route extends Base
             [
                 'path' => '/system/menu',
                 'name' => 'system_menu',
-                'component' => 'Index.vue',
+                'component' => 'system/menu/Index.vue',
                 'meta' => [
                     'name' => '菜单管理'
                 ]

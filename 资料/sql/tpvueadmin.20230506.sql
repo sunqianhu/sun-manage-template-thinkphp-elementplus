@@ -3,14 +3,14 @@ Navicat MySQL Data Transfer
 
 Source Server         : 127.0.0.1
 Source Server Version : 50529
-Source Host           : 127.0.0.1:3306
+Source Host           : localhost:3306
 Source Database       : tpvueadmin
 
 Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2023-05-06 18:30:00
+Date: 2023-05-07 17:45:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,14 +25,14 @@ CREATE TABLE `department` (
   `name` varchar(64) NOT NULL DEFAULT '' COMMENT '部门名称',
   `sort` int(255) NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='部门';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='部门';
 
 -- ----------------------------
 -- Records of department
 -- ----------------------------
 INSERT INTO `department` VALUES ('1', '0', '部门1', '1');
 INSERT INTO `department` VALUES ('2', '1', '部门1-1', '1');
-INSERT INTO `department` VALUES ('3', '2', '部门2', '2');
+INSERT INTO `department` VALUES ('3', '0', '部门2', '2');
 INSERT INTO `department` VALUES ('4', '0', '部门3', '3');
 
 -- ----------------------------
@@ -43,14 +43,14 @@ CREATE TABLE `menu` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `parent_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上级菜单',
   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单名称',
-  `type` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '菜单类型',
+  `type_id` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '菜单类型id',
   `icon` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单图标',
   `path` varchar(255) NOT NULL DEFAULT '' COMMENT '路由路径',
   `component` varchar(255) NOT NULL DEFAULT '' COMMENT '组件路径',
   `show` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '菜单显示',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COMMENT='菜单';
 
 -- ----------------------------
 -- Records of menu

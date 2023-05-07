@@ -7,6 +7,8 @@ use app\validate\system\Department as DepartmentValidate;
 use app\model\Department as DepartmentModel;
 use think\exception\ValidateException;
 use app\library\Tree;
+use Error;
+use Exception;
 
 /**
  * 部门管理

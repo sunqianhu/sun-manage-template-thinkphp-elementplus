@@ -58,7 +58,7 @@ router.beforeEach(async (to, from) => {
   // 权限
   if (!appStore.isSetPermission) {
     res = await axios.get("admin/permission/getPermissions");
-    if (res.code == 0) {
+    if (res.code != 1) {
       return "/login";
     }
     appStore.setPermissions(res.data);
@@ -67,7 +67,7 @@ router.beforeEach(async (to, from) => {
   // 动态路由
   if (!appStore.isSetRoute) {
     res = await axios.get("admin/route/getRoutes");
-    if (res.code == 0) {
+    if (res.code != 1) {
       return "/login";
     }
     appStore.setRoutes(res.data);
