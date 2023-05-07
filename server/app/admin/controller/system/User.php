@@ -10,27 +10,35 @@ use app\model\User as UserModel;
  */
 class User extends Base
 {
+
     /**
-     * 首页
+     * 初始化首页
      */
-    public function index()
+    public function initIndex()
     {
-        $query = $this->request->get(['account', 'name', 'phone', 'pageSize' => 20, 'pageNumber' => 1]);
+    }
+
+    /**
+     * 加载首页数据
+     */
+    public function loadIndexData()
+    {
+        $get = $this->request->get(['account', 'name', 'phone', 'pageSize' => 50, 'pageNumber' => 1]);
 
         $where = [];
-        if (isset($query['account'])) {
-            $where[] = ['account', 'LIKE', '%' . $query['account'] . '%'];
+        if (isset($get['account'])) {
+            $where[] = ['account', 'LIKE', '%' . $get['account'] . '%'];
         }
-        if (isset($query['name'])) {
-            $where[] = ['name', 'LIKE', '%' . $query['name'] . '%'];
+        if (isset($get['name'])) {
+            $where[] = ['name', 'LIKE', '%' . $get['name'] . '%'];
         }
-        if (isset($query['phone'])) {
-            $where[] = ['phone', 'LIKE', '%' . $query['phone'] . '%'];
+        if (isset($get['phone'])) {
+            $where[] = ['phone', 'LIKE', '%' . $get['phone'] . '%'];
         }
 
         $paginate = UserModel::field('id,account,name,phone,status_id,add_time')->where($where)->order('id', 'desc')->paginate([
-            'list_rows' => $query['pageSize'],
-            'page' => $query['pageNumber']
+            'list_rows' => $get['pageSize'],
+            'page' => $get['pageNumber']
         ]);
         $data = $paginate->toArray();
 

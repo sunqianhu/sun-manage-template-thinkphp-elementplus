@@ -14,17 +14,21 @@
           <el-input v-model="query.name" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search">查询</el-button>
+          <el-button type="primary" :icon="Search" @click="search"
+            >搜索</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
 
     <div class="toolbar">
-      <el-button type="primary" :icon="Plus" @click="showAddDialog">添加</el-button>
+      <el-button type="primary" :icon="Plus" @click="showAddDialog"
+        >添加</el-button
+      >
     </div>
 
     <div class="data">
-      <el-table :data="data" v-loading="loading" max-height="500" stripe style="width: 100%">
+      <el-table :data="data" v-loading="loading" stripe style="width: 100%">
         <el-table-column prop="account" label="账号" />
         <el-table-column prop="name" label="姓名" />
         <el-table-column prop="phone" label="电话" />
@@ -37,9 +41,16 @@
             @change="editStatus(row.id)"
           />
         </el-table-column>
-        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="220">
+        <el-table-column
+          v-slot="{ row }"
+          label="操作"
+          fixed="right"
+          width="220"
+        >
           <el-button size="small">详情</el-button>
-          <el-button size="small" @click="showEditDialog(row.id)">修改</el-button>
+          <el-button size="small" @click="showEditDialog(row.id)"
+            >修改</el-button
+          >
           <el-dropdown style="margin-left: 12px">
             <el-button size="small">
               更多
@@ -79,20 +90,31 @@ import { Search, ArrowDown, Plus } from "@element-plus/icons-vue";
 
 const query = ref({
   pageSize: 50,
-  pageNumber: 1
+  pageNumber: 1,
 });
 const loading = ref(true);
 const data = ref([]);
 const total = ref(0);
 const rowId = ref(0);
+const addTag = ref(false);
+const editTag = ref(false);
+const editPasswordTag = ref(false);
 
 /**
  * 初始化
  */
 const init = async () => {
+  //const res = await axios.get("/admin/system.user/initIndex");
+  loadData();
+};
+
+/**
+ * 加载数据
+ */
+const loadData = async () => {
   loading.value = true;
-  const res = await axios.get("/admin/system.user/index", {
-    params: query.value
+  const res = await axios.get("/admin/system.user/loadIndexData", {
+    params: query.value,
   });
   data.value = res.data.data;
   total.value = res.data.total;
@@ -104,7 +126,7 @@ const init = async () => {
  */
 const search = () => {
   query.pageNumber = 1;
-  init();
+  loadData();
 };
 
 /**
@@ -114,7 +136,7 @@ const search = () => {
 const changePageSize = (pageSize) => {
   query.value.pageSize = pageSize;
   query.value.pageNumber = 1;
-  init();
+  loadData();
 };
 
 /**
@@ -123,13 +145,12 @@ const changePageSize = (pageSize) => {
  */
 const changePageNumber = (pageNumber) => {
   query.value.pageNumber = pageNumber;
-  init();
+  loadData();
 };
 
 /**
  * 显示添加对话框
  */
-const addTag = ref(false);
 const showAddDialog = () => {
   addTag.value = true;
 };
@@ -137,7 +158,6 @@ const showAddDialog = () => {
 /**
  * 显示修改对话框
  */
-const editTag = ref(false);
 const showEditDialog = (id) => {
   rowId.value = id;
   editTag.value = true;
@@ -152,21 +172,20 @@ const editStatus = async (id) => {
   if (res.code != 0) {
     ElMessage({
       message: res.message,
-      type: "error"
+      type: "error",
     });
     return;
   }
 
   ElMessage({
     message: res.message,
-    type: "success"
+    type: "success",
   });
 };
 
 /**
  * 显示修改密码对话框
  */
-const editPasswordTag = ref(false);
 const showEditPasswordDialog = async (id) => {
   rowId.value = id;
   editPasswordTag.value = true;

@@ -23,6 +23,14 @@ class Route extends Base
                 ]
             ],
             [
+                'path' => '/system/department',
+                'name' => 'system_department',
+                'component' => 'system/department/Index.vue',
+                'meta' => [
+                    'name' => '部门管理'
+                ]
+            ],
+            [
                 'path' => '/system/user',
                 'name' => 'system_user',
                 'component' => 'system/user/Index.vue',
@@ -32,7 +40,7 @@ class Route extends Base
             ],
             [
                 'path' => '/system/role',
-                'name'=>'system_role',
+                'name' => 'system_role',
                 'component' => 'Index.vue',
                 'meta' => [
                     'name' => '角色管理'
@@ -40,7 +48,7 @@ class Route extends Base
             ],
             [
                 'path' => '/system/menu',
-                'name'=>'system_menu',
+                'name' => 'system_menu',
                 'component' => 'Index.vue',
                 'meta' => [
                     'name' => '菜单管理'
@@ -49,5 +57,4 @@ class Route extends Base
         ];
         return $this->success('获取成功', $routes);
     }
-
 }
