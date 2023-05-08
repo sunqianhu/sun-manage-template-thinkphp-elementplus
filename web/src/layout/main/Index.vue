@@ -46,6 +46,12 @@ const init = () => {
   }
 };
 
+window.onresize = () => {
+  if (document.body.clientWidth < 768) {
+    appStore.setSiderStatus(0);
+  }
+};
+
 onMounted(() => {
   init();
 });
@@ -117,6 +123,9 @@ html {
           justify-content: flex-end;
           margin-right: 16px;
         }
+      }
+      .main {
+        padding: 16px;
       }
     }
     &.close {
