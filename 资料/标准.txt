@@ -1,11 +1,10 @@
 开发编辑器
-前台：vscode
-	插件：Prettier格式化代码、Snippets代码片段
-后台：phpstrom
-	插件：chinise汉化、.env
+	前台：vscode，插件：Prettier格式化代码、Snippets代码片段
+	后台：phpstrom，插件：chinise汉化、.env
 
-命名：
+代码规范
 	事件处理函数：正常函数命名，不适用 onXXX事件 的方法，因为具体具体业务已经确定。
+	后台增删改方法：initIndex、getIndex、initAdd、saveAdd、initEdit、saveEdit、delete
 
 间距：
 	小：4px

@@ -80,7 +80,7 @@ class Department extends Base
     }
 
     /**
-     * 修改初始化
+     * 初始化修改
      *
      * @return void
      */
