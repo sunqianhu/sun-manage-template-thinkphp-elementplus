@@ -2,14 +2,40 @@
 	前台：vscode，插件：Prettier格式化代码、Snippets代码片段
 	后台：phpstrom，插件：chinise汉化、.env
 
-代码规范
-	增删改方法：initIndex、getIndex、initAdd、saveAdd、initEdit、saveEdit、delete
-	事件处理函数：正常函数命名，不适用 onXXX事件 的方法，因为具体具体业务已经确定。
+后端
+	文件夹/文件
+		文件夹：小写下划线分隔
+		文件：小写下划线分隔
+		类文件：大驼峰
+	数据库
+		数据库名、表名，字段名：小写下划线分隔
+		外键：表名_id
+	代码
+		模型文件/类名：大驼峰，不分子文件夹，和数据表名一样。
+		控制器：use加后缀，防止重名
+		助手：正常命名，use时加Helper后缀
+		布尔值：isXxx
+		函数/方法/事件处理函数：动词+名词，例如：getUsers
+		常量：大写下划线分隔
+		增删改方法：initIndex（GET）、getIndexInfos（GET）、initAdd（GET）、saveAdd（POST）、initEdit（GET）、saveEdit（PUT）、delete（DELETE）
+		变量数据：因模型是全路径命名，所以变量命名使用全路径命名。例如：数据表是rinfo_event，则模型变量为$rinfoEventModel，数据变量为$rinfoEvent。
 
-间距：
-	小：4px
-	中：12px
-	一般：16px
+前端
+	文件夹/文件
+		文件夹：小写下划线分隔
+		文件：小写下划线分隔
+		组件：大驼峰
+	代码
+		布尔值：isXxx
+		函数/方法/事件处理函数：动词+名词，例如：getUsers
+		常量：大写下划线分隔
+		变量数据：使用后端全路径命名法。
+	UI
+		间距
+			小：4px
+			中：12px
+			一般：16px
+
 
 
 
