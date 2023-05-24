@@ -14,20 +14,16 @@
           <el-input v-model="query.name" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="search"
-            >搜索</el-button
-          >
+          <el-button type="primary" :icon="Search" @click="search">搜索</el-button>
         </el-form-item>
       </el-form>
     </div>
 
     <div class="toolbar">
-      <el-button type="primary" :icon="Plus" @click="showAddDialog"
-        >添加</el-button
-      >
+      <el-button type="primary" :icon="Plus" @click="openAdd">添加</el-button>
     </div>
 
-    <div class="data">
+    <div class="list">
       <el-table :data="data" v-loading="loading" stripe style="width: 100%">
         <el-table-column prop="account" label="账号" />
         <el-table-column prop="name" label="姓名" />
@@ -41,16 +37,9 @@
             @change="editStatus(row.id)"
           />
         </el-table-column>
-        <el-table-column
-          v-slot="{ row }"
-          label="操作"
-          fixed="right"
-          width="220"
-        >
+        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="220">
           <el-button size="small">详情</el-button>
-          <el-button size="small" @click="showEditDialog(row.id)"
-            >修改</el-button
-          >
+          <el-button size="small" @click="openEdit(row.id)">修改</el-button>
           <el-dropdown style="margin-left: 12px">
             <el-button size="small">
               更多
@@ -90,7 +79,7 @@ import { Search, ArrowDown, Plus } from "@element-plus/icons-vue";
 
 const query = ref({
   pageSize: 50,
-  pageNumber: 1,
+  pageNumber: 1
 });
 const loading = ref(true);
 const data = ref([]);
@@ -114,7 +103,7 @@ const init = async () => {
 const loadData = async () => {
   loading.value = true;
   const res = await axios.get("/admin/system.user/loadIndexData", {
-    params: query.value,
+    params: query.value
   });
   data.value = res.data.data;
   total.value = res.data.total;
@@ -149,16 +138,16 @@ const changePageNumber = (pageNumber) => {
 };
 
 /**
- * 显示添加对话框
+ * 打开添加页面
  */
-const showAddDialog = () => {
+const openAdd = () => {
   addTag.value = true;
 };
 
 /**
- * 显示修改对话框
+ * 打开修改
  */
-const showEditDialog = (id) => {
+const openEdit = (id) => {
   rowId.value = id;
   editTag.value = true;
 };
@@ -172,14 +161,14 @@ const editStatus = async (id) => {
   if (res.code != 0) {
     ElMessage({
       message: res.message,
-      type: "error",
+      type: "error"
     });
     return;
   }
 
   ElMessage({
     message: res.message,
-    type: "success",
+    type: "success"
   });
 };
 
@@ -209,7 +198,7 @@ onMounted(() => {
   }
   .toolbar {
   }
-  .data {
+  .list {
     margin-top: 16px;
   }
   .pagination {

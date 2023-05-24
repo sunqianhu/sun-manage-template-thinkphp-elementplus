@@ -3,12 +3,10 @@
 namespace app\admin\controller\system;
 
 use app\admin\controller\Base;
-use app\validate\system\Department as DepartmentValidate;
-use app\model\Department as DepartmentModel;
-use think\exception\ValidateException;
 use app\library\Tree;
-use Error;
-use Exception;
+use app\model\Department as DepartmentModel;
+use app\validate\Department as DepartmentValidate;
+use think\exception\ValidateException;
 
 /**
  * 部门管理
@@ -17,56 +15,50 @@ class Department extends Base
 {
 
     /**
-     * 首页
-     *
-     * @return void
+     * 得到首页部门
      */
-    public function index()
+    public function getIndexDepartments()
     {
         $get = $this->request->get(['name']);
-        $where = [];
+        $wheres = [];
         if (isset($get['name'])) {
-            $where[] = ['name', 'LIKE', '%' . $get['name'] . '%'];
+            $wheres[] = ['name', 'LIKE', '%' . $get['name'] . '%'];
         }
 
-        $departmentModels = DepartmentModel::field('id,parent_id,name,sort')
-            ->where($where)
+        $departmentModels = DepartmentModel::field('id,department_id,name,sort')
+            ->where($wheres)
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
 
         $tree = new Tree();
-        $treeDepartments = $tree->convertTree($departments, 'id', 'parent_id', 'children');
+        $treeDepartments = $tree->convertTree($departments, 'id', 'department_id', 'children');
 
         return $this->success('获取成功', $treeDepartments);
     }
 
     /**
      * 初始化添加页面
-     *
-     * @return void
      */
     public function initAdd()
     {
-        $departmentModels = DepartmentModel::field('id, id as value, parent_id, name as label')
+        $departmentModels = DepartmentModel::field('id, id as value, department_id, name as label')
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
 
         $tree = new Tree();
-        $treeDepartments = $tree->convertTree($departments, 'id', 'parent_id', 'children');
+        $treeDepartments = $tree->convertTree($departments, 'id', 'department_id', 'children');
 
         return $this->success('获取成功', $treeDepartments);
     }
 
     /**
      * 保存添加
-     *
-     * @return void
      */
     public function saveAdd()
     {
-        $post = $this->request->post(['parent_id' => 0, 'name', 'sort']);
+        $post = $this->request->post(['department_id' => 0, 'name', 'sort']);
 
         // 验证
         try {
@@ -81,8 +73,6 @@ class Department extends Base
 
     /**
      * 初始化修改
-     *
-     * @return void
      */
     public function initEdit()
     {
@@ -92,19 +82,19 @@ class Department extends Base
         }
 
         // 部门
-        $departmentModel = DepartmentModel::field('id,name,parent_id,sort')->find($id);
+        $departmentModel = DepartmentModel::field('id,name,department_id,sort')->find($id);
         if (empty($departmentModel)) {
             return $this->error('没有找到记录');
         }
         $department = $departmentModel->toArray();
 
         // 树形部门
-        $departmentModels = DepartmentModel::field('id, id as value, parent_id, name as label')
+        $departmentModels = DepartmentModel::field('id, id as value, department_id, name as label')
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
         $tree = new Tree();
-        $treeDepartments = $tree->convertTree($departments, 'id', 'parent_id', 'children');
+        $treeDepartments = $tree->convertTree($departments, 'id', 'department_id', 'children');
 
         $data = [
             'treeDepartments' => $treeDepartments,
@@ -115,14 +105,12 @@ class Department extends Base
 
     /**
      * 保存修改
-     *
-     * @return void
      */
     public function saveEdit()
     {
-        $post = $this->request->post(['id', 'parent_id' => 0, 'name', 'sort']);
-        if (!$post['parent_id']) {
-            $data['parent_id'] = 0;
+        $post = $this->request->post(['id', 'department_id' => 0, 'name', 'sort']);
+        if (!$post['department_id']) {
+            $data['department_id'] = 0;
         }
 
         // 验证
@@ -147,8 +135,9 @@ class Department extends Base
         if ($id <= 0 || !is_numeric($id)) {
             return $this->error('id参数错误');
         }
-        // 手机号码
-        $departmentModel = DepartmentModel::where('parent_id', $id)->find();
+
+        // 子部门
+        $departmentModel = DepartmentModel::where('department_id', $id)->find();
         if (!empty($departmentModel)) {
             return $this->error('该部门下存在子部门，不能删除');
         }

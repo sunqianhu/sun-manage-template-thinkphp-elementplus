@@ -1,12 +1,12 @@
 <template>
   <div class="login">
-    <div class="main">
+    <div class="wrap">
       <div class="header">
         <div class="title">
           <img src="@/asset/image/logo.svg" class="logo" alt="logo" />
           <span class="name">管理后台</span>
         </div>
-        <div class="desc">基于thinkphp和vue的组件化管理后台框架</div>
+        <div class="subtitle">基于thinkphp和vue的组件化管理后台框架</div>
       </div>
       <el-form :model="form" :rules="rules" ref="formRef" class="form">
         <el-form-item prop="account">
@@ -27,7 +27,7 @@
             v-model="form.password"
           />
         </el-form-item>
-        <el-form-item class="button-wrap">
+        <el-form-item class="submit">
           <el-button
             type="primary"
             size="large"
@@ -41,9 +41,7 @@
     </div>
 
     <div class="footer">
-      <div class="browser">
-        浏览器支持：Edge ≥ 79 Firefox≥78 Chrome≥64 Safari≥12
-      </div>
+      <div class="browser">浏览器支持：Edge ≥ 79 Firefox≥78 Chrome≥64 Safari≥12</div>
       <div class="copyright">Copyright &copy; 2023 asun</div>
     </div>
   </div>
@@ -60,7 +58,7 @@ const form = ref({});
 const formRef = ref(null);
 const rules = {
   account: [{ required: true, message: "请输入账号", trigger: "blur" }],
-  password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+  password: [{ required: true, message: "请输入密码", trigger: "blur" }]
 };
 const loading = ref(false);
 
@@ -86,7 +84,7 @@ const submitForm = () => {
     if (res.code != 1) {
       ElMessage({
         message: res.message,
-        type: "error",
+        type: "error"
       });
       return;
     }
@@ -121,7 +119,7 @@ html {
   background-size: 100%;
   position: relative;
 
-  .main {
+  .wrap {
     width: 350px;
     position: absolute;
     left: 50%;
@@ -144,8 +142,7 @@ html {
           font-weight: bold;
         }
       }
-      .desc {
-        font-size: 14px;
+      .subtitle {
         color: rgba(0, 0, 0, 0.45);
         margin-top: 12px;
         margin-bottom: 40px;
@@ -155,7 +152,7 @@ html {
     .form {
       margin-top: 50px;
 
-      .button-wrap {
+      .submit {
         margin-top: 30px;
         .button {
           width: 100%;

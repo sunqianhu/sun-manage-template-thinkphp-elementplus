@@ -24,7 +24,7 @@ class Route extends Base
             ],
             [
                 'path' => '/system/department',
-                'name' => 'system_department',
+                'name' => 'systemDepartment',
                 'component' => 'system/department/Index.vue',
                 'meta' => [
                     'name' => '部门管理'
@@ -32,7 +32,7 @@ class Route extends Base
             ],
             [
                 'path' => '/system/user',
-                'name' => 'system_user',
+                'name' => 'systemUser',
                 'component' => 'system/user/Index.vue',
                 'meta' => [
                     'name' => '用户管理'
@@ -40,18 +40,26 @@ class Route extends Base
             ],
             [
                 'path' => '/system/role',
-                'name' => 'system_role',
-                'component' => 'Index.vue',
+                'name' => 'systemRole',
+                'component' => 'system/role/Index.vue',
                 'meta' => [
                     'name' => '角色管理'
                 ]
             ],
             [
                 'path' => '/system/menu',
-                'name' => 'system_menu',
+                'name' => 'systemMenu',
                 'component' => 'system/menu/Index.vue',
                 'meta' => [
                     'name' => '菜单管理'
+                ]
+            ],
+            [
+                'path' => '/system/dictionary',
+                'name' => 'systemDictionary',
+                'component' => 'system/dictionary/Index.vue',
+                'meta' => [
+                    'name' => '字典管理'
                 ]
             ]
         ];

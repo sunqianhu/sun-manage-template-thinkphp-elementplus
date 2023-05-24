@@ -1,9 +1,9 @@
 <template>
   <div class="index">
-    <div class="page-name">部门管理</div>
+    <div class="page-name">角色管理</div>
     <div class="search">
       <el-form :model="query" :inline="true">
-        <el-form-item label="部门名称">
+        <el-form-item label="角色名称">
           <el-input v-model="query.name" />
         </el-form-item>
         <el-form-item>
@@ -17,15 +17,8 @@
     </div>
 
     <div class="list">
-      <el-table
-        :data="departments"
-        v-loading="loading"
-        row-key="id"
-        default-expand-all
-        style="width: 100%"
-      >
-        <el-table-column prop="name" label="部门名称" />
-        <el-table-column prop="sort" label="排序" width="100" />
+      <el-table :data="roles" v-loading="loading" row-key="id" style="width: 100%">
+        <el-table-column prop="name" label="角色名称" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
           <el-popconfirm title="确定删除吗？" @confirm="del(row.id)">
@@ -36,11 +29,24 @@
         </el-table-column>
       </el-table>
     </div>
-    <Add :show="addTag" @hide="addTag = false" @refresh="getDepartments" v-if="addTag"></Add>
+
+    <div class="pagination">
+      <el-pagination
+        background
+        layout="total,->,sizes,jumper,prev, pager, next"
+        :page-sizes="[10, 30, 50, 100, 200, 300]"
+        :page-size="query.size"
+        :total="total"
+        @size-change="changePageSize"
+        @current-change="changePageNumber"
+      />
+    </div>
+
+    <Add :show="addTag" @hide="addTag = false" @refresh="getRoles" v-if="addTag"></Add>
     <Edit
       :show="editTag"
       @hide="editTag = false"
-      @refresh="getDepartments"
+      @refresh="getRoles"
       :id="rowId"
       v-if="editTag"
     ></Edit>
@@ -55,21 +61,26 @@ import Add from "./Add.vue";
 import Edit from "./Edit.vue";
 
 const rowId = ref(0);
-const query = ref({});
-const departments = ref([]);
+const query = ref({
+  size: 30,
+  page: 1
+});
+const roles = ref([]);
 const loading = ref(true);
 const addTag = ref(false);
 const editTag = ref(false);
+const total = ref(0);
 
 /**
  * 加载数据
  */
-const getDepartments = async () => {
+const getRoles = async () => {
   loading.value = true;
-  const res = await axios.get("/admin/system.Department/getIndexDepartments", {
+  const res = await axios.get("/admin/system.Role/getIndexRoles", {
     params: query.value
   });
-  departments.value = res.data;
+  total.value = res.data.total;
+  roles.value = res.data.data;
   loading.value = false;
 };
 
@@ -77,7 +88,7 @@ const getDepartments = async () => {
  * 搜索
  */
 const search = () => {
-  getDepartments();
+  getRoles();
 };
 
 /**
@@ -100,7 +111,7 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const res = await axios.post("/admin/system.Department/delete", {
+  const res = await axios.post("/admin/system.Role/delete", {
     id: id
   });
   if (res.code != 1) {
@@ -110,15 +121,35 @@ const del = async (id) => {
     });
     return;
   }
+
   ElMessage({
     message: res.message,
     type: "success"
   });
-  getDepartments();
+  getRoles();
+};
+
+/**
+ * 切换页面显示条目数
+ * @param {number} size
+ */
+const changePageSize = (size) => {
+  query.value.size = size;
+  query.value.number = 1;
+  getRoles();
+};
+
+/**
+ * 切换当前页
+ * @param {number} page
+ */
+const changePageNumber = (page) => {
+  query.value.page = page;
+  getRoles();
 };
 
 onMounted(() => {
-  getDepartments();
+  getRoles();
 });
 </script>
 

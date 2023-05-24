@@ -3,10 +3,10 @@
 namespace app\admin\controller\system;
 
 use app\admin\controller\Base;
-use app\validate\system\Menu as MenuValidate;
-use app\model\Menu as MenuModel;
-use think\exception\ValidateException;
 use app\library\Tree;
+use app\model\Menu as MenuModel;
+use app\validate\Menu as MenuValidate;
+use think\exception\ValidateException;
 
 /**
  * 菜单管理
@@ -15,42 +15,41 @@ class Menu extends Base
 {
 
     /**
-     * 首页
-     *
-     * @return void
+     * 得到首页菜单
      */
-    public function index()
+    public function getIndexMenus()
     {
         $get = $this->request->get(['name']);
-        $where = [];
+        $wheres = [];
         if (isset($get['name'])) {
-            $where[] = ['name', 'LIKE', '%' . $get['name'] . '%'];
+            $wheres[] = ['name', 'LIKE', '%' . $get['name'] . '%'];
         }
 
-        $menuModels = MenuModel::field('id,parent_id,type_id,name,sort')
-            ->where($where)
+        $menuModels = MenuModel::field('id,menu_id,type_id,name,sort')
+            ->where($wheres)
             ->order('sort', 'asc')
             ->select();
         $menus = $menuModels->toArray();
 
         $tree = new Tree();
-        $treeMenus = $tree->convertTree($menus, 'id', 'parent_id', 'children');
+        $treeMenus = $tree->convertTree($menus, 'id', 'menu_id', 'children');
 
         return $this->success('获取成功', $treeMenus);
     }
 
     /**
      * 初始化添加页面
-     *
-     * @return void
      */
     public function initAdd()
     {
-        $menuModels = MenuModel::field('id, id as value,parent_id,name as label')->order('sort', 'asc')->select();
+        $menuModels = MenuModel::field('id, id as value, menu_id, name as label')
+            ->where("type_id", '<>', 3)
+            ->order('sort', 'asc')
+            ->select();
         $menus = $menuModels->toArray();
 
         $tree = new Tree();
-        $treeMenus = $tree->convertTree($menus, 'id', 'parent_id', 'children');
+        $treeMenus = $tree->convertTree($menus, 'id', 'menu_id', 'children');
 
         $data = [
             'treeMenus' => $treeMenus
@@ -60,12 +59,10 @@ class Menu extends Base
 
     /**
      * 保存添加
-     *
-     * @return void
      */
     public function saveAdd()
     {
-        $post = $this->request->post(['parent_id' => 0, 'type_id' => 0, 'name', 'icon', 'path', 'component', 'show', 'sort']);
+        $post = $this->request->post(['menu_id' => 0, 'type_id' => 0, 'name', 'path', 'component', 'icon', 'api'=>'', 'show', 'sort']);
 
         // 验证
         try {
@@ -80,8 +77,6 @@ class Menu extends Base
 
     /**
      * 初始化修改
-     *
-     * @return void
      */
     public function initEdit()
     {
@@ -90,16 +85,17 @@ class Menu extends Base
             return $this->error('id参数错误');
         }
 
-        $menuModel = MenuModel::field('id,name,type_id,parent_id,icon,path,component,show,sort')->find($id);
+        $menuModel = MenuModel::field('id,name,type_id,menu_id,icon,path,component,api,show,sort')->find($id);
         if (empty($menuModel)) {
             return $this->error('没有找到记录');
         }
+        $menuModel->append(['apis']);
         $menu = $menuModel->toArray();
 
-        $menuModels = MenuModel::field('id, id as value,parent_id,name as label')->order('sort', 'asc')->select();
+        $menuModels = MenuModel::field('id, id as value,menu_id,name as label')->order('sort', 'asc')->select();
         $menus = $menuModels->toArray();
         $tree = new Tree();
-        $treeMenus = $tree->convertTree($menus, 'id', 'parent_id', 'children');
+        $treeMenus = $tree->convertTree($menus, 'id', 'menu_id', 'children');
 
         $data = [
             'treeMenus' => $treeMenus,
@@ -110,12 +106,10 @@ class Menu extends Base
 
     /**
      * 保存修改
-     *
-     * @return void
      */
     public function saveEdit()
     {
-        $post = $this->request->post(['id', 'parent_id' => 0, 'type_id' => 0, 'name', 'icon', 'path', 'component', 'show', 'sort']);
+        $post = $this->request->post(['id', 'menu_id' => 0, 'type_id' => 0, 'name', 'icon', 'path', 'component', 'api'=>'', 'show', 'sort']);
 
         // 验证
         try {
@@ -131,8 +125,6 @@ class Menu extends Base
 
     /**
      * 删除
-     *
-     * @return void
      */
     public function delete()
     {
@@ -141,7 +133,7 @@ class Menu extends Base
             return $this->error('id参数错误');
         }
 
-        $menuModel = MenuModel::where('parent_id', $id)->find();
+        $menuModel = MenuModel::where('menu_id', $id)->find();
         if (!empty($menuModel)) {
             return $this->error('存在子菜单，不能删除');
         }
