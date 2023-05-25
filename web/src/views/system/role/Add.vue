@@ -52,7 +52,7 @@ const submitForm = () => {
       return;
     }
 
-    const res = await axios.post("/admin/system.Role/saveAdd", role.value);
+    const res = await axios.post("admin/system.Role/saveAdd", role.value);
     if (res.code != 1) {
       ElMessage({
         message: res.message,

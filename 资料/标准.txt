@@ -20,6 +20,8 @@
 		常量：大写下划线分隔
 		增删改方法：initIndex（GET）、getIndexInfos（GET）、initAdd（GET）、saveAdd（POST）、initEdit（GET）、saveEdit（PUT）、delete（DELETE）
 		变量数据：因模型是全路径命名，所以变量命名使用全路径命名。例如：数据表是rinfo_event，则模型变量为$rinfoEventModel，数据变量为$rinfoEvent。
+	其他
+		分页：size=30，page=1
 
 前端
 	文件夹/文件
@@ -41,6 +43,8 @@
 			小：4px
 			中：12px
 			一般：16px
+	其他
+		分页：size=30，page=1
 
 
 

@@ -40,7 +40,7 @@ const rules = {
  * 初始化
  */
 const init = async () => {
-  const res = await axios.get("/admin/system.Role/initEdit", {
+  const res = await axios.get("admin/system.Role/initEdit", {
     params: { id: props.id }
   });
   if (res.code != 1) {
@@ -69,7 +69,7 @@ const submitForm = () => {
       return;
     }
 
-    const res = await axios.post("/admin/system.Role/saveEdit", role.value);
+    const res = await axios.post("admin/system.Role/saveEdit", role.value);
     if (res.code != 1) {
       ElMessage({
         message: res.message,

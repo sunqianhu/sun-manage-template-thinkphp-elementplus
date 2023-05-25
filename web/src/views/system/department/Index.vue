@@ -66,7 +66,7 @@ const editTag = ref(false);
  */
 const getDepartments = async () => {
   loading.value = true;
-  const res = await axios.get("/admin/system.Department/getIndexDepartments", {
+  const res = await axios.get("admin/system.Department/getIndexDepartments", {
     params: query.value
   });
   departments.value = res.data;
@@ -100,7 +100,7 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const res = await axios.post("/admin/system.Department/delete", {
+  const res = await axios.post("admin/system.Department/delete", {
     id: id
   });
   if (res.code != 1) {

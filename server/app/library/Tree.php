@@ -9,7 +9,7 @@ namespace app\library;
 class Tree
 {
     /**
-     * 得到数据树
+     * 转换为树数组
      * @param array $datas 数据
      * @return array
      */

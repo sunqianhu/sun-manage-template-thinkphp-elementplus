@@ -75,7 +75,7 @@ const editTag = ref(false);
  */
 const getMenus = async () => {
   loading.value = true;
-  const res = await axios.get("/admin/system.Menu/getIndexMenus", {
+  const res = await axios.get("admin/system.Menu/getIndexMenus", {
     params: query.value
   });
   menus.value = res.data;
@@ -109,7 +109,7 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const res = await axios.post("/admin/system.Menu/delete", {
+  const res = await axios.post("admin/system.Menu/delete", {
     id: id
   });
   if (res.code != 1) {

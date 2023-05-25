@@ -53,7 +53,7 @@ const treeDepartments = ref([]);
  * 初始化
  */
 const init = async () => {
-  const res = await axios.get("/admin/system.Department/initEdit", {
+  const res = await axios.get("admin/system.Department/initEdit", {
     params: { id: props.id }
   });
   if (res.code != 1) {
@@ -86,7 +86,7 @@ const submitForm = () => {
       return;
     }
 
-    const res = await axios.post("/admin/system.Department/saveEdit", department.value);
+    const res = await axios.post("admin/system.Department/saveEdit", department.value);
     if (res.code != 1) {
       ElMessage({
         message: res.message,

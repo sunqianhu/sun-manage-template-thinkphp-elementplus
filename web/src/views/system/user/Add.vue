@@ -1,34 +1,41 @@
 <template>
-  <el-dialog :model-value="show" title="添加用户" width="550" :draggable="true" @close="close">
-    <el-scrollbar max-height="300px" class="page-add">
-      <el-form :model="form" :rules="rules" ref="formRef" label-width="120px">
+  <el-dialog
+    :model-value="show"
+    title="添加用户"
+    width="550"
+    :draggable="true"
+    @close="close"
+    class="add"
+  >
+    <el-scrollbar max-height="300px" class="scrollbar">
+      <el-form :model="user" :rules="rules" ref="formRef" label-width="120px">
         <el-form-item label="账号" prop="account">
-          <el-input v-model="form.account" autocomplete="off" />
+          <el-input v-model="user.account" autocomplete="off" />
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input type="password" v-model="form.password" autocomplete="off" show-password />
+          <el-input type="password" v-model="user.password" autocomplete="off" show-password />
         </el-form-item>
         <el-form-item label="姓名" prop="name">
-          <el-input v-model="form.name" />
+          <el-input v-model="user.name" />
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
-          <el-input v-model="form.phone" />
+          <el-input v-model="user.phone" />
         </el-form-item>
         <el-form-item label="所属部门" prop="department_id">
           <el-tree-select
-            v-model="form.department_id"
+            v-model="user.department_id"
             :data="departments"
             :render-after-expand="false"
             check-strictly
           />
         </el-form-item>
         <el-form-item label="角色">
-          <el-select v-model="form.role_ids" multiple collapse-tags collapse-tags-tooltip>
+          <el-select v-model="user.role_ids" multiple collapse-tags collapse-tags-tooltip>
             <el-option v-for="role in roles" :label="role.name" :value="role.id" />
           </el-select>
         </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-radio-group v-model="form.status">
+        <el-form-item label="状态" prop="status_id">
+          <el-radio-group v-model="user.status_id">
             <el-radio label="1">启用</el-radio>
             <el-radio label="2">停用</el-radio>
           </el-radio-group>
@@ -36,23 +43,21 @@
       </el-form>
     </el-scrollbar>
     <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="close">取消</el-button>
-        <el-button type="primary" @click="submit"> 提交 </el-button>
-      </span>
+      <el-button @click="close">取消</el-button>
+      <el-button type="primary" @click="submitForm"> 提交 </el-button>
     </template>
   </el-dialog>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import axios from "@/utils/axios";
+import { ref, onMounted } from "vue";
+import axios from "@/util/axios";
 
 defineProps(["show"]);
 const emits = defineEmits(["hide", "refresh"]);
 
-const form = ref({
-  status: "1"
+const user = ref({
+  status_id: "1"
 });
 const formRef = ref();
 const rules = {
@@ -61,40 +66,45 @@ const rules = {
   name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
   phone: [{ required: true, message: "请输入手机号码", trigger: "blur" }],
   department_id: [{ required: true, message: "请选择所属部门", trigger: "blur" }],
-  status: [{ required: true, message: "请选择状态", trigger: "blur" }]
+  status_id: [{ required: true, message: "请选择状态", trigger: "blur" }]
 };
-
 const departments = ref([]);
 const roles = ref([]);
-const init = async () => {
-  let res = await axios.get("/pc/system.user/getDepartmentSelect");
-  departments.value = res.data;
 
-  res = await axios.get("/pc/system.user/getRoleSelect");
-  if (res.code != 0) {
+/**
+ * 初始化
+ */
+const init = async () => {
+  const res = await axios.get("admin/system.User/initAdd");
+  if (res.code != 1) {
     ElMessage({
       message: res.message,
       type: "error"
     });
     return;
   }
-
-  roles.value = res.data;
+  departments.value = res.data.departments;
+  roles.value = res.data.roles;
 };
-init();
 
+/**
+ * 关闭
+ */
 const close = () => {
   emits("hide", false);
 };
 
-const submit = () => {
+/**
+ * 提交表单
+ */
+const submitForm = () => {
   formRef.value.validate(async (valid) => {
     if (!valid) {
       return;
     }
 
-    const res = await axios.post("/pc/system.user/addSave", form.value);
-    if (res.code != 0) {
+    const res = await axios.post("admin/system.user/saveAdd", user.value);
+    if (res.code != 1) {
       ElMessage({
         message: res.message,
         type: "error"
@@ -110,15 +120,18 @@ const submit = () => {
     emits("refresh", true);
   });
 };
+
+onMounted(() => {
+  init();
+});
 </script>
 <style lang="scss" scoped>
-.page-add {
-  padding-right: 50px;
-  .el-select {
-    width: 100%;
+.add {
+  .scrollbar {
+    padding-right: 50px;
+    .el-select {
+      width: 100%;
+    }
   }
-}
-.dialog-footer button:first-child {
-  margin-right: 10px;
 }
 </style>

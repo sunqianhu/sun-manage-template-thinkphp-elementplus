@@ -87,7 +87,7 @@ const treeMenus = ref([]);
  * 初始化
  */
 const init = async () => {
-  const res = await axios.get("/admin/system.Menu/initAdd");
+  const res = await axios.get("admin/system.Menu/initAdd");
   treeMenus.value = res.data.treeMenus;
 };
 
@@ -107,7 +107,7 @@ const submitForm = () => {
       return;
     }
 
-    const res = await axios.post("/admin/system.Menu/saveAdd", menu.value);
+    const res = await axios.post("admin/system.Menu/saveAdd", menu.value);
     if (res.code != 1) {
       ElMessage({
         message: res.message,

@@ -24,7 +24,7 @@
     </div>
 
     <div class="list">
-      <el-table :data="data" v-loading="loading" stripe style="width: 100%">
+      <el-table :data="users" v-loading="loading" stripe style="width: 100%">
         <el-table-column prop="account" label="账号" />
         <el-table-column prop="name" label="姓名" />
         <el-table-column prop="phone" label="电话" />
@@ -32,10 +32,7 @@
           {{ dayjs.unix(row.add_time).format("YYYY-MM-DD") }}
         </el-table-column>
         <el-table-column v-slot="{ row }" prop="status" label="状态">
-          <el-switch
-            :model-value="row.status_id == 1 ? true : false"
-            @change="editStatus(row.id)"
-          />
+          <el-switch :model-value="row.status_id == 1 ? true : false" @change="editStatus(row)" />
         </el-table-column>
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="220">
           <el-button size="small">详情</el-button>
@@ -47,9 +44,7 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item @click="showEditPasswordDialog(row.id)"
-                  >修改密码</el-dropdown-item
-                >
+                <el-dropdown-item @click="openEditPassword(row.id)">修改密码</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -68,6 +63,21 @@
         @current-change="changePageNumber"
       />
     </div>
+
+    <Add :show="addTag" @hide="addTag = false" @refresh="getUsers" v-if="addTag"></Add>
+    <Edit
+      :show="editTag"
+      @hide="editTag = false"
+      @refresh="getUsers"
+      :id="rowId"
+      v-if="editTag"
+    ></Edit>
+    <EditPassword
+      :show="editPasswordTag"
+      :id="rowId"
+      @hide="editPasswordTag = false"
+      v-if="editPasswordTag"
+    ></EditPassword>
   </div>
 </template>
 
@@ -76,13 +86,16 @@ import { ref, onMounted } from "vue";
 import axios from "@/util/axios";
 import dayjs from "dayjs";
 import { Search, ArrowDown, Plus } from "@element-plus/icons-vue";
+import Add from "./Add.vue";
+import Edit from "./Edit.vue";
+import EditPassword from "./EditPassword.vue";
 
 const query = ref({
-  pageSize: 50,
-  pageNumber: 1
+  size: 30,
+  page: 1
 });
 const loading = ref(true);
-const data = ref([]);
+const users = ref([]);
 const total = ref(0);
 const rowId = ref(0);
 const addTag = ref(false);
@@ -93,19 +106,19 @@ const editPasswordTag = ref(false);
  * 初始化
  */
 const init = async () => {
-  //const res = await axios.get("/admin/system.user/initIndex");
-  loadData();
+  //const res = await axios.get("admin/system.User/initIndex");
+  getUsers();
 };
 
 /**
- * 加载数据
+ * 得到用户数据
  */
-const loadData = async () => {
+const getUsers = async () => {
   loading.value = true;
-  const res = await axios.get("/admin/system.user/loadIndexData", {
+  const res = await axios.get("admin/system.User/getIndexUsers", {
     params: query.value
   });
-  data.value = res.data.data;
+  users.value = res.data.data;
   total.value = res.data.total;
   loading.value = false;
 };
@@ -114,31 +127,31 @@ const loadData = async () => {
  * 搜索
  */
 const search = () => {
-  query.pageNumber = 1;
-  loadData();
+  query.page = 1;
+  getUsers();
 };
 
 /**
- * 切换页面显示记录
- * @param {number} pageSize
+ * 切换页面显示条目数
+ * @param {number} size
  */
-const changePageSize = (pageSize) => {
-  query.value.pageSize = pageSize;
-  query.value.pageNumber = 1;
-  loadData();
+const changePageSize = (size) => {
+  query.value.size = size;
+  query.value.page = 1;
+  getUsers();
 };
 
 /**
- * 切换分页页码
- * @param {*} pageNumber
+ * 切换页面页码
+ * @param {*} page
  */
-const changePageNumber = (pageNumber) => {
-  query.value.pageNumber = pageNumber;
-  loadData();
+const changePageNumber = (page) => {
+  query.value.page = page;
+  getUsers();
 };
 
 /**
- * 打开添加页面
+ * 打开添加
  */
 const openAdd = () => {
   addTag.value = true;
@@ -156,16 +169,19 @@ const openEdit = (id) => {
  * 修改状态
  * @param {number} id 记录id
  */
-const editStatus = async (id) => {
-  const res = await axios.post("/pc/system.user/editStatus", { id: id });
-  if (res.code != 0) {
+const editStatus = async (row) => {
+  row.status_id = row.status_id == 1 ? 2 : 1;
+  const res = await axios.post("admin/system.User/editStatus", {
+    id: row.id,
+    status_id: row.status_id
+  });
+  if (res.code != 1) {
     ElMessage({
       message: res.message,
       type: "error"
     });
     return;
   }
-
   ElMessage({
     message: res.message,
     type: "success"
@@ -175,7 +191,7 @@ const editStatus = async (id) => {
 /**
  * 显示修改密码对话框
  */
-const showEditPasswordDialog = async (id) => {
+const openEditPassword = async (id) => {
   rowId.value = id;
   editPasswordTag.value = true;
 };

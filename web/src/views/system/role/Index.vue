@@ -76,7 +76,7 @@ const total = ref(0);
  */
 const getRoles = async () => {
   loading.value = true;
-  const res = await axios.get("/admin/system.Role/getIndexRoles", {
+  const res = await axios.get("admin/system.Role/getIndexRoles", {
     params: query.value
   });
   total.value = res.data.total;
@@ -111,7 +111,7 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const res = await axios.post("/admin/system.Role/delete", {
+  const res = await axios.post("admin/system.Role/delete", {
     id: id
   });
   if (res.code != 1) {
