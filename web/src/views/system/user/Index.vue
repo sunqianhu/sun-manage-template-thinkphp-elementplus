@@ -34,8 +34,8 @@
         <el-table-column v-slot="{ row }" prop="status" label="状态">
           <el-switch :model-value="row.status_id == 1 ? true : false" @change="editStatus(row)" />
         </el-table-column>
-        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="220">
-          <el-button size="small">详情</el-button>
+        <el-table-column v-slot="{ row }" label="操作" fixed="right" width="170">
+          <!--<el-button size="small">详情</el-button>-->
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
           <el-dropdown style="margin-left: 12px">
             <el-button size="small">
@@ -56,11 +56,11 @@
       <el-pagination
         background
         layout="total,->,sizes,jumper,prev, pager, next"
-        :page-sizes="[10, 20, 30, 40, 50, 100, 200]"
-        v-model:page-size="query.pageSize"
+        :page-sizes="[10, 30, 50, 100, 200, 300]"
+        v-model:page-size="query.size"
         :total="total"
         @size-change="changePageSize"
-        @current-change="changePageNumber"
+        @current-change="changePageCurrent"
       />
     </div>
 
@@ -145,7 +145,7 @@ const changePageSize = (size) => {
  * 切换页面页码
  * @param {*} page
  */
-const changePageNumber = (page) => {
+const changePageCurrent = (page) => {
   query.value.page = page;
   getUsers();
 };

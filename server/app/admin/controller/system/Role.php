@@ -4,8 +4,11 @@ namespace app\admin\controller\system;
 
 use app\admin\controller\Base;
 use app\model\Role as RoleModel;
+use app\model\Menu as MenuModel;
+use app\model\RoleMenu as RoleMenuModel;
 use app\validate\Role as RoleValidate;
 use think\exception\ValidateException;
+use app\library\Tree;
 
 /**
  * 角色管理
@@ -34,11 +37,27 @@ class Role extends Base
     }
 
     /**
+     * 初始化添加页面
+     */
+    public function initAdd()
+    {
+        // 菜单
+        $menuModels = MenuModel::field('id, id, menu_id, name')
+            ->order('sort', 'asc')
+            ->select();
+        $menus = $menuModels->toArray();
+        $tree = new Tree();
+        $treeMenus = $tree->convertTree($menus, 'id', 'menu_id', 'children');
+
+        return $this->success('获取成功', $treeMenus);
+    }
+
+    /**
      * 保存添加
      */
     public function saveAdd()
     {
-        $post = $this->request->post(['name']);
+        $post = $this->request->post(['name', 'menu_ids' => []]);
 
         // 验证
         try {
@@ -47,7 +66,12 @@ class Role extends Base
             return $this->error($e->getError());
         }
 
-        RoleModel::create($post);
+        $roleModel = RoleModel::create($post);
+        if (!empty($post['menu_ids'])) {
+            $roleMenuBelongsToMany = $roleModel->menus();
+            $roleMenuBelongsToMany->attach($post['menu_ids']);
+        }
+
         return $this->success('添加成功');
     }
 
@@ -64,13 +88,31 @@ class Role extends Base
         }
 
         // 角色
-        $roleModel = RoleModel::field('id,name')->find($id);
+        $roleModel = RoleModel::with('menus')
+            ->field('id,name')
+            ->find($id);
         if (empty($roleModel)) {
             return $this->error('没有找到记录');
         }
         $role = $roleModel->toArray();
+        $role['menu_ids'] = [];
+        if (!empty($role['menus'])) {
+            $role['menu_ids'] = array_column($role['menus'], 'id');
+        }
 
-        return $this->success('获取成功', $role);
+        // 菜单
+        $menuModels = MenuModel::field('id, id, menu_id, name')
+            ->order('sort', 'asc')
+            ->select();
+        $menus = $menuModels->toArray();
+        $tree = new Tree();
+        $treeMenus = $tree->convertTree($menus, 'id', 'menu_id', 'children');
+
+        $data = [
+            'role' => $role,
+            'menus' => $treeMenus
+        ];
+        return $this->success('获取成功', $data);
     }
 
     /**
@@ -78,7 +120,7 @@ class Role extends Base
      */
     public function saveEdit()
     {
-        $post = $this->request->post(['id', 'name']);
+        $post = $this->request->post(['id', 'name', 'menu_ids'=>[]]);
 
         // 验证
         try {
@@ -92,6 +134,11 @@ class Role extends Base
             return $this->error('没有找到记录');
         }
         $roleModel->save($post);
+
+        RoleMenuModel::where('role_id', $roleModel->id)->delete();
+        if (!empty($post['menu_ids'])) {
+            $roleModel->menus()->attach($post['menu_ids']);
+        }
 
         return $this->success('修改成功');
     }
@@ -113,6 +160,7 @@ class Role extends Base
             return $this->error('没有找到记录');
         }
         $roleModel->delete();
+        RoleMenuModel::where('role_id', $roleModel->id)->delete();
 
         return $this->success('删除成功');
     }

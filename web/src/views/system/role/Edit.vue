@@ -7,10 +7,26 @@
     @close="close"
     class="edit"
   >
-    <el-scrollbar class="scrollbar">
+    <el-scrollbar class="scrollbar" v-loading="loading">
       <el-form :model="role" :rules="rules" ref="formRef" label-width="120px">
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="role.name" />
+        </el-form-item>
+        <el-form-item label="角色权限" prop="menu_ids">
+          <div>
+            <el-input v-model="menuFilterText" placeholder="关键词" />
+            <el-tree
+              :props="{ children: 'children', label: 'name' }"
+              :data="menus"
+              show-checkbox
+              node-key="id"
+              :filter-node-method="filterMenu"
+              ref="menuRef"
+              empty-text="无菜单"
+              @check="checkMenu"
+              :default-checked-keys="menuDefaultCheckKeys"
+            />
+          </div>
         </el-form-item>
       </el-form>
     </el-scrollbar>
@@ -22,19 +38,23 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, watch, onMounted } from "vue";
 import axios from "@/util/axios";
 
 const props = defineProps(["show", "id"]);
 const emits = defineEmits(["hide"]);
-const role = ref({});
+const role = ref({
+  menu_ids: []
+});
 const formRef = ref();
 const rules = {
-  type: [{ required: true, message: "请输入角色类型", trigger: "blur" }],
-  name: [{ required: true, message: "请输入角色名称", trigger: "blur" }],
-  value: [{ required: true, message: "请输入角色值", trigger: "blur" }],
-  sort: [{ required: true, message: "请输入排序", trigger: "blur" }]
+  name: [{ required: true, message: "请输入角色名称", trigger: "blur" }]
 };
+const menus = ref([]);
+const menuRef = ref(null);
+const menuFilterText = ref("");
+const loading = ref(true);
+const menuDefaultCheckKeys = ref([]);
 
 /**
  * 初始化
@@ -50,7 +70,14 @@ const init = async () => {
     });
     return;
   }
-  role.value = res.data;
+
+  menus.value = res.data.menus;
+  role.value = res.data.role;
+
+  setTimeout(() => {
+    menuDefaultCheckKeys.value = getMenuDefaultCheckKeys(res.data.role.menu_ids);
+    loading.value = false;
+  }, 800);
 };
 
 /**
@@ -58,6 +85,50 @@ const init = async () => {
  */
 const close = () => {
   emits("hide", false);
+};
+
+/**
+ * 过滤菜单节点
+ */
+const filterMenu = (value, data) => {
+  if (value === "") {
+    return true;
+  }
+  return data.name.includes(value);
+};
+
+/**
+ * 得到菜单默认选中的key(排除父节点)
+ * @param {array} menuIds
+ */
+const getMenuDefaultCheckKeys = (menuIds) => {
+  let finalMenuIds = [];
+  let i;
+  let menuId = 0;
+  let node;
+
+  for (i in menuIds) {
+    menuId = menuIds[i];
+    node = menuRef.value.getNode(menuId);
+    if (!node) {
+      continue;
+    }
+
+    if (!node.childNodes || !node.childNodes.length) {
+      finalMenuIds.push(menuId);
+    }
+  }
+  return finalMenuIds;
+};
+
+/**
+ * 选择菜单
+ */
+const checkMenu = () => {
+  const allKeys = menuRef.value.getCheckedKeys(); // 全选中
+  const halfKeys = menuRef.value.getHalfCheckedKeys(); // 半选中
+  const keys = [...allKeys, ...halfKeys];
+  role.value.menu_ids = keys;
 };
 
 /**
@@ -86,6 +157,10 @@ const submitForm = () => {
     emits("refresh", true);
   });
 };
+
+watch(menuFilterText, (value) => {
+  menuRef.value?.filter(value);
+});
 
 onMounted(() => {
   init();

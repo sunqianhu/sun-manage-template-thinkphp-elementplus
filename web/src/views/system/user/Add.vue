@@ -6,6 +6,7 @@
     :draggable="true"
     @close="close"
     class="add"
+    v-load
   >
     <el-scrollbar max-height="300px" class="scrollbar">
       <el-form :model="user" :rules="rules" ref="formRef" label-width="120px">

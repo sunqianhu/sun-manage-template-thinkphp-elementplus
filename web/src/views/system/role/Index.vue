@@ -38,7 +38,7 @@
         :page-size="query.size"
         :total="total"
         @size-change="changePageSize"
-        @current-change="changePageNumber"
+        @current-change="changePageCurrent"
       />
     </div>
 
@@ -143,7 +143,7 @@ const changePageSize = (size) => {
  * 切换当前页
  * @param {number} page
  */
-const changePageNumber = (page) => {
+const changePageCurrent = (page) => {
   query.value.page = page;
   getRoles();
 };
