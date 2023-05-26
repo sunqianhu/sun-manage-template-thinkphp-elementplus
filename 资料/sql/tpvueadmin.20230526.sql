@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2023-05-26 16:19:57
+Date: 2023-05-26 16:40:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -73,19 +73,19 @@ CREATE TABLE `menu` (
   `show` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '菜单显示',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COMMENT='菜单';
 
 -- ----------------------------
 -- Records of menu
 -- ----------------------------
 INSERT INTO `menu` VALUES ('1', '0', '1', '系统管理', 'system', '', '', 'Setting', '', '1', '2');
 INSERT INTO `menu` VALUES ('2', '1', '2', '用户管理', 'user', '/system/user', 'system/user/Index.vue', 'User', '/admin/system.User/getIndexUsers', '1', '1');
-INSERT INTO `menu` VALUES ('3', '2', '3', '添加', 'userAdd', '', '', '', '/admin/system.User/saveAdd', '1', '1');
+INSERT INTO `menu` VALUES ('3', '2', '3', '添加', 'userAdd', '', '', '', '/admin/system.User/initAdd\n/admin/system.User/saveAdd', '1', '1');
 INSERT INTO `menu` VALUES ('4', '2', '3', '修改', 'userEdit', '', '', '', '/admin/system.User/initEdit\n/admin/system.User/saveEdit', '1', '2');
 INSERT INTO `menu` VALUES ('5', '1', '2', '部门管理', 'department', '/system/department', 'system/department/Index.vue', 'Memo', '/admin/system.Department/getIndexDepartments', '1', '2');
 INSERT INTO `menu` VALUES ('6', '2', '3', '修改状态', 'userEditStatus', '', '', '', '/admin/system.User/editStatus', '1', '3');
 INSERT INTO `menu` VALUES ('7', '2', '3', '修改密码', 'userEditPassword', '', '', '', '/admin/system.User/editPassword', '1', '5');
-INSERT INTO `menu` VALUES ('8', '5', '3', '添加', 'departmentAdd', '', '', '', '/admin/system.Department/saveAdd', '1', '1');
+INSERT INTO `menu` VALUES ('8', '5', '3', '添加', 'departmentAdd', '', '', '', '/admin/system.Department/initAdd\n/admin/system.Department/saveAdd', '1', '1');
 INSERT INTO `menu` VALUES ('9', '5', '3', '修改', 'departmentEdit', '', '', '', '/admin/system.Department/initEdit\n/admin/system.Department/saveEdit', '1', '1');
 INSERT INTO `menu` VALUES ('10', '5', '3', '删除', 'departmentDelete', '', '', '', '/admin/system.Department/delete', '1', '1');
 INSERT INTO `menu` VALUES ('11', '1', '2', '角色管理', 'role', '/system/role', 'system/role/Index.vue', 'ChatSquare', '/admin/system.Role/getIndexRoles', '1', '3');
@@ -101,6 +101,8 @@ INSERT INTO `menu` VALUES ('20', '19', '3', '添加', 'dictionaryAdd', '', '', '
 INSERT INTO `menu` VALUES ('21', '19', '3', '修改', 'dictionaryEdit', '', '', '', '/admin/system.Dictionary/initEdit\n/admin/system.Dictionary/saveEdit', '1', '2');
 INSERT INTO `menu` VALUES ('22', '19', '3', '删除', 'dictionaryDelete', '', '', '', '/admin/system.Dictionary/delete', '1', '3');
 INSERT INTO `menu` VALUES ('23', '0', '2', '首页', 'index', '/index', 'Index.vue', 'House', '', '1', '0');
+INSERT INTO `menu` VALUES ('24', '0', '1', '个人中心', 'my', '', '', '', '', '2', '3');
+INSERT INTO `menu` VALUES ('25', '24', '3', '修改密码', 'myEditPassword', '', '', '', '/admin/my/editPassword', '1', '1');
 
 -- ----------------------------
 -- Table structure for role
@@ -128,39 +130,43 @@ CREATE TABLE `role_menu` (
   `menu_id` int(10) unsigned NOT NULL COMMENT '菜单id',
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COMMENT='角色权限关联';
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8 COMMENT='角色权限关联';
 
 -- ----------------------------
 -- Records of role_menu
 -- ----------------------------
-INSERT INTO `role_menu` VALUES ('33', '4', '3');
-INSERT INTO `role_menu` VALUES ('34', '4', '4');
-INSERT INTO `role_menu` VALUES ('35', '4', '6');
-INSERT INTO `role_menu` VALUES ('36', '4', '1');
-INSERT INTO `role_menu` VALUES ('37', '4', '2');
-INSERT INTO `role_menu` VALUES ('38', '1', '23');
-INSERT INTO `role_menu` VALUES ('39', '1', '1');
-INSERT INTO `role_menu` VALUES ('40', '1', '2');
-INSERT INTO `role_menu` VALUES ('41', '1', '3');
-INSERT INTO `role_menu` VALUES ('42', '1', '4');
-INSERT INTO `role_menu` VALUES ('43', '1', '6');
-INSERT INTO `role_menu` VALUES ('44', '1', '7');
-INSERT INTO `role_menu` VALUES ('45', '1', '5');
-INSERT INTO `role_menu` VALUES ('46', '1', '10');
-INSERT INTO `role_menu` VALUES ('47', '1', '9');
-INSERT INTO `role_menu` VALUES ('48', '1', '8');
-INSERT INTO `role_menu` VALUES ('49', '1', '11');
-INSERT INTO `role_menu` VALUES ('50', '1', '12');
-INSERT INTO `role_menu` VALUES ('51', '1', '13');
-INSERT INTO `role_menu` VALUES ('52', '1', '14');
-INSERT INTO `role_menu` VALUES ('53', '1', '15');
-INSERT INTO `role_menu` VALUES ('54', '1', '16');
-INSERT INTO `role_menu` VALUES ('55', '1', '17');
-INSERT INTO `role_menu` VALUES ('56', '1', '18');
-INSERT INTO `role_menu` VALUES ('57', '1', '19');
-INSERT INTO `role_menu` VALUES ('58', '1', '20');
-INSERT INTO `role_menu` VALUES ('59', '1', '21');
-INSERT INTO `role_menu` VALUES ('60', '1', '22');
+INSERT INTO `role_menu` VALUES ('61', '1', '23');
+INSERT INTO `role_menu` VALUES ('62', '1', '1');
+INSERT INTO `role_menu` VALUES ('63', '1', '2');
+INSERT INTO `role_menu` VALUES ('64', '1', '3');
+INSERT INTO `role_menu` VALUES ('65', '1', '4');
+INSERT INTO `role_menu` VALUES ('66', '1', '6');
+INSERT INTO `role_menu` VALUES ('67', '1', '7');
+INSERT INTO `role_menu` VALUES ('68', '1', '5');
+INSERT INTO `role_menu` VALUES ('69', '1', '10');
+INSERT INTO `role_menu` VALUES ('70', '1', '9');
+INSERT INTO `role_menu` VALUES ('71', '1', '8');
+INSERT INTO `role_menu` VALUES ('72', '1', '11');
+INSERT INTO `role_menu` VALUES ('73', '1', '12');
+INSERT INTO `role_menu` VALUES ('74', '1', '13');
+INSERT INTO `role_menu` VALUES ('75', '1', '14');
+INSERT INTO `role_menu` VALUES ('76', '1', '15');
+INSERT INTO `role_menu` VALUES ('77', '1', '16');
+INSERT INTO `role_menu` VALUES ('78', '1', '17');
+INSERT INTO `role_menu` VALUES ('79', '1', '18');
+INSERT INTO `role_menu` VALUES ('80', '1', '19');
+INSERT INTO `role_menu` VALUES ('81', '1', '20');
+INSERT INTO `role_menu` VALUES ('82', '1', '21');
+INSERT INTO `role_menu` VALUES ('83', '1', '22');
+INSERT INTO `role_menu` VALUES ('84', '1', '24');
+INSERT INTO `role_menu` VALUES ('85', '1', '25');
+INSERT INTO `role_menu` VALUES ('86', '4', '3');
+INSERT INTO `role_menu` VALUES ('87', '4', '4');
+INSERT INTO `role_menu` VALUES ('88', '4', '6');
+INSERT INTO `role_menu` VALUES ('89', '4', '24');
+INSERT INTO `role_menu` VALUES ('90', '4', '25');
+INSERT INTO `role_menu` VALUES ('91', '4', '1');
+INSERT INTO `role_menu` VALUES ('92', '4', '2');
 
 -- ----------------------------
 -- Table structure for user
