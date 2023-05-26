@@ -5,9 +5,9 @@ namespace app\admin\controller;
 use app\BaseController;
 use app\library\entity\User;
 use think\Response;
+use app\library\Jwt;
 use app\model\Menu as MenuModel;
 use app\model\Role as RoleModel;
-use app\library\Jwt;
 use Exception;
 
 /**
@@ -38,6 +38,11 @@ class Base extends BaseController
     public $user;
 
     /**
+     * @var string 鉴权错误
+     */
+    public $authError = '';
+
+    /**
      * 初始化
      * @return void
      */
@@ -45,47 +50,51 @@ class Base extends BaseController
     {
         parent::initialize();
 
-        try {
-            $this->user = $this->auth();
-        } catch (Exception $e) {
-            $this->error($e->getMessage())->send();
+        if (!$this->auth()) {
+            $this->error($this->authError)->send();
             exit;
         }
     }
 
     /**
      * 鉴权
-     * @return boolean
+     * @return void
      */
     function auth()
     {
-        $user = new User();
-
         // 登录
         $url = $this->request->baseUrl();
         $url = strtolower($url);
         if (in_array($url, $this->noLoginUrls)) {
-            return $user;
+            return true;
         }
 
         $token = $this->request->header('token', '');
         if (empty($token)) {
-            throw new \Exception('token错误');
+            $this->authError = 'token错误';
+            return false;
         }
 
         $jwt = new Jwt();
-        $user = $jwt->resolverToken($token);
+        try {
+            $user = $jwt->resolverToken($token);
+        } catch (Exception $e) {
+            $this->authError = $e->getMessage();
+            return false;
+        }
+        $this->user = $user;
 
         // 权限
         if (in_array($url, $this->noPermissionUrls)) {
-            return $user;
+            return true;
         }
 
         $roleIds = RoleModel::join('user_role', 'role.id = user_role.role_id')
             ->where('user_role.user_id', $user->id)
             ->column('role_id');
         if (empty($roleIds)) {
-            throw new \Exception('无权限');
+            $this->authError = '无权限';
+            return false;
         }
 
         $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
@@ -93,7 +102,8 @@ class Base extends BaseController
             ->where('role_menu.role_id', 'in', $roleIds)
             ->select();
         if ($menuModels->isEmpty()) {
-            throw new \Exception('无权限');
+            $this->authError = '无权限';
+            return false;
         }
         $menus = $menuModels->toArray();
 
@@ -112,10 +122,11 @@ class Base extends BaseController
             }
         }
         if (!$has) {
-            throw new \Exception('无权限');
+            $this->authError = '无权限';
+            return false;
         }
 
-        return $user;
+        return true;
     }
 
     /**
