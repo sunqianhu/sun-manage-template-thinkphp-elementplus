@@ -10,19 +10,36 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
+          <el-dropdown-item :icon="Edit" @click="openEditPassword"> 修改密码 </el-dropdown-item>
           <el-dropdown-item :icon="SwitchButton" @click="logout"> 退出登录 </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
+
+    <EditPassword
+      :show="editPasswordTag"
+      @hide="editPasswordTag = false"
+      v-if="editPasswordTag"
+    ></EditPassword>
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { SwitchButton } from "@element-plus/icons-vue";
+import { Edit, SwitchButton } from "@element-plus/icons-vue";
 import { useAppStore } from "../../store/app";
+import EditPassword from "@/views/my/EditPassword.vue";
 
 const router = useRouter();
+const editPasswordTag = ref(false);
+
+/**
+ * 打开修改密码
+ */
+const openEditPassword = async () => {
+  editPasswordTag.value = true;
+};
 
 /**
  * 退出登录

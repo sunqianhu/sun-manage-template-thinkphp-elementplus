@@ -197,7 +197,7 @@ const editStatus = async (row) => {
 };
 
 /**
- * 显示修改密码对话框
+ * 打开修改密码
  */
 const openEditPassword = async (id) => {
   rowId.value = id;
