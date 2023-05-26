@@ -11,6 +11,7 @@ class Menu extends Validate
         'menu_id'  =>  'require|number',
         'type_id'  =>  'require|number',
         'name'  =>  'require',
+        'key'  =>  'require',
         'sort'  =>  'require|number',
     ];
     protected $message = [
@@ -21,12 +22,13 @@ class Menu extends Validate
         'type_id.require' => '菜单类型不能为空',
         'type_id.number' => '菜单类型必须是数字',
         'name.require' => '菜单名称不能为空',
+        'key.require' => '菜单key不能为空',
         'sort.require' => '排序不能为空',
         'sort.number' => '排序必须是数字',
     ];
     protected $scene = [
-        'add' => ['type_id', 'name', 'sort'],
-        'edit' => ['id', 'type_id', 'name', 'sort'],
+        'add' => ['type_id', 'name', 'key', 'sort'],
+        'edit' => ['id', 'type_id', 'name', 'key', 'sort'],
         'delete' => ['id']
     ];
 }

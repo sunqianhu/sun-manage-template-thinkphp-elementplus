@@ -118,6 +118,14 @@ const getUsers = async () => {
   const res = await axios.get("admin/system.User/getIndexUsers", {
     params: query.value
   });
+  if (res.code != 1) {
+    ElMessage({
+      message: res.message,
+      type: "error"
+    });
+    loading.value = false;
+    return;
+  }
   users.value = res.data.data;
   total.value = res.data.total;
   loading.value = false;

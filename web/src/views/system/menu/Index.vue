@@ -29,6 +29,7 @@
         style="width: 100%"
       >
         <el-table-column prop="name" label="菜单名称" />
+        <el-table-column prop="key" label="菜单key" />
         <el-table-column v-slot="{ row }" prop="type_id" label="菜单类型" width="100">
           <TypeTag :type="row.type_id"></TypeTag>
         </el-table-column>
@@ -78,6 +79,14 @@ const getMenus = async () => {
   const res = await axios.get("admin/system.Menu/getIndexMenus", {
     params: query.value
   });
+  if (res.code != 1) {
+    ElMessage({
+      message: res.message,
+      type: "error"
+    });
+    loading.value = false;
+    return;
+  }
   menus.value = res.data;
   loading.value = false;
 };

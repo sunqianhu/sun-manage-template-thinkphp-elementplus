@@ -25,7 +25,7 @@ class Menu extends Base
             $wheres[] = ['name', 'LIKE', '%' . $get['name'] . '%'];
         }
 
-        $menuModels = MenuModel::field('id,menu_id,type_id,name,sort')
+        $menuModels = MenuModel::field('id,menu_id,type_id,name,key,sort')
             ->where($wheres)
             ->order('sort', 'asc')
             ->select();
@@ -62,7 +62,7 @@ class Menu extends Base
      */
     public function saveAdd()
     {
-        $post = $this->request->post(['menu_id' => 0, 'type_id' => 0, 'name', 'path', 'component', 'icon', 'api'=>'', 'show', 'sort']);
+        $post = $this->request->post(['menu_id' => 0, 'type_id' => 0, 'name', 'key', 'path', 'component', 'icon', 'api'=>'', 'show', 'sort']);
 
         // 验证
         try {
@@ -85,7 +85,7 @@ class Menu extends Base
             return $this->error('id参数错误');
         }
 
-        $menuModel = MenuModel::field('id,name,type_id,menu_id,icon,path,component,api,show,sort')->find($id);
+        $menuModel = MenuModel::field('id,name,key,type_id,menu_id,icon,path,component,api,show,sort')->find($id);
         if (empty($menuModel)) {
             return $this->error('没有找到记录');
         }
@@ -109,7 +109,7 @@ class Menu extends Base
      */
     public function saveEdit()
     {
-        $post = $this->request->post(['id', 'menu_id' => 0, 'type_id' => 0, 'name', 'icon', 'path', 'component', 'api'=>'', 'show', 'sort']);
+        $post = $this->request->post(['id', 'menu_id' => 0, 'type_id' => 0, 'name', 'key', 'icon', 'path', 'component', 'api'=>'', 'show', 'sort']);
 
         // 验证
         try {

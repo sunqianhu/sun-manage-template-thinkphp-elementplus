@@ -7,7 +7,7 @@
     @close="close"
     class="edit"
   >
-    <el-scrollbar class="scrollbar">
+    <el-scrollbar max-height="300px" class="scrollbar">
       <el-form :model="department" :rules="rules" ref="formRef" label-width="120px">
         <el-form-item label="所属部门">
           <el-tree-select
@@ -63,6 +63,7 @@ const init = async () => {
     });
     return;
   }
+
   treeDepartments.value = res.data.treeDepartments;
   if (res.data.department.parent_id == "0") {
     res.data.department.parent_id = "";

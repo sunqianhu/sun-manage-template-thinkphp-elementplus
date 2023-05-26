@@ -25,7 +25,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://tpvueadmin.sunqianhu123.cc/",
+        target: "http://tpvueadmin.sunqianhu123.cc",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "")
       }

@@ -69,6 +69,15 @@ const getDepartments = async () => {
   const res = await axios.get("admin/system.Department/getIndexDepartments", {
     params: query.value
   });
+  if (res.code != 1) {
+    ElMessage({
+      message: res.message,
+      type: "error"
+    });
+    loading.value = false;
+    return;
+  }
+
   departments.value = res.data;
   loading.value = false;
 };

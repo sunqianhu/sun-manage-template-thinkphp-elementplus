@@ -85,6 +85,15 @@ const getDictionarys = async () => {
   const res = await axios.get("admin/system.Dictionary/getIndexDictionarys", {
     params: query.value
   });
+  if (res.code != 1) {
+    ElMessage({
+      message: res.message,
+      type: "error"
+    });
+    loading.value = false;
+    return;
+  }
+
   total.value = res.data.total;
   dictionarys.value = res.data.data;
   loading.value = false;

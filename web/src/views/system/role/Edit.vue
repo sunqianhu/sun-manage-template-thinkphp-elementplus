@@ -7,7 +7,7 @@
     @close="close"
     class="edit"
   >
-    <el-scrollbar class="scrollbar" v-loading="loading">
+    <el-scrollbar max-height="300px" class="scrollbar" v-loading="loading">
       <el-form :model="role" :rules="rules" ref="formRef" label-width="120px">
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="role.name" />

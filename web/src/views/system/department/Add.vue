@@ -7,7 +7,7 @@
     @close="close"
     class="add"
   >
-    <el-scrollbar class="scrollbar">
+    <el-scrollbar max-height="300px" class="scrollbar">
       <el-form :model="department" :rules="rules" ref="formRef" label-width="120px">
         <el-form-item label="上级部门">
           <el-tree-select
@@ -57,6 +57,14 @@ const treeDepartments = ref([]);
  */
 const init = async () => {
   const res = await axios.get("admin/system.department/initAdd");
+  if (res.code != 1) {
+    ElMessage({
+      message: res.message,
+      type: "error"
+    });
+    return;
+  }
+
   treeDepartments.value = res.data;
 };
 

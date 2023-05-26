@@ -7,7 +7,7 @@
     @close="close"
     class="add"
   >
-    <el-scrollbar class="scrollbar">
+    <el-scrollbar max-height="300px" class="scrollbar">
       <el-form :model="role" :rules="rules" ref="formRef" label-width="120px">
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="role.name" />
@@ -65,7 +65,6 @@ const init = async () => {
     });
     return;
   }
-  console.log(res.data);
   menus.value = res.data;
 };
 

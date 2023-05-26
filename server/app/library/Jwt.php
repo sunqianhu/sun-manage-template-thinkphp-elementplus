@@ -2,11 +2,12 @@
 
 namespace app\library;
 
+use app\library\entity\User;
 use Firebase\JWT\JWT as FirebaseJWT;
 use Firebase\JWT\Key;
 
 /**
- * jwt
+ * json web token
  */
 class Jwt
 {
@@ -15,29 +16,33 @@ class Jwt
 
     /**
      * 得到token
-     * @param array $payload 载荷
-     * @return string token
+     * @param User $user
+     * @return Str token
      */
-    function getToken($payload)
+    function getToken(User $user)
     {
+        $payload = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'department_id' => $user->departmentId
+        ];
         return FirebaseJWT::encode($payload, $this->key, 'HS256');
     }
 
-
     /**
      * 解析token
-     * @param string $token jwt token
-     * @return JwtUser jwtUser对象
-     * @expectedException
+     * @param $token token
+     * @return User 用户对象
      */
     function resolverToken($token){
-        $jwtUser = new JwtUser();
         FirebaseJWT::$leeway = $this->leeway;
         $decoded = FirebaseJWT::decode($token, new Key($this->key, 'HS256'));
 
-        $jwtUser->id = $decoded->id;
-        $jwtUser->name = $decoded->name;
+        $user = new User();
+        $user->setId($decoded->id);
+        $user->setName($decoded->name);
+        $user->setDepartmentId($decoded->department_id);
 
-        return $jwtUser;
+        return $user;
     }
 }

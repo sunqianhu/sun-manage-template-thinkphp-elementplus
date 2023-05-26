@@ -44,7 +44,9 @@ import axios from "@/util/axios";
 const props = defineProps(["show", "id"]);
 const emits = defineEmits(["hide"]);
 
-const user = ref({});
+const user = ref({
+  id: props.id
+});
 const formRef = ref();
 const rules = {
   name: [{ required: true, message: "请输入姓名", trigger: "blur" }],

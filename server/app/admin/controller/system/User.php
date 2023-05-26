@@ -189,7 +189,7 @@ class User extends Base
         }
 
         $post['edit_time'] = time();
-        $userModel = $userModel->save($post);
+        $userModel->save($post);
 
         UserRoleModel::where('user_id', $userModel->id)->delete();
         if (!empty($post['role_ids'])) {

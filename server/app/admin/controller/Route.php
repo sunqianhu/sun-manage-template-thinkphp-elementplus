@@ -2,6 +2,9 @@
 
 namespace app\admin\controller;
 
+use app\model\Role as RoleModel;
+use app\model\Menu as MenuModel;
+
 /**
  * 路由
  */
@@ -13,56 +16,44 @@ class Route extends Base
      */
     public function getRoutes()
     {
-        $routes = [
-            [
-                'path' => '/index',
-                'name' => 'index',
-                'component' => 'Index.vue',
-                'meta' => [
-                    'name' => '首页'
-                ]
-            ],
-            [
-                'path' => '/system/department',
-                'name' => 'systemDepartment',
-                'component' => 'system/department/Index.vue',
-                'meta' => [
-                    'name' => '部门管理'
-                ]
-            ],
-            [
-                'path' => '/system/user',
-                'name' => 'systemUser',
-                'component' => 'system/user/Index.vue',
-                'meta' => [
-                    'name' => '用户管理'
-                ]
-            ],
-            [
-                'path' => '/system/role',
-                'name' => 'systemRole',
-                'component' => 'system/role/Index.vue',
-                'meta' => [
-                    'name' => '角色管理'
-                ]
-            ],
-            [
-                'path' => '/system/menu',
-                'name' => 'systemMenu',
-                'component' => 'system/menu/Index.vue',
-                'meta' => [
-                    'name' => '菜单管理'
-                ]
-            ],
-            [
-                'path' => '/system/dictionary',
-                'name' => 'systemDictionary',
-                'component' => 'system/dictionary/Index.vue',
-                'meta' => [
-                    'name' => '字典管理'
-                ]
-            ]
-        ];
+        $roleIds = RoleModel::join('user_role', 'role.id = user_role.role_id')
+            ->where('user_role.user_id', $this->user->id)
+            ->column('role_id');
+        if (empty($roleIds)) {
+            return [];
+        }
+
+        // 菜单
+        $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
+            ->field('menu.*')
+            ->where('menu.type_id', 2)
+            ->where('role_menu.role_id', 'in', $roleIds)
+            ->order('menu.sort', 'asc')
+            ->group('menu.id')
+        ->select();
+        if ($menuModels->isEmpty()) {
+            return [];
+        }
+
+        $routes = [];
+        foreach ($menuModels as $menuModel) {
+            if (
+                empty($menuModel) ||
+                $menuModel->path === '' ||
+                $menuModel->name === '' ||
+                $menuModel->component === ''
+            ) {
+                continue;
+            }
+
+            $route = [];
+            $route['path'] = $menuModel->path;
+            $route['name'] = $menuModel->key;
+            $route['component'] = $menuModel->component;
+            $route['meta']['name'] = $menuModel->name;
+            $routes[] = $route;
+        }
+
         return $this->success('获取成功', $routes);
     }
 }

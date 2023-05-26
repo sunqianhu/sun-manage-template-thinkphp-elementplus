@@ -7,7 +7,7 @@ const props = defineProps(["type"]);
 const types = [];
 types[1] = {
   label: "目录",
-  type: "warning"
+  type: "danger"
 };
 types[2] = {
   label: "页面",

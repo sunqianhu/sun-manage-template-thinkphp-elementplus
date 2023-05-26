@@ -72,13 +72,22 @@ const editTag = ref(false);
 const total = ref(0);
 
 /**
- * 加载数据
+ * 获取角色
  */
 const getRoles = async () => {
   loading.value = true;
   const res = await axios.get("admin/system.Role/getIndexRoles", {
     params: query.value
   });
+  if (res.code != 1) {
+    ElMessage({
+      message: res.message,
+      type: "error"
+    });
+    loading.value = false;
+    return;
+  }
+
   total.value = res.data.total;
   roles.value = res.data.data;
   loading.value = false;

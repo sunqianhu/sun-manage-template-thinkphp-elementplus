@@ -31,26 +31,33 @@
         <el-form-item label="菜单名称" prop="name">
           <el-input v-model="menu.name" />
         </el-form-item>
+        <el-form-item label="菜单key" prop="key">
+          <el-input v-model="menu.key" />
+          <div class="form-message">菜单的唯一标识，用于前端路由名称和权限指令标识</div>
+        </el-form-item>
 
         <el-form-item label="路由路径" prop="path" v-if="menu.type_id == 2">
           <el-input v-model="menu.path" />
+          <div class="form-message">例如/system/user</div>
         </el-form-item>
         <el-form-item label="组件路径" prop="component" v-if="menu.type_id == 2">
           <el-input v-model="menu.component" />
+          <div class="form-message">相对于views目录</div>
         </el-form-item>
         <el-form-item label="菜单图标" prop="icon" v-if="menu.type_id == 1 || menu.type_id == 2">
           <el-input v-model="menu.icon" />
+          <div class="form-message">elementplus图标组件名</div>
         </el-form-item>
 
         <el-form-item label="接口地址" prop="api" v-if="menu.type_id == 2 || menu.type_id == 3">
           <el-input v-model="menu.api" type="textarea" rows="3" />
-          <div class="form-message">后端接口网址一行一个，格式：应用/控制器/方法</div>
+          <div class="form-message">后端接口网址一行一个，格式：/应用/控制器/方法</div>
         </el-form-item>
 
         <el-form-item label="排序" prop="sort">
           <el-input v-model="menu.sort" type="number" />
         </el-form-item>
-        <el-form-item label="菜单显示" prop="show" v-if="menu.type_id == 2">
+        <el-form-item label="菜单显示" prop="show" v-if="menu.type_id == 1 || menu.type_id == 2">
           <el-radio-group v-model="menu.show">
             <el-radio :label="1">显示</el-radio>
             <el-radio :label="2">隐藏</el-radio>
@@ -71,12 +78,12 @@ import axios from "@/util/axios";
 
 const props = defineProps(["show", "id"]);
 const emits = defineEmits(["hide", "refresh"]);
-
 const menu = ref({});
 const formRef = ref();
 const rules = {
   type: [{ required: true, message: "请选择菜单类型", trigger: "blur" }],
   name: [{ required: true, message: "请输入菜单名称", trigger: "blur" }],
+  key: [{ required: true, message: "请输入菜单key", trigger: "blur" }],
   sort: [{ required: true, message: "请输入排序", trigger: "blur" }]
 };
 const treeMenus = ref([]);
@@ -88,7 +95,6 @@ const init = async () => {
   const res = await axios.get("admin/system.Menu/initEdit", {
     params: { id: props.id }
   });
-
   if (res.code != 1) {
     ElMessage({
       message: res.message,
@@ -143,9 +149,11 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .edit {
-  padding-right: 50px;
-  .el-select {
-    width: 100%;
+  .scrollbar {
+    padding-right: 50px;
+    .el-select {
+      width: 100%;
+    }
   }
 }
 </style>

@@ -7,7 +7,7 @@
     @close="close"
     class="add"
   >
-    <el-scrollbar class="scrollbar">
+    <el-scrollbar max-height="300px" class="scrollbar">
       <el-form :model="dictionary" :rules="rules" ref="formRef" label-width="120px">
         <el-form-item label="字典类型" prop="type">
           <el-input v-model="dictionary.type" />
@@ -36,7 +36,6 @@ import axios from "@/util/axios";
 
 defineProps(["show"]);
 const emits = defineEmits(["hide"]);
-
 const dictionary = ref({
   sort: 1
 });

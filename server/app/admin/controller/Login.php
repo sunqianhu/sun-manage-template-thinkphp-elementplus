@@ -2,11 +2,11 @@
 
 namespace app\admin\controller;
 
-use think\Exception;
-use think\exception\ValidateException;
-use app\validate\Login as LoginValidate;
-use app\model\User as UserModel;
+use app\library\entity\User as UserEntity;
 use app\library\Jwt;
+use app\model\User as UserModel;
+use app\validate\Login as LoginValidate;
+use think\exception\ValidateException;
 
 /**
  * 登录
@@ -32,7 +32,7 @@ class Login extends Base
             ['account', '=', $post['account']],
             ['password', '=', md5($post['password'])]
         ];
-        $userModel = UserModel::where($wheres)->field('id,status_id,name,phone,avatar')->find();
+        $userModel = UserModel::where($wheres)->field('id,department_id,status_id,name,phone,avatar')->find();
         if (empty($userModel)) {
             return $this->error('账号或密码错误');
         }
@@ -41,12 +41,11 @@ class Login extends Base
         }
 
         $jwt = new Jwt();
-        $payload = [
-            'id' => $userModel->id,
-            'name' => $userModel->name,
-            'time' => time()
-        ];
-        $token = $jwt->getToken($payload);
+        $userEntity = new UserEntity();
+        $userEntity->setId($userModel->id);
+        $userEntity->setName($userModel->name);
+        $userEntity->setDepartmentId($userModel->department_id);
+        $token = $jwt->getToken($userEntity);
 
         $data = [
             'token' => $token
