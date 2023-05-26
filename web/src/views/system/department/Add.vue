@@ -11,7 +11,7 @@
       <el-form :model="department" :rules="rules" ref="formRef" label-width="120px">
         <el-form-item label="上级部门">
           <el-tree-select
-            v-model="department.parent_id"
+            v-model="department.department_id"
             :data="treeDepartments"
             :render-after-expand="false"
             show-checkbox

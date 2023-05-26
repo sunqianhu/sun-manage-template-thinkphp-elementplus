@@ -11,7 +11,7 @@
       <el-form :model="department" :rules="rules" ref="formRef" label-width="120px">
         <el-form-item label="所属部门">
           <el-tree-select
-            v-model="department.parent_id"
+            v-model="department.department_id"
             :data="treeDepartments"
             :render-after-expand="false"
             show-checkbox
@@ -65,8 +65,8 @@ const init = async () => {
   }
 
   treeDepartments.value = res.data.treeDepartments;
-  if (res.data.department.parent_id == "0") {
-    res.data.department.parent_id = "";
+  if (res.data.department.department_id == "0") {
+    res.data.department.department_id = "";
   }
   department.value = res.data.department;
 };
