@@ -38,11 +38,6 @@ class Base extends BaseController
     public $user;
 
     /**
-     * @var string 鉴权错误
-     */
-    public $authError = '';
-
-    /**
      * 初始化
      * @return void
      */
@@ -50,10 +45,7 @@ class Base extends BaseController
     {
         parent::initialize();
 
-        if (!$this->auth()) {
-            $this->error($this->authError)->send();
-            exit;
-        }
+        $this->auth();
     }
 
     /**
@@ -66,35 +58,28 @@ class Base extends BaseController
         $url = $this->request->baseUrl();
         $url = strtolower($url);
         if (in_array($url, $this->noLoginUrls)) {
-            return true;
+            return;
         }
 
         $token = $this->request->header('token', '');
         if (empty($token)) {
-            $this->authError = 'token错误';
-            return false;
+            throw new Exception('token错误');
         }
 
         $jwt = new Jwt();
-        try {
-            $user = $jwt->resolverToken($token);
-        } catch (Exception $e) {
-            $this->authError = $e->getMessage();
-            return false;
-        }
+        $user = $jwt->resolverToken($token);
         $this->user = $user;
 
         // 权限
         if (in_array($url, $this->noPermissionUrls)) {
-            return true;
+            return;
         }
 
         $roleIds = RoleModel::join('user_role', 'role.id = user_role.role_id')
             ->where('user_role.user_id', $user->id)
             ->column('role_id');
         if (empty($roleIds)) {
-            $this->authError = '无权限';
-            return false;
+            throw new Exception('未设置角色');
         }
 
         $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
@@ -102,14 +87,12 @@ class Base extends BaseController
             ->where('role_menu.role_id', 'in', $roleIds)
             ->select();
         if ($menuModels->isEmpty()) {
-            $this->authError = '无权限';
-            return false;
+            throw new Exception('无权限');
         }
-        $menus = $menuModels->toArray();
 
         $has = false;
-        foreach ($menus as $menu) {
-            $api = $menu['api'];
+        foreach ($menuModels as $menuModel) {
+            $api = $menuModel->api;
             if ($api === '') {
                 continue;
             }
@@ -122,11 +105,8 @@ class Base extends BaseController
             }
         }
         if (!$has) {
-            $this->authError = '无权限';
-            return false;
+            throw new Exception('无权限');
         }
-
-        return true;
     }
 
     /**
