@@ -40,6 +40,7 @@ class User extends Validate
         'add' => ['account', 'password', 'name', 'phone', 'department_id', 'role_ids', 'status_id'],
         'edit' => ['id', 'name', 'phone', 'department_id', 'role_ids'],
         'editStatus' => ['id', 'status_id'],
-        'editPassword' => ['id', 'password1', 'password2']
+        'editPassword' => ['id', 'password1', 'password2'],
+        'offLine' => ['id']
     ];
 }

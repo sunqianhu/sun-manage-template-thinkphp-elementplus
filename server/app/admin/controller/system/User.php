@@ -3,6 +3,7 @@
 namespace app\admin\controller\system;
 
 use app\admin\controller\Base;
+use app\admin\model\Token as TokenModel;
 use app\model\User as UserModel;
 use app\model\Department as DepartmentModel;
 use app\model\Role as RoleModel;
@@ -240,5 +241,23 @@ class User extends Base
         UserModel::update($post);
 
         return $this->success('修改成功');
+    }
+
+    /**
+     * 踢下线
+     */
+    function offLine()
+    {
+        $post = $this->request->post(['id']);
+
+        // 验证
+        try {
+            validate(UserValidate::class)->scene('offLine')->check($post);
+        } catch (ValidateException $e) {
+            return $this->error($e->getError());
+        }
+
+        TokenModel::where('user_id', $post['id'])->delete();
+        return $this->success('操作成功');
     }
 }

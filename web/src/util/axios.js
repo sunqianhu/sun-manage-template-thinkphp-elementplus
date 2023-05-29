@@ -32,7 +32,7 @@ instance.interceptors.response.use(
   function (response) {
     const data = response.data;
 
-    if (data.code != 1 && data.message.indexOf("登录已失效") !== -1) {
+    if (data && data.code != 1 && data.message.indexOf("登录已失效") !== -1) {
       ElMessage({
         message: data.message,
         type: "error"
