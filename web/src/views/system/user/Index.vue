@@ -45,7 +45,7 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item @click="openEditPassword(row.id)">修改密码</el-dropdown-item>
-                <el-dropdown-item @click="openOffLine(row.id)"> 踢下线 </el-dropdown-item>
+                <el-dropdown-item @click="offLine(row.id)"> 踢下线 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -79,13 +79,6 @@
       @hide="editPasswordTag = false"
       v-if="editPasswordTag"
     ></EditPassword>
-    <el-dialog v-model="offLineTag" title="提示" width="300">
-      <span>确定将用户踢下线吗？</span>
-      <template #footer>
-        <el-button @click="offLineTag = false">取消</el-button>
-        <el-button type="primary" @click="submitOffLine"> 确定 </el-button>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
@@ -109,7 +102,6 @@ const rowId = ref(0);
 const addTag = ref(false);
 const editTag = ref(false);
 const editPasswordTag = ref(false);
-const offLineTag = ref(false);
 
 /**
  * 初始化
@@ -215,22 +207,15 @@ const openEditPassword = async (id) => {
 };
 
 /**
- * 打开踢下线
+ * 踢下线
  * @param {number} id 记录id
  */
-const openOffLine = async (id) => {
-  rowId.value = id;
-  offLineTag.value = true;
-};
+const offLine = async (id) => {
+  let res = await ElMessageBox.confirm("确定将用户踢下线吗？", "提示", { draggable: true });
 
-/**
- * 提交踢下线
- */
-const submitOffLine = async () => {
-  const res = await axios.post("admin/system.User/offLine", {
-    id: rowId.value
+  res = await axios.post("admin/system.User/offLine", {
+    id: id
   });
-  offLineTag.value = false;
   if (res.code != 1) {
     ElMessage({
       message: res.message,
