@@ -45,8 +45,9 @@ const openEditPassword = async () => {
  * 退出登录
  */
 const logout = () => {
+  const appStore = useAppStore();
+
   localStorage.removeItem("token");
-  let appStore = useAppStore();
   appStore.clearRoutes();
   appStore.clearPermissions();
 

@@ -3,12 +3,12 @@
 namespace app\admin\controller;
 
 use app\BaseController;
-use app\library\entity\User;
-use think\Response;
-use app\library\Jwt;
+use app\admin\library\Jwt;
+use app\admin\model\Token as TokenModel;
 use app\model\Menu as MenuModel;
 use app\model\Role as RoleModel;
 use Exception;
+use think\Response;
 
 /**
  * 基控制器
@@ -24,7 +24,7 @@ class Base extends BaseController
     ];
 
     /**
-     * @var Str[] 不鉴权网址
+     * @var Str[] 不判断权限网址
      */
     private $noPermissionUrls = [
         '/admin/permission/getpermissions',
@@ -45,12 +45,18 @@ class Base extends BaseController
     {
         parent::initialize();
 
-        $this->auth();
+        try {
+            $this->auth();
+        } catch (Exception $e) {
+            $this->error($e->getMessage())->send();
+            exit;
+        }
     }
 
     /**
      * 鉴权
      * @return void
+     * @throws Exception
      */
     function auth()
     {

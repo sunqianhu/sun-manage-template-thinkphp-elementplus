@@ -1,6 +1,6 @@
 <?php
 
-namespace app\library\entity;
+namespace app\entity;
 
 /**
  * 用户对象

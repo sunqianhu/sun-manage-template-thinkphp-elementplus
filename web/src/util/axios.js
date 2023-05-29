@@ -1,4 +1,6 @@
 import axios from "axios";
+import router from "../router";
+import { useAppStore } from "../store/app";
 
 const instance = axios.create({
   baseURL: "/api/",
@@ -28,7 +30,18 @@ instance.interceptors.request.use(
 // 响应拦截器
 instance.interceptors.response.use(
   function (response) {
-    return response.data;
+    const data = response.data;
+
+    if (data.code != 1 && data.message.indexOf("登录已失效") !== -1) {
+      ElMessage({
+        message: data.message,
+        type: "error"
+      });
+      logout();
+      return Promise.reject(data);
+    }
+
+    return data;
   },
   function (error) {
     ElMessage({
@@ -38,5 +51,17 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+/**
+ * 退出登录
+ */
+const logout = () => {
+  const appStore = useAppStore();
+
+  localStorage.removeItem("token");
+  appStore.clearRoutes();
+  appStore.clearPermissions();
+  router.replace("/login");
+};
 
 export default instance;

@@ -1,8 +1,12 @@
 <?php
 
-namespace app\library;
+namespace app\admin\library;
 
-use app\library\entity\User;
+use app\admin\model\Token as TokenModel;
+use app\entity\User;
+use app\library\Str;
+use app\library\token;
+use Exception;
 use Firebase\JWT\JWT as FirebaseJWT;
 use Firebase\JWT\Key;
 
@@ -24,9 +28,20 @@ class Jwt
         $payload = [
             'id' => $user->id,
             'name' => $user->name,
-            'department_id' => $user->departmentId
+            'department_id' => $user->departmentId,
+            'time'=>microtime()
         ];
-        return FirebaseJWT::encode($payload, $this->key, 'HS256');
+        $token = FirebaseJWT::encode($payload, $this->key, 'HS256');
+
+        // 管理
+        $tokenData = [
+            'token'=>$token,
+            'user_id'=>$user->id,
+            'expires_in'=> time() + 3600 * 2
+        ];
+        TokenModel::create($tokenData);
+
+        return $token;
     }
 
     /**
@@ -37,6 +52,22 @@ class Jwt
     function resolverToken($token){
         FirebaseJWT::$leeway = $this->leeway;
         $decoded = FirebaseJWT::decode($token, new Key($this->key, 'HS256'));
+
+        // 验证
+        $tokenModel = TokenModel::where('token', $token)->find();
+        if(empty($tokenModel)){
+            throw new Exception('登录已失效，请重新登录');
+        }
+        if($tokenModel->expires_in < time()){
+            throw new Exception('登录已失效，请重新登录');
+        }
+        if($tokenModel->user_id != $decoded->id) {
+            throw new Exception('登录已失效，请重新登录');
+        }
+
+        // 有效期
+        $tokenModel->expires_in = time() + 3600 * 2;
+        $tokenModel->save();
 
         $user = new User();
         $user->setId($decoded->id);

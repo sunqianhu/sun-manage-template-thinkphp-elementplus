@@ -2,8 +2,8 @@
 
 namespace app\admin\controller;
 
-use app\library\entity\User as UserEntity;
-use app\library\Jwt;
+use app\admin\library\Jwt;
+use app\entity\User as UserEntity;
 use app\model\User as UserModel;
 use app\validate\Login as LoginValidate;
 use think\exception\ValidateException;
