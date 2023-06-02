@@ -32,7 +32,9 @@ class Login extends Base
             ['account', '=', $post['account']],
             ['password', '=', md5($post['password'])]
         ];
-        $userModel = UserModel::where($wheres)->field('id,department_id,status_id,name,phone,avatar')->find();
+        $userModel = UserModel::where($wheres)
+            ->field('id,department_id,status_id,name,phone,avatar')
+            ->find();
         if (empty($userModel)) {
             return $this->error('账号或密码错误');
         }

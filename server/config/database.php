@@ -28,9 +28,9 @@ return [
             // 数据库名
             'database'        => env('database.database', 'tpvueadmin'),
             // 用户名
-            'username'        => env('database.username', 'tpvueadmin'),
+            'username'        => env('database.username', 'root'),
             // 密码
-            'password'        => env('database.password', 'xsdvfJkeUi#AL89z'),
+            'password'        => env('database.password', 'sqh_mysql'),
             // 端口
             'hostport'        => env('database.hostport', '3306'),
             // 数据库连接参数
