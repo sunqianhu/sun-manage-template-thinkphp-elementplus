@@ -3,13 +3,22 @@
 </template>
 
 <script setup>
-const socket = new WebSocket("ws://localhost:9001");
-socket.onopen = function (event) {
-  socket.send("测试发送数据");
+import { useWebSocket } from "../util/websocket.js";
+
+const onOpen = () => {
+  console.log("ssssssssssssssss");
 };
-socket.onmessage = function (event) {
-  console.log("收到服务器端数据：", event.data);
-};
+
+const webSocket = useWebSocket({
+  url: "ws://localhost:9001",
+  onOpen: onOpen
+});
+
+setTimeout(() => {
+  const webSocket2 = useWebSocket({
+    url: "ws://localhost:9001"
+  });
+}, 1500);
 </script>
 
 <style scoped></style>
