@@ -9,7 +9,7 @@ const useWebSocket = (config) => {
   let reconnetTag = false; // 重连标识
 
   let pingTimer = null; // 心跳定时器
-  let pingNumber = 1000 * 40; // 心跳定时器
+  let pingNumber = 1000 * 40; // 心跳间隔
 
   /**
    * 初始化
@@ -89,7 +89,7 @@ const useWebSocket = (config) => {
     webSocket.onclose = function (event) {
       console.log("webSocket：onclose 连接关闭");
       clearInterval(pingTimer);
-      reconnet(url);
+      reconnet();
       config.onClose(event);
     };
 
@@ -138,7 +138,7 @@ const useWebSocket = (config) => {
 
   init(); // 初始化
 
-  return webSocket;
+  return this;
 };
 
 export { useWebSocket };

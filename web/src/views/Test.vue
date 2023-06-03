@@ -5,20 +5,24 @@
 <script setup>
 import { useWebSocket } from "../util/websocket.js";
 
+let webSocket;
+
 const onOpen = () => {
-  console.log("ssssssssssssssss");
+  const message = {
+    type: "bind",
+    data: {
+      token: "token1"
+    }
+  };
+  const payload = JSON.stringify(message);
+  webSocket.webSocket.send(payload);
 };
 
-const webSocket = useWebSocket({
+webSocket = useWebSocket({
   url: "ws://localhost:9001",
   onOpen: onOpen
 });
-
-setTimeout(() => {
-  const webSocket2 = useWebSocket({
-    url: "ws://localhost:9001"
-  });
-}, 1500);
+console.log(webSocket)
 </script>
 
 <style scoped></style>
