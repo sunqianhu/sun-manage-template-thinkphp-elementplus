@@ -91,6 +91,7 @@ const submitForm = () => {
 
     // 存储
     localStorage.setItem("token", res.data.token);
+    localStorage.setItem("user_id", res.data.user_id);
 
     // 导航
     router.push("/");

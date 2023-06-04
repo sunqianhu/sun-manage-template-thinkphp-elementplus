@@ -50,7 +50,8 @@ class Login extends Base
         $token = $jwt->getToken($userEntity);
 
         $data = [
-            'token' => $token
+            'token' => $token,
+            'user_id' => $userModel->id
         ];
         return $this->success("登录成功", $data);
     }

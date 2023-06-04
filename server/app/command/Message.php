@@ -15,7 +15,14 @@ use Workerman\Timer;
 
 class Message extends Command
 {
+    /**
+     * @var 容器类
+     */
+    public $worker;
 
+    /**
+     * @var string[] 命令参数
+     */
     private $actions = ['start', 'stop', 'reload', 'restart', 'status'];
 
     protected function configure()
@@ -29,6 +36,7 @@ class Message extends Command
 
     protected function execute(Input $input, Output $output)
     {
+        // linux系统命令参数
         if (strtolower(PHP_OS) == "linux") {
             global $argv;
             $action = trim($input->getArgument('action'));
@@ -46,13 +54,13 @@ class Message extends Command
         // 容器
         $config = Config::get('message');
         $uri = 'websocket://' . $config['server_ip'] . ':' . $config['port'];
-        $worker = new Worker($uri);
-        $worker->name = 'message';
-        $worker->count = 1;
+        $this->worker = new Worker($uri);
+        $this->worker->name = 'message';
+        $this->worker->count = 1;
 
         // 事件
-        $worker->onWorkerStart = [$this, 'onWorkerStart'];
-        $worker->onMessage = [$this, 'onMessage'];
+        $this->worker->onWorkerStart = [$this, 'onWorkerStart'];
+        $this->worker->onMessage = [$this, 'onMessage'];
 
         Worker::runAll();
     }
@@ -64,21 +72,7 @@ class Message extends Command
      */
     public function onWorkerStart($worker)
     {
-        // 清理连接
-        Timer::add(5, function () use ($worker) {
-            $time = time();
-            echo count($worker->connections);
-            foreach ($worker->connections as $connection) {
-//echo $connection->token;
-                if (empty($connection->lastMessageTime)) {
-                    $connection->lastMessageTime = $time;
-                    continue;
-                }
-                if ($time - $connection->lastMessageTime > 60 * 60) {
-                    $connection->close();
-                }
-            }
-        });
+        $this->clear($worker);
     }
 
     /**
@@ -89,16 +83,22 @@ class Message extends Command
      */
     public function onMessage(TcpConnection $connection, string $payload)
     {
-        echo $payload.PHP_EOL;
+        echo $payload . PHP_EOL;
+
+        // 活跃时间
+        $connection->activeTime = time();
+
         // 消息
         $message = json_decode($payload, true);
-        if(empty($message) || empty($message['type'])){
+        if (empty($message) || empty($message['type'])) {
             return;
         }
 
-        switch ($message['type']){
+        // 处理
+        switch ($message['type']) {
+            // 绑定
             case 'bind':
-                $this->bind($connection, $message['data']['token']);
+                $this->bind($connection, $message['user_id']);
                 break;
             // 发送
             case 'send':
@@ -108,12 +108,37 @@ class Message extends Command
     }
 
     /**
-     * @param $connection
-     * @param $token
+     * 清理连接
+     * @param $worker
      * @return void
      */
-    public function bind(&$connection, $token){
-        $connection->token = $token;
+    public function clear($worker)
+    {
+        Timer::add(3600, function () use ($worker) {
+            $time = time();
+            foreach ($worker->connections as $connection) {
+                if (empty($connection->activeTime)) {
+                    continue;
+                }
+                if ($time - $connection->activeTime > 3600) {
+                    $connection->close();
+                }
+            }
+        });
+    }
+
+    /**
+     * 绑定
+     * @param $connection
+     * @param $userId
+     * @return void
+     */
+    public function bind(&$connection, $userId)
+    {
+        if (empty($userId)) {
+            return;
+        }
+        $connection->userId = $userId;
     }
 
     /**
@@ -122,14 +147,32 @@ class Message extends Command
      * @param $data
      * @return void
      */
-    public function send($user, $data){
-        $message = [
-            'type'=>'send',
-            'data'=>[
-                'data'=>$data
-            ]
-        ];
-        $payload = json_encode($message);
-    }
+    public function send($user, $data)
+    {
+        if ($user === '') {
+            return;
+        }
 
+        // 消息
+        $payload = json_encode($data);
+
+        // 全部
+        if ($user == 'all') {
+            foreach ($this->worker->connections as $connection) {
+                $connection->send($payload);
+            }
+            return;
+        }
+
+        // 指定
+        $userIds = explode(',', $user);
+        foreach ($this->worker->connections as $connection) {
+            if (empty($connection->userId)) {
+                continue;
+            }
+            if (in_array($connection->userId, $userIds)) {
+                $connection->send($payload);
+            }
+        }
+    }
 }

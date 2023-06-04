@@ -21,6 +21,7 @@
         </el-main>
       </el-container>
     </el-container>
+    <Message></Message>
   </div>
 </template>
 
@@ -31,6 +32,7 @@ import Menu from "./Menu.vue";
 import Hamburger from "./Hamburger.vue";
 import FullScreen from "./FullScreen.vue";
 import Avatar from "./Avatar.vue";
+import Message from "./Message.vue";
 
 const appStore = useAppStore();
 const siderStatus = computed(() => {

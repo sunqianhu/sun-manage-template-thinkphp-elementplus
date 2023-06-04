@@ -8,30 +8,28 @@ namespace app\library;
 
 use think\facade\Config;
 use WebSocket\Client;
-use \app\entity\Message as MessageEntity;
 
 class Message
 {
 
     /**
      * 发送
-     * @param $user 用户
-     * @param $data 数据
+     * @param $user 接收用户
+     * @param $clientMessage 客户端消息
      * @return void
      */
-    public function send($user, $data)
+    public function send($user, $clientMessage)
     {
         $config = Config::get('message');
-        $payload = json_encode([
-            'type'=>'send',
-            'data'=>[
-                'user' => $user,
-                'data' => $data
-            ]
-        ]);
+        $serverMessage = [
+            'type' => 'send',
+            'user' => $user,
+            'message' => $clientMessage
+        ];
+        $payload = json_encode($serverMessage);
 
-        $uri = 'ws://' . $config['client_ip'] . ':' . $config['port'];
-        $client = new Client($uri);
+        $url = 'ws://' . $config['client_ip'] . ':' . $config['port'];
+        $client = new Client($url);
         $client->text($payload);
         $client->close();
     }

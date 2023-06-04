@@ -8,9 +8,11 @@ class Test extends Base
     public function index()
     {
         $message = new Message();
-        $message->send('1', 'message');
-
-
+        $clientMessage = [
+            'type'=>'type',
+            'data'=>['title'=>'标题','url'=>'http://www.baidu.com']
+        ];
+        $message->send('all', $clientMessage);
     }
 
 }

@@ -80,7 +80,12 @@ const ping = () => {
  * @param {object} event 
  */
 const onOpen = (event) => {
-  console.log("openopen")
+  const message = {
+    type: "bind",
+    user_id: 10
+  };
+  const payload = JSON.stringify(message);
+  ws.send(payload);
 }
 
 /**
