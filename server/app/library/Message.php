@@ -15,18 +15,18 @@ class Message
     /**
      * 发送
      * @param $user 接收用户
-     * @param $clientMessage 客户端消息
+     * @param $data 数据
      * @return void
      */
-    public function send($user, $clientMessage)
+    public function send($user, $data)
     {
         $config = Config::get('message');
-        $serverMessage = [
+        $serverData = [
             'type' => 'send',
             'user' => $user,
-            'message' => $clientMessage
+            'data' => $data
         ];
-        $payload = json_encode($serverMessage);
+        $payload = json_encode($serverData);
 
         $url = 'ws://' . $config['client_ip'] . ':' . $config['port'];
         $client = new Client($url);

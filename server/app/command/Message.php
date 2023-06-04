@@ -83,26 +83,24 @@ class Message extends Command
      */
     public function onMessage(TcpConnection $connection, string $payload)
     {
-        echo $payload . PHP_EOL;
-
         // 活跃时间
         $connection->activeTime = time();
 
         // 消息
-        $message = json_decode($payload, true);
-        if (empty($message) || empty($message['type'])) {
+        $data = json_decode($payload, true);
+        if (empty($data) || empty($data['type'])) {
             return;
         }
 
         // 处理
-        switch ($message['type']) {
+        switch ($data['type']) {
             // 绑定
             case 'bind':
-                $this->bind($connection, $message['user_id']);
+                $this->bind($connection, $data['user_id']);
                 break;
             // 发送
             case 'send':
-                $this->send($message['data']['user'], $message['data']['data']);
+                $this->send($data['user'], $data['data']);
                 break;
         }
     }
