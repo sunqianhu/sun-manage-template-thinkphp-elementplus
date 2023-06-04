@@ -3,12 +3,16 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+
 let url = "ws://127.0.0.1:9001";
 let ws; // websocket对象
 let reconnetNumber = 1000 * 10; // 重连间隔
 let reconnetTag = false; // 重连标识
 let pingTimer = null; // 心跳定时器
 let pingNumber = 1000 * 40; // 心跳间隔
+
+const messages = ref([]);
 
 /**
  * 连接websocket
@@ -93,7 +97,32 @@ const onOpen = (event) => {
  * @param {object} event 
  */
 const onMessage = (event) => {
-  console.log("onMessageonMessageonMessageonMessage")
+  const data = JSON.parse(event.data);
+
+  if (!data || !data.type) {
+    return;
+  }
+
+  switch (data.type) {
+    case "message":
+      newMessage(newMessage);
+      break;
+  }
+}
+
+/**
+ * 新消息
+ * @param {object} data 
+ */
+const newMessage = (data) => {
+  messages.value.unshift(data);
+}
+
+/**
+ * 关闭
+ */
+const close = ()=>{
+  messages.value = [];
 }
 
 if (!connect()) {
