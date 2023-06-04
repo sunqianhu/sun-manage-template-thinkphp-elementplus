@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 let url = "ws://127.0.0.1:9001";
 let ws; // websocket对象
@@ -13,6 +13,7 @@ let pingTimer = null; // 心跳定时器
 let pingNumber = 1000 * 40; // 心跳间隔
 
 const messages = ref([]);
+const show = ref(false);
 
 /**
  * 连接websocket
@@ -119,18 +120,27 @@ const newMessage = (data) => {
 }
 
 /**
+ * 初始化
+ */
+const init = () => {
+  if (!connect()) {
+    ElMessage({
+      message: "您的浏览器不支持websokect，推荐使用新版chrome浏览器",
+      type: "error"
+    });
+  }
+}
+
+/**
  * 关闭
  */
-const close = ()=>{
+const close = () => {
   messages.value = [];
 }
 
-if (!connect()) {
-  ElMessage({
-    message: "您的浏览器不支持websokect，推荐使用新版chrome浏览器",
-    type: "error"
-  });
-}
+onMounted(()=>{
+  init();
+});
 </script>
 
 <style scoped></style>
