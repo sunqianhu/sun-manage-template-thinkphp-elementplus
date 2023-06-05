@@ -29,7 +29,9 @@ class Base extends BaseController
     private $noPermissionUrls = [
         '/admin/permission/getpermissions',
         '/admin/route/getroutes',
-        '/admin/menu/getmenus'
+        '/admin/menu/getmenus',
+        '/admin/message/readall',
+        '/admin/message/getnoreads'
     ];
 
     /**

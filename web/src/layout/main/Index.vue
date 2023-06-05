@@ -18,6 +18,7 @@
         </el-header>
         <el-main class="main">
           <router-view />
+          <el-backtop :right="15" :bottom="15" target=".workspace .main"> UP </el-backtop>
         </el-main>
       </el-container>
     </el-container>

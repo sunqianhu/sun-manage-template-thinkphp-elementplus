@@ -53,8 +53,8 @@ class Message extends Command
 
         // 容器
         $config = Config::get('message');
-        $uri = 'websocket://' . $config['server_ip'] . ':' . $config['port'];
-        $this->worker = new Worker($uri);
+        $url = 'websocket://' . $config['server_ip'] . ':' . $config['port'];
+        $this->worker = new Worker($url);
         $this->worker->name = 'message';
         $this->worker->count = 1;
 
@@ -116,6 +116,7 @@ class Message extends Command
             $time = time();
             foreach ($worker->connections as $connection) {
                 if (empty($connection->activeTime)) {
+                    $connection->activeTime = $time;
                     continue;
                 }
                 if ($time - $connection->activeTime > 3600) {

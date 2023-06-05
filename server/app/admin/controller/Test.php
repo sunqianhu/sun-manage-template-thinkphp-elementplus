@@ -9,12 +9,6 @@ class Test extends Base
     public function index()
     {
         $message = new Message();
-        $data = [
-            'type' => 'type',
-            'title' => '标题',
-            'url' => 'http://www.baidu.com'
-        ];
-        $message->send('1,2,3', $data);
+        $message->send('all', '消息标题', '/system/user');
     }
-
 }

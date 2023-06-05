@@ -8,6 +8,7 @@
   --font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
     "微软雅黑", Arial, sans-serif;
 
+  // 文字大小
   --font-size: 14px;
   --extra-small-font-size: 12px;
   --small-font-size: 13px;
@@ -15,8 +16,11 @@
   --large-font-size: 18px;
   --extra-large-font-size: 20px;
 
+  // 文字颜色
   --font-color: #303133;
   --gray-font-color: #909399;
+  --a-font-color: #409eff;
+  --a-hover-font-color: #79bbff;
 
   // 边框颜色
   --border-color: #dcdfe6;
@@ -42,9 +46,9 @@
   --circle-border-radius: 100%;
 
   // 阴影
-  --box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.08);
-  --light-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
-  --dark-box-shadow: 0px 8px 16px -8px rgba(0, 0, 0, 0.16);
+  --box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.12);
+  --light-box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.08);
+  --dark-box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.16);
 
   // 透明度
   --hover-opacity: 0.7;
@@ -60,6 +64,14 @@ html {
     font-size: var(--font-size);
     line-height: 150%;
     color: var(font-color);
+    a {
+      color: var(--a-font-color);
+      text-decoration: none;
+      &:hover {
+        color: var(--a-hover-font-color);
+        text-decoration: underline;
+      }
+    }
   }
 }
 

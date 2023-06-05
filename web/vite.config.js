@@ -5,6 +5,7 @@ import vue from "@vitejs/plugin-vue";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import { config } from "./config.js";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -25,7 +26,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://tpvueadmin.sunqianhu123.cc",
+        target: config.server,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "")
       }
