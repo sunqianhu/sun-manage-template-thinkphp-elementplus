@@ -14,7 +14,7 @@ class Test extends Base
             'title' => '标题',
             'url' => 'http://www.baidu.com'
         ];
-        $message->send('all', $data);
+        $message->send('1,2,3', $data);
     }
 
 }
