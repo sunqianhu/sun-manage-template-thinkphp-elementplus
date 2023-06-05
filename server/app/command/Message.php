@@ -13,10 +13,13 @@ use Workerman\Worker;
 use Workerman\Connection\TcpConnection;
 use Workerman\Timer;
 
+/**
+ * 消息服务
+ */
 class Message extends Command
 {
     /**
-     * @var 容器类
+     * @var object 容器类
      */
     public $worker;
 
@@ -78,7 +81,7 @@ class Message extends Command
     /**
      * 收到数据
      * @param TcpConnection $connection
-     * @param $payload 传输中的数据
+     * @param string $payload 传输中的数据
      * @return void
      */
     public function onMessage(TcpConnection $connection, string $payload)
