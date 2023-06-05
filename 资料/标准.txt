@@ -54,5 +54,6 @@
 		分页：size=30，page=1
 
 
-
+命名：
+	消息：message > 消息数据：data > 数据传输：payload
 
