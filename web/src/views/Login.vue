@@ -164,7 +164,7 @@ html {
   position: relative;
 
   .wrap {
-    width: 350px;
+    width: 300px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -194,10 +194,10 @@ html {
     }
 
     .form {
-      margin-top: 50px;
+      margin-top: 30px;
       .captcha {
         .input {
-          width: 210px;
+          width: 160px;
         }
         img {
           margin-left: 15px;
