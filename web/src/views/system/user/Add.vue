@@ -9,7 +9,7 @@
     v-load
   >
     <el-scrollbar max-height="300px" class="scrollbar">
-      <el-form :model="user" :rules="rules" ref="formRef" label-width="120px">
+      <el-form :model="user" :rules="rules" ref="userRef" label-width="120px">
         <el-form-item label="账号" prop="account">
           <el-input v-model="user.account" autocomplete="off" />
         </el-form-item>
@@ -60,7 +60,7 @@ const emits = defineEmits(["hide", "refresh"]);
 const user = ref({
   status_id: "1"
 });
-const formRef = ref();
+const userRef = ref();
 const rules = {
   account: [{ required: true, message: "请输入账号", trigger: "blur" }],
   password: [{ required: true, message: "请输入密码", trigger: "blur" }],
@@ -99,7 +99,7 @@ const close = () => {
  * 提交表单
  */
 const submitForm = () => {
-  formRef.value.validate(async (valid) => {
+  userRef.value.validate(async (valid) => {
     if (!valid) {
       return;
     }

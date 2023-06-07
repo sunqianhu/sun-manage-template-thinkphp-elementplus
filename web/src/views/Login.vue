@@ -8,13 +8,13 @@
         </div>
         <div class="subtitle">基于thinkphp和vue的组件化管理后台框架</div>
       </div>
-      <el-form :model="form" :rules="rules" ref="formRef" class="form">
+      <el-form :model="login" :rules="rules" ref="loginRef" class="form">
         <el-form-item prop="account">
           <el-input
             :prefix-icon="User"
             placeholder="请输入账号"
             size="large"
-            v-model="form.account"
+            v-model="login.account"
           />
         </el-form-item>
         <el-form-item prop="password">
@@ -24,7 +24,24 @@
             show-password
             size="large"
             :prefix-icon="Lock"
-            v-model="form.password"
+            v-model="login.password"
+          />
+        </el-form-item>
+        <el-form-item prop="captcha_code" class="captcha">
+          <el-input
+            type="text"
+            placeholder="验证码"
+            size="large"
+            :prefix-icon="Monitor"
+            v-model="login.captcha_code"
+            maxlength="4"
+            class="input"
+          />
+          <img
+            :src="captchaImage"
+            v-if="captchaImage"
+            @click="getCaptcha()"
+            title="点击更换验证码"
           />
         </el-form-item>
         <el-form-item class="submit">
@@ -48,25 +65,44 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { User, Lock } from "@element-plus/icons-vue";
+import { ref, onMounted } from "vue";
+import { User, Lock, Monitor } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
 import axios from "@/util/axios";
 
 const router = useRouter();
-const form = ref({});
-const formRef = ref(null);
+const login = ref({});
+const loginRef = ref(null);
 const rules = {
   account: [{ required: true, message: "请输入账号", trigger: "blur" }],
-  password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+  password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+  captcha_code: [{ required: true, message: "请输入验证码", trigger: "blur" }]
 };
 const loading = ref(false);
+const captchaImage = ref("");
+
+/**
+ * 得到验证码
+ */
+const getCaptcha = async () => {
+  const res = await axios.get("admin/login/getCaptcha");
+  if (res.code != 1) {
+    ElMessage({
+      message: res.message,
+      type: "error"
+    });
+    return;
+  }
+  login.value.captcha_token = res.data.token;
+  login.value.captcha_code = "";
+  captchaImage.value = res.data.image;
+};
 
 /**
  * 提交表单
  */
 const submitForm = () => {
-  formRef.value.validate(async (valid) => {
+  loginRef.value.validate(async (valid) => {
     if (!valid) {
       return;
     }
@@ -74,7 +110,7 @@ const submitForm = () => {
     let res;
     loading.value = true;
     try {
-      res = await axios.post("admin/login/login", form.value);
+      res = await axios.post("admin/login/login", login.value);
     } catch (error) {
       loading.value = false;
       return;
@@ -86,6 +122,9 @@ const submitForm = () => {
         message: res.message,
         type: "error"
       });
+      if (res.message.indexOf("验证码错误") !== -1) {
+        getCaptcha();
+      }
       return;
     }
 
@@ -97,6 +136,10 @@ const submitForm = () => {
     router.push("/");
   });
 };
+
+onMounted(() => {
+  getCaptcha();
+});
 </script>
 
 <style lang="scss">
@@ -152,7 +195,17 @@ html {
 
     .form {
       margin-top: 50px;
-
+      .captcha {
+        .input {
+          width: 210px;
+        }
+        img {
+          margin-left: 15px;
+          height: 35px;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+      }
       .submit {
         margin-top: 30px;
         .button {

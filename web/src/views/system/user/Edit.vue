@@ -8,7 +8,7 @@
     class="edit"
   >
     <el-scrollbar max-height="300px" class="scrollbar">
-      <el-form :model="user" :rules="rules" ref="formRef" label-width="120px">
+      <el-form :model="user" :rules="rules" ref="userRef" label-width="120px">
         <el-form-item label="姓名" prop="name">
           <el-input v-model="user.name" />
         </el-form-item>
@@ -47,7 +47,7 @@ const emits = defineEmits(["hide"]);
 const user = ref({
   id: props.id
 });
-const formRef = ref();
+const userRef = ref();
 const rules = {
   name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
   phone: [{ required: true, message: "请输入手机号码", trigger: "blur" }],
@@ -86,7 +86,7 @@ const close = () => {
  * 提交表单
  */
 const submitForm = () => {
-  formRef.value.validate(async (valid) => {
+  userRef.value.validate(async (valid) => {
     if (!valid) {
       return;
     }

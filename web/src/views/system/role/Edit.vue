@@ -8,7 +8,7 @@
     class="edit"
   >
     <el-scrollbar max-height="300px" class="scrollbar" v-loading="loading">
-      <el-form :model="role" :rules="rules" ref="formRef" label-width="120px">
+      <el-form :model="role" :rules="rules" ref="roleRef" label-width="120px">
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="role.name" />
         </el-form-item>
@@ -46,7 +46,7 @@ const emits = defineEmits(["hide"]);
 const role = ref({
   menu_ids: []
 });
-const formRef = ref();
+const roleRef = ref();
 const rules = {
   name: [{ required: true, message: "请输入角色名称", trigger: "blur" }]
 };
@@ -135,7 +135,7 @@ const checkMenu = () => {
  * 提交表单
  */
 const submitForm = () => {
-  formRef.value.validate(async (valid) => {
+  roleRef.value.validate(async (valid) => {
     if (!valid) {
       return;
     }

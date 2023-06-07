@@ -1,7 +1,7 @@
 <template>
   <el-dialog :model-value="show" title="修改密码" width="500" :draggable="true" @close="close">
     <div class="edit-password">
-      <el-form :model="user" :rules="rules" ref="formRef" label-width="120px">
+      <el-form :model="user" :rules="rules" ref="userRef" label-width="120px">
         <el-form-item label="新密码" prop="password1">
           <el-input type="password" show-password v-model="user.password1" />
         </el-form-item>
@@ -26,7 +26,7 @@ const emits = defineEmits(["hide"]);
 const user = ref({
   id: props.id
 });
-const formRef = ref();
+const userRef = ref();
 const rules = {
   password1: [{ required: true, message: "请输入新密码", trigger: "blur" }],
   password2: [{ required: true, message: "请输入确认新密码", trigger: "blur" }]
@@ -43,7 +43,7 @@ const close = () => {
  * 提交表单
  */
 const submitForm = () => {
-  formRef.value.validate(async (valid) => {
+  userRef.value.validate(async (valid) => {
     if (!valid) {
       return;
     }

@@ -8,7 +8,7 @@
     class="add"
   >
     <el-scrollbar max-height="300px" class="scrollbar">
-      <el-form :model="dictionary" :rules="rules" ref="formRef" label-width="120px">
+      <el-form :model="dictionary" :rules="rules" ref="dictionaryRef" label-width="120px">
         <el-form-item label="字典类型" prop="type">
           <el-input v-model="dictionary.type" />
         </el-form-item>
@@ -39,7 +39,7 @@ const emits = defineEmits(["hide"]);
 const dictionary = ref({
   sort: 1
 });
-const formRef = ref({});
+const dictionaryRef = ref({});
 const rules = {
   type: [{ required: true, message: "请输入字典类型", trigger: "blur" }],
   name: [{ required: true, message: "请输入字典名称", trigger: "blur" }],
@@ -58,7 +58,7 @@ const close = () => {
  * 提交表单
  */
 const submitForm = () => {
-  formRef.value.validate(async (valid) => {
+  dictionaryRef.value.validate(async (valid) => {
     if (!valid) {
       return;
     }

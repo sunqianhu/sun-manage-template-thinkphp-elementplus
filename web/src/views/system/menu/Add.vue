@@ -8,7 +8,7 @@
     class="add"
   >
     <el-scrollbar max-height="300px" class="scrollbar">
-      <el-form :model="menu" :rules="rules" ref="formRef" label-width="120px">
+      <el-form :model="menu" :rules="rules" ref="menuRef" label-width="120px">
         <el-form-item label="上级菜单" prop="menu_id">
           <el-tree-select
             v-model="menu.menu_id"
@@ -83,7 +83,7 @@ const menu = ref({
   sort: 1,
   show: 1
 });
-const formRef = ref();
+const menuRef = ref();
 const rules = {
   type_id: [{ required: true, message: "请选择菜单类型", trigger: "blur" }],
   name: [{ required: true, message: "请输入菜单名称", trigger: "blur" }],
@@ -118,7 +118,7 @@ const close = () => {
  * 提交表单
  */
 const submitForm = () => {
-  formRef.value.validate(async (valid) => {
+  menuRef.value.validate(async (valid) => {
     if (!valid) {
       return;
     }

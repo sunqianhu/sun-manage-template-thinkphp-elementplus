@@ -19,6 +19,7 @@ class Base extends BaseController
      * @var Str[] 不登录网址
      */
     private $noLoginUrls = [
+        '/admin/login/getcaptcha',
         '/admin/login/login',
         '/admin/test/index'
     ];

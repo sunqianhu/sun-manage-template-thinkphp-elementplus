@@ -2,13 +2,16 @@
 
 namespace app\admin\controller;
 
-use app\library\Message;
+use app\library\Captcha;
 
 class Test extends Base
 {
     public function index()
     {
-        $message = new Message();
-        $message->send('all', '消息标题', '/system/user');
+        $captcha = new Captcha();
+        $image = $captcha->create('1ade',100, 35);
+        $base64Image = $captcha->getBase64($image);
+
+
     }
 }

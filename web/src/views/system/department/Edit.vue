@@ -8,7 +8,7 @@
     class="edit"
   >
     <el-scrollbar max-height="300px" class="scrollbar">
-      <el-form :model="department" :rules="rules" ref="formRef" label-width="120px">
+      <el-form :model="department" :rules="rules" ref="departmentRef" label-width="120px">
         <el-form-item label="所属部门">
           <el-tree-select
             v-model="department.department_id"
@@ -42,7 +42,7 @@ import axios from "@/util/axios";
 const props = defineProps(["show", "id"]);
 const emits = defineEmits(["hide"]);
 const department = ref({});
-const formRef = ref();
+const departmentRef = ref();
 const rules = {
   name: [{ required: true, message: "请输入部门名称", trigger: "blur" }],
   sort: [{ required: true, message: "请输入排序", trigger: "blur" }]
@@ -82,7 +82,7 @@ const close = () => {
  * 提交表单
  */
 const submitForm = () => {
-  formRef.value.validate(async (valid) => {
+  departmentRef.value.validate(async (valid) => {
     if (!valid) {
       return;
     }
