@@ -5,6 +5,7 @@ namespace app\admin\controller;
 use app\admin\library\Jwt;
 use app\entity\User as UserEntity;
 use app\library\Captcha;
+use app\model\LoginLog as LoginLogModel;
 use app\model\User as UserModel;
 use app\validate\Login as LoginValidate;
 use think\exception\ValidateException;
@@ -79,6 +80,13 @@ class Login extends Base
         $token = $jwt->getToken($userEntity);
 
         Cache::delete('captcha_' . $post['captcha_token']);
+        $data = [
+            'user_id'=>$userModel->id,
+            'time'=>time(),
+            'ip'=>$this->request->ip()
+        ];
+        LoginLogModel::create($data);
+
         $data = [
             'token' => $token,
             'user_id' => $userModel->id

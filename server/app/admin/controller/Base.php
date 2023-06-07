@@ -4,8 +4,8 @@ namespace app\admin\controller;
 
 use app\BaseController;
 use app\admin\library\Jwt;
-use app\admin\model\Token as TokenModel;
 use app\model\Menu as MenuModel;
+use app\model\OperationLog as OperationLogModel;
 use app\model\Role as RoleModel;
 use Exception;
 use think\Response;
@@ -54,6 +54,8 @@ class Base extends BaseController
             $this->error($e->getMessage())->send();
             exit;
         }
+
+        $this->createOperationLog();
     }
 
     /**
@@ -146,5 +148,34 @@ class Base extends BaseController
             'data' => $data
         ];
         return Response::create($result, 'json', 200);
+    }
+
+    /**
+     * 新增操作日志
+     * @return void
+     */
+    public function createOperationLog(){
+        if(empty($this->user->id)){
+            return;
+        }
+
+        // 不记录公共页面
+        $url = $this->request->baseUrl();
+        $url = strtolower($url);
+        if (in_array($url, $this->noLoginUrls)) {
+            return;
+        }
+        if (in_array($url, $this->noPermissionUrls)) {
+            return;
+        }
+
+        // 记录
+        $data = [
+            'user_id'=>$this->user->id,
+            'time'=>time(),
+            'ip'=>$this->request->ip(),
+            'url'=>$url
+        ];
+        OperationLogModel::create($data);
     }
 }
