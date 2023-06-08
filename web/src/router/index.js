@@ -39,7 +39,7 @@ router.beforeEach(async (to, from) => {
   NProgress.start();
 
   // 白名单
-  const writeList = ["/login", "/404", '/test'];
+  const writeList = ["/login", "/404", "/test"];
   if (writeList.includes(to.path)) {
     return true;
   }

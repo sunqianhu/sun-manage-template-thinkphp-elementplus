@@ -40,14 +40,12 @@ class Menu extends Base
 
         $menus = [];
         foreach ($menuModels as $menuModel) {
-
             $menu = [];
             $menu['id'] = $menuModel->id;
             $menu['menu_id'] = $menuModel->menu_id;
             $menu['name'] = $menuModel->name;
             $menu['url'] = $menuModel->path;
             $menu['icon'] = $menuModel->icon;
-
             $menus[] = $menu;
         }
         $tree = new Tree();

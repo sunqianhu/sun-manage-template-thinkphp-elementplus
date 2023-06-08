@@ -32,7 +32,8 @@ class Base extends BaseController
         '/admin/route/getroutes',
         '/admin/menu/getmenus',
         '/admin/message/readall',
-        '/admin/message/getnoreads'
+        '/admin/message/getnoreads',
+        '/admin/uploadfile/uploadfile'
     ];
 
     /**
