@@ -1,38 +1,22 @@
 <template>
-  <div>
-    <UploadFile v-model="files" multiple>
-      <el-button type="primary">上传</el-button>
-      <template #tip>
-        <div>提示提示ddd</div>
-      </template>
-    </UploadFile>
+  <div style="margin: 20px; border: 1px solid #ff0000">
+    <Description>
+      <DescriptionItem label="姓名">孙乾户</DescriptionItem>
+      <DescriptionItem label="性别">男</DescriptionItem>
+      <DescriptionItem label="生日">2022-11-12</DescriptionItem>
+      <DescriptionItem label="籍贯">四川</DescriptionItem>
+      <DescriptionItem label="居住地">成都成都成都成都成都成都</DescriptionItem>
+
+      <DescriptionItem sm="24" md="24" label="222222">成都成都成都成都成都成都</DescriptionItem>
+      <DescriptionItem sm="24" md="24" label="网站网址">成都成都成都成都成都成都</DescriptionItem>
+    </Description>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import UploadFile from "../component/UploadFile.vue";
-
-const files = ref([
-  {
-    name: "2.jpg",
-    type: "image/jpeg",
-    ext: "jpg",
-    size: 255784,
-    path: "20230608\\68e85627f9d652fd9308de7cadbed4e4.jpg"
-  },
-  {
-    name: "3.jpg",
-    type: "image/jpeg",
-    ext: "jpg",
-    size: 255784,
-    path: "20230608\\68e85627f9d652fd9308de7cadbed4e4.jpg"
-  }
-]);
-
-setInterval(() => {
-  //console.log(files);
-}, 8000);
+import Description from "../component/Description.vue";
+import DescriptionItem from "../component/DescriptionItem.vue";
 </script>
 
 <style scoped></style>
