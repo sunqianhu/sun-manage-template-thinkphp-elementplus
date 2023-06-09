@@ -1,21 +1,24 @@
 <template>
-  <div style="margin: 20px; border: 1px solid #ff0000">
-    <Description>
-      <DescriptionItem label="姓名">孙乾户</DescriptionItem>
-      <DescriptionItem label="性别">男</DescriptionItem>
-      <DescriptionItem label="生日">2022-11-12</DescriptionItem>
-      <DescriptionItem label="籍贯">四川</DescriptionItem>
-      <DescriptionItem label="居住地">成都成都成都成都成都成都</DescriptionItem>
+  <div style="margin: 50px">
+    <Panel title="信息详情" description="xxx">
+      <template #button>
+        <el-button text>按钮</el-button>
+      </template>
+      内容内容 内容内容 内容内容
+    </Panel>
 
-      <DescriptionItem sm="24" md="24" label="222222">成都成都成都成都成都成都</DescriptionItem>
-      <DescriptionItem sm="24" md="24" label="网站网址">成都成都成都成都成都成都</DescriptionItem>
-    </Description>
+    <Panel title="内容回复">
+      <template #button>
+        <el-button text>按钮</el-button>
+      </template>
+      内容内容 内容内容 内容内容
+    </Panel>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import Description from "../component/Description.vue";
+import Panel from "../component/Panel.vue";
 import DescriptionItem from "../component/DescriptionItem.vue";
 </script>
 
