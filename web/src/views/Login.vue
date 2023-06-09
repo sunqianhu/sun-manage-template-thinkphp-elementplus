@@ -8,7 +8,7 @@
         </div>
         <div class="subtitle">基于thinkphp和vue的组件化管理后台框架</div>
       </div>
-      <el-form :model="login" :rules="rules" ref="loginRef" class="form">
+      <el-form :model="login" :rules="rules" ref="loginRef" class="form" @keyup.enter="submitForm">
         <el-form-item prop="account">
           <el-input
             :prefix-icon="User"
@@ -164,7 +164,7 @@ html {
   position: relative;
 
   .wrap {
-    width: 300px;
+    width: 330px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -197,10 +197,10 @@ html {
       margin-top: 30px;
       .captcha {
         .input {
-          width: 160px;
+          width: 190px;
         }
         img {
-          margin-left: 15px;
+          margin-left: 16px;
           height: 35px;
           border-radius: 4px;
           cursor: pointer;
