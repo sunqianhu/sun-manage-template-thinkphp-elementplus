@@ -3,20 +3,49 @@
     ref="uploadRef"
     action="/api/admin/UploadFile/uploadFile"
     v-model:file-list="files"
+    :name="props.name"
     :headers="headers"
-    multiple
-    name="file"
+    :multiple="props.multiple"
+    :disabled="props.disabled"
+    :limit="props.limit"
     :on-success="success"
     :on-remove="remove"
+    :on-change="change"
+    :on-exceed="exceed"
   >
-    <el-button type="primary">上传</el-button>
+    <template #default>
+      <slot></slot>
+    </template>
+    <template #tip>
+      <slot name="tip"></slot>
+    </template>
   </el-upload>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 
-const props = defineProps(["modelValue"]);
+const props = defineProps({
+  modelValue: {
+    default: []
+  },
+  name: {
+    type: String,
+    default: "file"
+  },
+  multiple: {
+    type: Boolean,
+    default: false
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  limit: {
+    type: Number,
+    default: 4
+  }
+});
 const emits = defineEmits(["update:modelValue"]);
 
 const headers = { token: localStorage.getItem("token") };
@@ -56,6 +85,29 @@ const success = (response, uploadFile, uploadFiles) => {
  */
 const remove = (uploadFile, uploadFiles) => {
   emits("update:modelValue", getFiles());
+};
+
+/**
+ * 改变
+ * @param {*} file
+ * @param {*} uploadFiles
+ */
+const change = (uploadFile, uploadFiles) => {
+  emits("update:modelValue", getFiles());
+};
+
+/**
+ * 超出限制
+ * @param {Array} files 超出限制的文件
+ * @param {Array} uploadFiles 已上传的文件
+ */
+const exceed = (files, uploadFiles) => {
+  let totalNumber = files.length + uploadFiles.length;
+  let exceedNumber = totalNumber - props.limit;
+  ElMessage({
+    message: "最多上传" + props.limit + "个文件，超出" + exceedNumber + "个，请重新选择",
+    type: "error"
+  });
 };
 
 /**

@@ -1,6 +1,11 @@
 <template>
   <div>
-    <UploadFile v-model="files"></UploadFile>
+    <UploadFile v-model="files" multiple>
+      <el-button type="primary">上传</el-button>
+      <template #tip>
+        <div>提示提示ddd</div>
+      </template>
+    </UploadFile>
   </div>
 </template>
 
@@ -26,7 +31,7 @@ const files = ref([
 ]);
 
 setInterval(() => {
-  console.log(files);
+  //console.log(files);
 }, 8000);
 </script>
 
