@@ -66,7 +66,8 @@ class User extends Base
             $wheres[] = ['a.phone', 'LIKE', '%' . $get['phone'] . '%'];
         }
 
-        $paginate = UserModel::field('a.id,a.account,a.name,a.phone,a.status_id,a.add_time')
+        $paginate = UserModel::field('a.id,a.account,a.name,a.phone,a.status_id,a.add_time,a.department_id')
+            ->with('department')
             ->alias('a')
             ->leftJoin('user_role b', 'a.id = b.user_id')
             ->where($wheres)

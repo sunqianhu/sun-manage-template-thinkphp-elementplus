@@ -41,6 +41,7 @@
       <el-table :data="users" v-loading="loading" stripe style="width: 100%">
         <el-table-column prop="account" label="账号" />
         <el-table-column prop="name" label="姓名" />
+        <el-table-column prop="department.name" label="部门" />
         <el-table-column prop="phone" label="手机号码" />
         <el-table-column v-slot="{ row }" prop="add_time" label="添加日期">
           {{ dayjs.unix(row.add_time).format("YYYY-MM-DD") }}
