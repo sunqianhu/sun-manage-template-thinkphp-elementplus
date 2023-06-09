@@ -23,6 +23,23 @@ class User extends Base
      */
     public function initIndex()
     {
+        // 部门
+        $departmentModels = DepartmentModel::field('id, id as value,department_id, name as label')
+            ->order('sort', 'asc')
+            ->select();
+        $departments = $departmentModels->toArray();
+        $tree = new Tree();
+        $treeDepartments = $tree->convertTree($departments, 'id', 'department_id', 'children');
+
+        // 角色
+        $roleModels = RoleModel::field('id,name')->select();
+        $roles = $roleModels->toArray();
+
+        $data = [
+            'departments' => $treeDepartments,
+            'roles' => $roles
+        ];
+        return $this->success('获取成功', $data);
     }
 
     /**
@@ -30,21 +47,30 @@ class User extends Base
      */
     public function getIndexUsers()
     {
-        $get = $this->request->get(['account', 'name', 'phone', 'size' => 30, 'page' => 1]);
+        $get = $this->request->get(['department_id', 'role_id', 'account', 'name', 'phone', 'size' => 30, 'page' => 1]);
+
         $wheres = [];
-        if (isset($get['account'])) {
-            $wheres[] = ['account', 'LIKE', '%' . $get['account'] . '%'];
+        if (!empty($get['department_id'])) {
+            $wheres[] = ['a.department_id', '=', $get['department_id']];
         }
-        if (isset($get['name'])) {
-            $wheres[] = ['name', 'LIKE', '%' . $get['name'] . '%'];
+        if (!empty($get['role_id'])) {
+            $wheres[] = ['b.role_id', '=', $get['role_id']];
         }
-        if (isset($get['phone'])) {
-            $wheres[] = ['phone', 'LIKE', '%' . $get['phone'] . '%'];
+        if (isset($get['account']) && $get['account'] !== '') {
+            $wheres[] = ['a.account', 'LIKE', '%' . $get['account'] . '%'];
+        }
+        if (isset($get['name']) && $get['name'] !== '') {
+            $wheres[] = ['a.name', 'LIKE', '%' . $get['name'] . '%'];
+        }
+        if (isset($get['phone']) && $get['phone'] !== '') {
+            $wheres[] = ['a.phone', 'LIKE', '%' . $get['phone'] . '%'];
         }
 
-        $paginate = UserModel::field('id,account,name,phone,status_id,add_time')
+        $paginate = UserModel::field('a.id,a.account,a.name,a.phone,a.status_id,a.add_time')
+            ->alias('a')
+            ->leftJoin('user_role b', 'a.id = b.user_id')
             ->where($wheres)
-            ->order('id', 'desc')
+            ->order('a.id', 'desc')
             ->paginate([
                 'list_rows' => $get['size'],
                 'page' => $get['page']

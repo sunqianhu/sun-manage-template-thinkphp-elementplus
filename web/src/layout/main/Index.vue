@@ -3,7 +3,7 @@
     <el-container :class="{ container: true, close: !siderStatus }">
       <el-aside class="aside">
         <div class="system-name">
-          <img src="@/asset/image/logo.svg" class="logo" />
+          <img src="@/asset/image/logo.png" class="logo" />
           <span class="name">管理后台</span>
         </div>
         <Menu></Menu>
@@ -86,23 +86,26 @@ html {
       box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
       background-color: #001529;
       color: #ffffff;
-      transition: all 0.5s;
       z-index: 2;
+      transition: width 0.8s;
       .system-name {
+        width: 220px;
         height: 50px;
         line-height: 50px;
-        overflow-y: hidden;
         padding-left: 18px;
+        overflow: hidden;
+        transition: all 0.8s;
         .logo {
-          height: 24px;
+          height: 25px;
           vertical-align: middle;
         }
         .name {
           font-size: 20px;
-          font-weight: 600;
+          font-weight: bold;
           margin-left: 12px;
-          vertical-align: middle;
           display: inline-block;
+          vertical-align: middle;
+          transition: all 0.8s;
         }
       }
     }
@@ -134,6 +137,12 @@ html {
     &.close {
       .aside {
         width: 64px;
+        .system-name {
+          //padding-left: 7px;
+          .name {
+            margin-left: 16px;
+          }
+        }
       }
     }
   }

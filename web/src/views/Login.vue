@@ -3,7 +3,7 @@
     <div class="wrap">
       <div class="header">
         <div class="title">
-          <img src="@/asset/image/logo.svg" class="logo" alt="logo" />
+          <img src="@/asset/image/logo.png" class="logo" alt="logo" />
           <span class="name">管理后台</span>
         </div>
         <div class="subtitle">基于thinkphp和vue的组件化管理后台框架</div>

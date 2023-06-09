@@ -4,6 +4,20 @@
 
     <div class="search">
       <el-form :model="query" :inline="true">
+        <el-form-item label="部门">
+          <el-tree-select
+            v-model="query.department_id"
+            :data="departments"
+            :render-after-expand="false"
+            check-strictly
+            clearable
+          />
+        </el-form-item>
+        <el-form-item label="角色">
+          <el-select v-model="query.role_id" clearable>
+            <el-option v-for="role in roles" :label="role.name" :value="role.id" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="账号">
           <el-input v-model="query.account" />
         </el-form-item>
@@ -96,6 +110,8 @@ const query = ref({
   page: 1
 });
 const loading = ref(true);
+const departments = ref([]);
+const roles = ref([]);
 const users = ref([]);
 const total = ref(0);
 const rowId = ref(0);
@@ -107,7 +123,9 @@ const editPasswordTag = ref(false);
  * 初始化
  */
 const init = async () => {
-  //const res = await axios.get("admin/system.User/initIndex");
+  const res = await axios.get("admin/system.User/initIndex");
+  departments.value = res.data.departments;
+  roles.value = res.data.roles;
   getUsers();
 };
 
