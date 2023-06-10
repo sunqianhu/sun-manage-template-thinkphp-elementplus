@@ -72,6 +72,7 @@ class User extends Base
             ->leftJoin('user_role b', 'a.id = b.user_id')
             ->where($wheres)
             ->order('a.id', 'desc')
+			->group('a.id')
             ->paginate([
                 'list_rows' => $get['size'],
                 'page' => $get['page']
