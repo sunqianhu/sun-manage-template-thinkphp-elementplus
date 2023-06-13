@@ -82,7 +82,7 @@ const total = ref(0);
  */
 const getDictionarys = async () => {
   loading.value = true;
-  const res = await axios.get("admin/system.Dictionary/getIndexDictionarys", {
+  const res = await axios.get("admin/Dictionary/getIndexDictionarys", {
     params: query.value
   });
   if (res.code != 1) {
@@ -126,7 +126,7 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const res = await axios.post("admin/system.Dictionary/delete", {
+  const res = await axios.post("admin/Dictionary/delete", {
     id: id
   });
   if (res.code != 1) {

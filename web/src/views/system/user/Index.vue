@@ -124,7 +124,15 @@ const editPasswordTag = ref(false);
  * 初始化
  */
 const init = async () => {
-  const res = await axios.get("admin/system.User/initIndex");
+  const res = await axios.get("admin/User/initIndex");
+  if (res.code != 1) {
+    ElMessage({
+      message: res.message,
+      type: "error"
+    });
+    return;
+  }
+
   departments.value = res.data.departments;
   roles.value = res.data.roles;
   getUsers();
@@ -135,7 +143,7 @@ const init = async () => {
  */
 const getUsers = async () => {
   loading.value = true;
-  const res = await axios.get("admin/system.User/getIndexUsers", {
+  const res = await axios.get("admin/User/getIndexUsers", {
     params: query.value
   });
   if (res.code != 1) {
@@ -199,7 +207,7 @@ const openEdit = (id) => {
  */
 const editStatus = async (row) => {
   row.status_id = row.status_id == 1 ? 2 : 1;
-  const res = await axios.post("admin/system.User/editStatus", {
+  const res = await axios.post("admin/User/editStatus", {
     id: row.id,
     status_id: row.status_id
   });
@@ -232,7 +240,7 @@ const openEditPassword = async (id) => {
 const offLine = async (id) => {
   let res = await ElMessageBox.confirm("确定将用户踢下线吗？", "提示", { draggable: true });
 
-  res = await axios.post("admin/system.User/offLine", {
+  res = await axios.post("admin/User/offLine", {
     id: id
   });
   if (res.code != 1) {

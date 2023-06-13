@@ -1,9 +1,7 @@
 <?php
 
-namespace app\admin\controller\system;
+namespace app\admin\controller;
 
-use app\admin\controller\Base;
-use app\library\Tree;
 use app\model\Dictionary as DictionaryModel;
 use app\validate\Dictionary as DictionaryValidate;
 use think\exception\ValidateException;

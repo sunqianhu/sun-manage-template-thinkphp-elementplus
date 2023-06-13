@@ -1,11 +1,10 @@
 <?php
 
-namespace app\admin\library;
+namespace app\helper;
 
-use app\admin\model\Token as TokenModel;
+use app\model\Token as TokenModel;
 use app\entity\User;
-use app\library\Str;
-use app\library\token;
+use app\helper\token;
 use Exception;
 use Firebase\JWT\JWT as FirebaseJWT;
 use Firebase\JWT\Key;
@@ -13,7 +12,7 @@ use Firebase\JWT\Key;
 /**
  * json web token
  */
-class Jwt
+class AdminJwt
 {
     private $key = 'axjeJXKlA836x7s@#';
     private $leeway = 180;

@@ -60,7 +60,7 @@ const roles = ref([]);
  * 初始化
  */
 const init = async () => {
-  let res = await axios.get("admin/system.User/initEdit", {
+  let res = await axios.get("admin/User/initEdit", {
     params: { id: props.id }
   });
   if (res.code != 1) {
@@ -91,7 +91,7 @@ const submitForm = () => {
       return;
     }
 
-    const res = await axios.post("admin/system.User/saveEdit", user.value);
+    const res = await axios.post("admin/User/saveEdit", user.value);
     if (res.code != 1) {
       ElMessage({
         message: res.message,

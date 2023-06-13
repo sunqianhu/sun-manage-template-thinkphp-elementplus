@@ -88,6 +88,7 @@ html {
       color: #ffffff;
       z-index: 2;
       transition: width 0.8s;
+      overflow-x: hidden;
       .system-name {
         width: 220px;
         height: 50px;
@@ -138,9 +139,8 @@ html {
       .aside {
         width: 64px;
         .system-name {
-          //padding-left: 7px;
           .name {
-            margin-left: 16px;
+            margin-left: 18px;
           }
         }
       }

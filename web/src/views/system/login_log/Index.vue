@@ -77,7 +77,7 @@ const getLoginLogs = async () => {
   }
 
   loading.value = true;
-  const res = await axios.get("admin/system.LoginLog/getIndexLoginLogs", {
+  const res = await axios.get("admin/LoginLog/getIndexLoginLogs", {
     params: query.value
   });
   if (res.code != 1) {

@@ -4,7 +4,7 @@
  * 验证码
  */
 
-namespace app\library;
+namespace app\helper;
 
 class Captcha
 {

@@ -4,7 +4,7 @@
  * 树
  */
 
-namespace app\library;
+namespace app\helper;
 
 class Tree
 {

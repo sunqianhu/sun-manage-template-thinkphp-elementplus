@@ -3,7 +3,7 @@
 namespace app\admin\controller;
 
 use app\BaseController;
-use app\admin\library\Jwt;
+use app\helper\AdminJwt;
 use app\model\Menu as MenuModel;
 use app\model\OperationLog as OperationLogModel;
 use app\model\Role as RoleModel;
@@ -28,9 +28,9 @@ class Base extends BaseController
      * @var Str[] 不判断权限网址
      */
     private $noPermissionUrls = [
-        '/admin/permission/getpermissions',
-        '/admin/route/getroutes',
-        '/admin/menu/getmenus',
+        '/admin/main/getpermissions',
+        '/admin/main/getroutes',
+        '/admin/main/getmenus',
         '/admin/message/readall',
         '/admin/message/getnoreads',
         '/admin/uploadfile/uploadfile'
@@ -78,8 +78,8 @@ class Base extends BaseController
             throw new Exception('token错误');
         }
 
-        $jwt = new Jwt();
-        $user = $jwt->resolverToken($token);
+        $adminJwt = new AdminJwt();
+        $user = $adminJwt->resolverToken($token);
         $this->user = $user;
 
         // 权限
@@ -117,7 +117,7 @@ class Base extends BaseController
             }
         }
         if (!$has) {
-            throw new Exception('无权限');
+            throw new Exception('无权限22');
         }
     }
 
@@ -155,8 +155,9 @@ class Base extends BaseController
      * 新增操作日志
      * @return void
      */
-    public function createOperationLog(){
-        if(empty($this->user->id)){
+    public function createOperationLog()
+    {
+        if (empty($this->user->id)) {
             return;
         }
 
@@ -172,10 +173,10 @@ class Base extends BaseController
 
         // 记录
         $data = [
-            'user_id'=>$this->user->id,
-            'time'=>time(),
-            'ip'=>$this->request->ip(),
-            'url'=>$url
+            'user_id' => $this->user->id,
+            'time' => time(),
+            'ip' => $this->request->ip(),
+            'url' => $url
         ];
         OperationLogModel::create($data);
     }

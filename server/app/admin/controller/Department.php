@@ -1,9 +1,8 @@
 <?php
 
-namespace app\admin\controller\system;
+namespace app\admin\controller;
 
-use app\admin\controller\Base;
-use app\library\Tree;
+use app\helper\Tree;
 use app\model\Department as DepartmentModel;
 use app\validate\Department as DepartmentValidate;
 use think\exception\ValidateException;

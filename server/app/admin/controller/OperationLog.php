@@ -1,20 +1,19 @@
 <?php
 
-namespace app\admin\controller\system;
+namespace app\admin\controller;
 
-use app\admin\controller\Base;
-use app\model\LoginLog as LoginLogModel;
+use app\model\OperationLog as OperationLogModel;
 
 /**
  * 登录日志
  */
-class LoginLog extends Base
+class OperationLog extends Base
 {
 
     /**
-     * 得到首页登录日志
+     * 得到首页操作日志
      */
-    public function getIndexLoginLogs()
+    public function getIndexOperationLogs()
     {
         $get = $this->request->get(['time_start' => '', 'time_end' => '', 'name' => '', 'phone' => '', 'size' => '30', 'page' => '1']);
         $wheres = [];
@@ -30,7 +29,7 @@ class LoginLog extends Base
         if ($get['phone'] !== '') {
             $wheres[] = ['b.phone', 'LIKE', '%' . $get['phone'] . '%'];
         }
-        $loginLogs = LoginLogModel::alias('a')
+        $loginLogs = OperationLogModel::alias('a')
             ->field('a.*,b.name')
             ->leftJoin("user b", "a.user_id = b.id")
             ->where($wheres)

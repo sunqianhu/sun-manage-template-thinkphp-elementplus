@@ -4,7 +4,7 @@
  * 消息
  */
 
-namespace app\library;
+namespace app\helper;
 
 use app\model\User as UserModel;
 use \app\model\Message as MessageModel;

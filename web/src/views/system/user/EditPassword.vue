@@ -48,7 +48,7 @@ const submitForm = () => {
       return;
     }
 
-    const res = await axios.post("admin/system.User/editPassword", user.value);
+    const res = await axios.post("admin/User/editPassword", user.value);
     if (res.code != 1) {
       ElMessage({
         message: res.message,

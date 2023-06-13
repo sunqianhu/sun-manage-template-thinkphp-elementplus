@@ -2,9 +2,9 @@
 
 namespace app\admin\controller;
 
-use app\admin\library\Jwt;
+use app\helper\AdminJwt;
 use app\entity\User as UserEntity;
-use app\library\Captcha;
+use app\helper\Captcha;
 use app\model\LoginLog as LoginLogModel;
 use app\model\User as UserModel;
 use app\validate\Login as LoginValidate;
@@ -72,12 +72,12 @@ class Login extends Base
             return $this->error("账号已停用");
         }
 
-        $jwt = new Jwt();
+        $adminJwt = new AdminJwt();
         $userEntity = new UserEntity();
         $userEntity->setId($userModel->id);
         $userEntity->setName($userModel->name);
         $userEntity->setDepartmentId($userModel->department_id);
-        $token = $jwt->getToken($userEntity);
+        $token = $adminJwt->getToken($userEntity);
 
         Cache::delete('captcha_' . $post['captcha_token']);
         $data = [

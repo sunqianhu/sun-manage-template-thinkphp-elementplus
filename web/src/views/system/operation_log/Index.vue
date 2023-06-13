@@ -78,7 +78,7 @@ const getOperationLogs = async () => {
   }
 
   loading.value = true;
-  const res = await axios.get("admin/system.OperationLog/getIndexOperationLogs", {
+  const res = await axios.get("admin/OperationLog/getIndexOperationLogs", {
     params: query.value
   });
   if (res.code != 1) {

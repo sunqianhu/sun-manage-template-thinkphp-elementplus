@@ -1,14 +1,13 @@
 <?php
 
-namespace app\admin\controller\system;
+namespace app\admin\controller;
 
-use app\admin\controller\Base;
-use app\model\Role as RoleModel;
+use app\helper\Tree;
 use app\model\Menu as MenuModel;
+use app\model\Role as RoleModel;
 use app\model\RoleMenu as RoleMenuModel;
 use app\validate\Role as RoleValidate;
 use think\exception\ValidateException;
-use app\library\Tree;
 
 /**
  * 角色管理

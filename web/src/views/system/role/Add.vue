@@ -57,7 +57,7 @@ const menuFilterText = ref("");
  * 初始化
  */
 const init = async () => {
-  const res = await axios.get("admin/system.Role/initAdd");
+  const res = await axios.get("admin/Role/initAdd");
   if (res.code != 1) {
     ElMessage({
       message: res.message,
@@ -104,7 +104,7 @@ const submitForm = () => {
       return;
     }
 
-    const res = await axios.post("admin/system.Role/saveAdd", role.value);
+    const res = await axios.post("admin/Role/saveAdd", role.value);
     if (res.code != 1) {
       ElMessage({
         message: res.message,

@@ -63,7 +63,7 @@ const submitForm = () => {
       return;
     }
 
-    const res = await axios.post("admin/system.Dictionary/saveAdd", dictionary.value);
+    const res = await axios.post("admin/Dictionary/saveAdd", dictionary.value);
     if (res.code != 1) {
       ElMessage({
         message: res.message,

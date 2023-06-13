@@ -12,7 +12,7 @@ const router = createRouter({
       name: "main",
       component: () => import("../layout/main/Index.vue"),
       meta: {
-        name: "主布局"
+        name: "主页"
       },
       children: []
     },
@@ -57,7 +57,7 @@ router.beforeEach(async (to, from) => {
 
   // 权限
   if (!appStore.isSetPermission) {
-    res = await axios.get("admin/permission/getPermissions");
+    res = await axios.get("admin/Main/getPermissions");
     if (res.code != 1) {
       return "/login";
     }
@@ -66,7 +66,7 @@ router.beforeEach(async (to, from) => {
 
   // 动态路由
   if (!appStore.isSetRoute) {
-    res = await axios.get("admin/route/getRoutes");
+    res = await axios.get("admin/Main/getRoutes");
     if (res.code != 1) {
       return "/login";
     }

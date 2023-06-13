@@ -1,16 +1,15 @@
 <?php
 
-namespace app\admin\controller\system;
+namespace app\admin\controller;
 
-use app\admin\controller\Base;
-use app\admin\model\Token as TokenModel;
-use app\model\User as UserModel;
+use app\model\Token as TokenModel;
+use app\helper\Tree;
 use app\model\Department as DepartmentModel;
 use app\model\Role as RoleModel;
-use app\library\Tree;
+use app\model\User as UserModel;
 use app\model\UserRole as UserRoleModel;
-use think\exception\ValidateException;
 use app\validate\User as UserValidate;
+use think\exception\ValidateException;
 
 /**
  * 用户管理
@@ -71,6 +70,7 @@ class User extends Base
             ->alias('a')
             ->leftJoin('user_role b', 'a.id = b.user_id')
             ->where($wheres)
+            ->group('a.id')
             ->order('a.id', 'desc')
             ->paginate([
                 'list_rows' => $get['size'],
