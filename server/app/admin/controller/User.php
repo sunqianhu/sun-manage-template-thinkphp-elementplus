@@ -72,6 +72,7 @@ class User extends Base
             ->where($wheres)
             ->group('a.id')
             ->order('a.id', 'desc')
+			->group('a.id')
             ->paginate([
                 'list_rows' => $get['size'],
                 'page' => $get['page']
