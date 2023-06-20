@@ -92,22 +92,22 @@ const treeMenus = ref([]);
  * 初始化
  */
 const init = async () => {
-  const res = await axios.get("admin/Menu/initEdit", {
+  const response = await axios.get("admin/Menu/initEdit", {
     params: { id: props.id }
   });
-  if (res.code != 1) {
+  if (response.code != 1) {
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "error"
     });
     return;
   }
 
-  if (res.data.menu.menu_id == "0") {
-    res.data.menu.menu_id = "";
+  if (response.data.menu.menu_id == "0") {
+    response.data.menu.menu_id = "";
   }
-  menu.value = res.data.menu;
-  treeMenus.value = res.data.treeMenus;
+  menu.value = response.data.menu;
+  treeMenus.value = response.data.treeMenus;
 };
 
 /**
@@ -125,17 +125,17 @@ const submitForm = () => {
     if (!valid) {
       return;
     }
-    const res = await axios.post("admin/Menu/saveEdit", menu.value);
-    if (res.code != 1) {
+    const response = await axios.post("admin/Menu/saveEdit", menu.value);
+    if (response.code != 1) {
       ElMessage({
-        message: res.message,
+        message: response.message,
         type: "error"
       });
       return;
     }
 
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "success"
     });
     emits("hide", false);

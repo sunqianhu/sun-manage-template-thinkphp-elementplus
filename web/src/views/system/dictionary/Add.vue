@@ -63,17 +63,17 @@ const submitForm = () => {
       return;
     }
 
-    const res = await axios.post("admin/Dictionary/saveAdd", dictionary.value);
-    if (res.code != 1) {
+    const response = await axios.post("admin/Dictionary/saveAdd", dictionary.value);
+    if (response.code != 1) {
       ElMessage({
-        message: res.message,
+        message: response.message,
         type: "error"
       });
       return;
     }
 
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "success"
     });
     emits("hide", false);

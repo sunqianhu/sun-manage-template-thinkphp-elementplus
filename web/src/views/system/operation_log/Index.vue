@@ -78,20 +78,20 @@ const getOperationLogs = async () => {
   }
 
   loading.value = true;
-  const res = await axios.get("admin/OperationLog/getIndexOperationLogs", {
+  const response = await axios.get("admin/OperationLog/getIndexOperationLogs", {
     params: query.value
   });
-  if (res.code != 1) {
+  if (response.code != 1) {
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "error"
     });
     loading.value = false;
     return;
   }
 
-  total.value = res.data.total;
-  operationLogs.value = res.data.data;
+  total.value = response.data.total;
+  operationLogs.value = response.data.data;
   loading.value = false;
 };
 

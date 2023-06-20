@@ -49,17 +49,17 @@ const rules = {
  * 初始化
  */
 const init = async () => {
-  const res = await axios.get("admin/Dictionary/initEdit", {
+  const response = await axios.get("admin/Dictionary/initEdit", {
     params: { id: props.id }
   });
-  if (res.code != 1) {
+  if (response.code != 1) {
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "error"
     });
     return;
   }
-  dictionary.value = res.data;
+  dictionary.value = response.data;
 };
 
 /**
@@ -78,17 +78,17 @@ const submitForm = () => {
       return;
     }
 
-    const res = await axios.post("admin/Dictionary/saveEdit", dictionary.value);
-    if (res.code != 1) {
+    const response = await axios.post("admin/Dictionary/saveEdit", dictionary.value);
+    if (response.code != 1) {
       ElMessage({
-        message: res.message,
+        message: response.message,
         type: "error"
       });
       return;
     }
 
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "success"
     });
     emits("hide", false);

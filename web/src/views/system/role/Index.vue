@@ -76,20 +76,20 @@ const total = ref(0);
  */
 const getRoles = async () => {
   loading.value = true;
-  const res = await axios.get("admin/Role/getIndexRoles", {
+  const response = await axios.get("admin/Role/getIndexRoles", {
     params: query.value
   });
-  if (res.code != 1) {
+  if (response.code != 1) {
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "error"
     });
     loading.value = false;
     return;
   }
 
-  total.value = res.data.total;
-  roles.value = res.data.data;
+  total.value = response.data.total;
+  roles.value = response.data.data;
   loading.value = false;
 };
 
@@ -120,19 +120,19 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const res = await axios.post("admin/Role/delete", {
+  const response = await axios.post("admin/Role/delete", {
     id: id
   });
-  if (res.code != 1) {
+  if (response.code != 1) {
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "error"
     });
     return;
   }
 
   ElMessage({
-    message: res.message,
+    message: response.message,
     type: "success"
   });
   getRoles();

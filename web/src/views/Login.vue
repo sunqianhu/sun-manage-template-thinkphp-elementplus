@@ -85,17 +85,17 @@ const captchaImage = ref("");
  * 得到验证码
  */
 const getCaptcha = async () => {
-  const res = await axios.get("admin/login/getCaptcha");
-  if (res.code != 1) {
+  const response = await axios.get("admin/login/getCaptcha");
+  if (response.code != 1) {
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "error"
     });
     return;
   }
-  login.value.captcha_token = res.data.token;
+  login.value.captcha_token = response.data.token;
   login.value.captcha_code = "";
-  captchaImage.value = res.data.image;
+  captchaImage.value = response.data.image;
 };
 
 /**
@@ -107,30 +107,30 @@ const submitForm = () => {
       return;
     }
 
-    let res;
+    let response;
     loading.value = true;
     try {
-      res = await axios.post("admin/login/login", login.value);
+      response = await axios.post("admin/login/login", login.value);
     } catch (error) {
       loading.value = false;
       return;
     }
 
     loading.value = false;
-    if (res.code != 1) {
+    if (response.code != 1) {
       ElMessage({
-        message: res.message,
+        message: response.message,
         type: "error"
       });
-      if (res.message.indexOf("验证码错误") !== -1) {
+      if (response.message.indexOf("验证码错误") !== -1) {
         getCaptcha();
       }
       return;
     }
 
     // 存储
-    localStorage.setItem("token", res.data.token);
-    localStorage.setItem("user_id", res.data.user_id);
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("user_id", response.data.user_id);
 
     // 导航
     router.push("/");

@@ -53,31 +53,31 @@ router.beforeEach(async (to, from) => {
   }
 
   const appStore = useAppStore();
-  let res; // 接口响应
+  let response; // 接口响应
 
   // 权限
   if (!appStore.isSetPermission) {
-    res = await axios.get("admin/Main/getPermissions");
-    if (res.code != 1) {
+    response = await axios.get("admin/Main/getPermissions");
+    if (response.code != 1) {
       return "/login";
     }
-    appStore.setPermissions(res.data);
+    appStore.setPermissions(response.data);
   }
 
   // 动态路由
   if (!appStore.isSetRoute) {
-    res = await axios.get("admin/Main/getRoutes");
-    if (res.code != 1) {
+    response = await axios.get("admin/Main/getRoutes");
+    if (response.code != 1) {
       return "/login";
     }
-    appStore.setRoutes(res.data);
+    appStore.setRoutes(response.data);
 
     let allRoutes = router.getRoutes();
     let mainRoute = allRoutes.find((route) => route.name == "main");
     let dynamicRoutes = [];
 
-    if (res.data && res.data.length > 0) {
-      dynamicRoutes = res.data;
+    if (response.data && response.data.length > 0) {
+      dynamicRoutes = response.data;
       dynamicRoutes.forEach((dynamicRoute) => {
         let componentPath = "../views/" + dynamicRoute.component;
         dynamicRoute.component = () => import(/* @vite-ignore */ componentPath);

@@ -76,18 +76,18 @@ const editTag = ref(false);
  */
 const getMenus = async () => {
   loading.value = true;
-  const res = await axios.get("admin/Menu/getIndexMenus", {
+  const response = await axios.get("admin/Menu/getIndexMenus", {
     params: query.value
   });
-  if (res.code != 1) {
+  if (response.code != 1) {
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "error"
     });
     loading.value = false;
     return;
   }
-  menus.value = res.data;
+  menus.value = response.data;
   loading.value = false;
 };
 
@@ -118,18 +118,18 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const res = await axios.post("admin/Menu/delete", {
+  const response = await axios.post("admin/Menu/delete", {
     id: id
   });
-  if (res.code != 1) {
+  if (response.code != 1) {
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "error"
     });
     return;
   }
   ElMessage({
-    message: res.message,
+    message: response.message,
     type: "success"
   });
   getMenus();

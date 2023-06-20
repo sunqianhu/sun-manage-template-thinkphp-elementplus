@@ -49,11 +49,11 @@ ws.connect();
  * 获取未读消息
  */
 const getNoReads = async () => {
-  const res = await axios.get("admin/message/getNoReads");
-  if (res.data.length == 0) {
+  const response = await axios.get("admin/message/getNoReads");
+  if (response.data.length == 0) {
     return;
   }
-  messages.value = res.data;
+  messages.value = response.data;
   show.value = true;
 };
 

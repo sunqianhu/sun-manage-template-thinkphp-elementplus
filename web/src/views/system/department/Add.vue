@@ -56,16 +56,16 @@ const treeDepartments = ref([]);
  * 初始化
  */
 const init = async () => {
-  const res = await axios.get("admin/department/initAdd");
-  if (res.code != 1) {
+  const response = await axios.get("admin/department/initAdd");
+  if (response.code != 1) {
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "error"
     });
     return;
   }
 
-  treeDepartments.value = res.data;
+  treeDepartments.value = response.data;
 };
 
 /**
@@ -84,17 +84,17 @@ const submitForm = () => {
       return;
     }
 
-    const res = await axios.post("admin/Department/saveAdd", department.value);
-    if (res.code != 1) {
+    const response = await axios.post("admin/Department/saveAdd", department.value);
+    if (response.code != 1) {
       ElMessage({
-        message: res.message,
+        message: response.message,
         type: "error"
       });
       return;
     }
 
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "success"
     });
     emits("hide", false);

@@ -60,22 +60,22 @@ const menuDefaultCheckKeys = ref([]);
  * 初始化
  */
 const init = async () => {
-  const res = await axios.get("admin/Role/initEdit", {
+  const response = await axios.get("admin/Role/initEdit", {
     params: { id: props.id }
   });
-  if (res.code != 1) {
+  if (response.code != 1) {
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "error"
     });
     return;
   }
 
-  menus.value = res.data.menus;
-  role.value = res.data.role;
+  menus.value = response.data.menus;
+  role.value = response.data.role;
 
   setTimeout(() => {
-    menuDefaultCheckKeys.value = getMenuDefaultCheckKeys(res.data.role.menu_ids);
+    menuDefaultCheckKeys.value = getMenuDefaultCheckKeys(response.data.role.menu_ids);
     loading.value = false;
   }, 800);
 };
@@ -140,17 +140,17 @@ const submitForm = () => {
       return;
     }
 
-    const res = await axios.post("admin/Role/saveEdit", role.value);
-    if (res.code != 1) {
+    const response = await axios.post("admin/Role/saveEdit", role.value);
+    if (response.code != 1) {
       ElMessage({
-        message: res.message,
+        message: response.message,
         type: "error"
       });
       return;
     }
 
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "success"
     });
     emits("hide", false);

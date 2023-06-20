@@ -66,19 +66,19 @@ const editTag = ref(false);
  */
 const getDepartments = async () => {
   loading.value = true;
-  const res = await axios.get("admin/Department/getIndexDepartments", {
+  const response = await axios.get("admin/Department/getIndexDepartments", {
     params: query.value
   });
-  if (res.code != 1) {
+  if (response.code != 1) {
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "error"
     });
     loading.value = false;
     return;
   }
 
-  departments.value = res.data;
+  departments.value = response.data;
   loading.value = false;
 };
 
@@ -109,18 +109,18 @@ const openEdit = (id) => {
  * @param {number} id
  */
 const del = async (id) => {
-  const res = await axios.post("admin/Department/delete", {
+  const response = await axios.post("admin/Department/delete", {
     id: id
   });
-  if (res.code != 1) {
+  if (response.code != 1) {
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "error"
     });
     return;
   }
   ElMessage({
-    message: res.message,
+    message: response.message,
     type: "success"
   });
   getDepartments();

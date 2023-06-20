@@ -76,16 +76,16 @@ const roles = ref([]);
  * 初始化
  */
 const init = async () => {
-  const res = await axios.get("admin/User/initAdd");
-  if (res.code != 1) {
+  const response = await axios.get("admin/User/initAdd");
+  if (response.code != 1) {
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "error"
     });
     return;
   }
-  departments.value = res.data.departments;
-  roles.value = res.data.roles;
+  departments.value = response.data.departments;
+  roles.value = response.data.roles;
 };
 
 /**
@@ -104,17 +104,17 @@ const submitForm = () => {
       return;
     }
 
-    const res = await axios.post("admin/user/saveAdd", user.value);
-    if (res.code != 1) {
+    const response = await axios.post("admin/user/saveAdd", user.value);
+    if (response.code != 1) {
       ElMessage({
-        message: res.message,
+        message: response.message,
         type: "error"
       });
       return;
     }
 
     ElMessage({
-      message: res.message,
+      message: response.message,
       type: "success"
     });
     emits("hide", false);

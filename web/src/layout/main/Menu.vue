@@ -32,8 +32,8 @@ const siderStatus = computed(() => {
  * 初始化
  */
 const init = async () => {
-  const res = await axios.get("admin/Main/getMenus");
-  menus.value = res.data;
+  const response = await axios.get("admin/Main/getMenus");
+  menus.value = response.data;
 };
 
 onMounted(() => {
