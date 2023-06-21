@@ -172,6 +172,7 @@ onMounted(() => {
 .index {
   background-color: #ffffff;
   padding: 16px;
+  border-radius: var(--border-radius);
   .page-name {
     font-size: 20px;
     font-weight: bold;
