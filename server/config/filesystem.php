@@ -15,10 +15,12 @@ return [
             // 磁盘路径
             'root'       => app()->getRootPath() . 'public/storage',
             // 磁盘路径对应的外部URL路径
-            'url'        => '/storage',
+            'url'        => '/file',
             // 可见性
             'visibility' => 'public',
         ],
         // 更多的磁盘配置信息
     ],
+    'root_dir'=>app()->getRootPath() . 'public/file/', // 根目录
+    'access_prefix'=>'http://wechatroom.sunqianhu123.cc/file/' // 访问前缀
 ];
