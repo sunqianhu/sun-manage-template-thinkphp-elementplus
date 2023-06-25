@@ -146,17 +146,16 @@ const getUsers = async () => {
   const response = await axios.get("admin/User/getIndexUsers", {
     params: query.value
   });
+  loading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
       type: "error"
     });
-    loading.value = false;
     return;
   }
   users.value = response.data.data;
   total.value = response.data.total;
-  loading.value = false;
 };
 
 /**

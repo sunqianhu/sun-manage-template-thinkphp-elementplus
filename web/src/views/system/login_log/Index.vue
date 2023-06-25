@@ -80,18 +80,17 @@ const getLoginLogs = async () => {
   const response = await axios.get("admin/LoginLog/getIndexLoginLogs", {
     params: query.value
   });
+  loading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
       type: "error"
     });
-    loading.value = false;
     return;
   }
 
   total.value = response.data.total;
   loginLogs.value = response.data.data;
-  loading.value = false;
 };
 
 /**

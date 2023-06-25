@@ -79,16 +79,15 @@ const getMenus = async () => {
   const response = await axios.get("admin/Menu/getIndexMenus", {
     params: query.value
   });
+  loading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
       type: "error"
     });
-    loading.value = false;
     return;
   }
   menus.value = response.data;
-  loading.value = false;
 };
 
 /**
