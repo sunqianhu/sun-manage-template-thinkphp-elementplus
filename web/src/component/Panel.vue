@@ -1,13 +1,13 @@
 <template>
   <div class="panel">
-    <div class="panel-header">
+    <div class="header">
       <div class="title">{{ props.title }}</div>
       <div class="description" v-if="props.description">{{ props.description }}</div>
       <div class="button">
         <slot name="button"></slot>
       </div>
     </div>
-    <div class="panel-body">
+    <div class="body">
       <slot name="default"></slot>
     </div>
   </div>
@@ -19,7 +19,7 @@ const props = defineProps(["title", "description"]);
 
 <style lang="scss" scoped>
 .panel {
-  .panel-header {
+  .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,7 +49,7 @@ const props = defineProps(["title", "description"]);
       background-color: var(--border-color);
     }
   }
-  .panel-body {
+  .body {
     margin-top: 12px;
   }
 }

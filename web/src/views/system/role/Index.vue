@@ -42,10 +42,10 @@
       />
     </div>
 
-    <Add :show="addTag" @hide="addTag = false" @refresh="getRoles" v-if="addTag"></Add>
+    <Add :open="addTag" @close="addTag = false" @refresh="getRoles" v-if="addTag"></Add>
     <Edit
-      :show="editTag"
-      @hide="editTag = false"
+      :open="editTag"
+      @close="editTag = false"
       @refresh="getRoles"
       :id="rowId"
       v-if="editTag"

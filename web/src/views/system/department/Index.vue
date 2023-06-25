@@ -36,10 +36,10 @@
         </el-table-column>
       </el-table>
     </div>
-    <Add :show="addTag" @hide="addTag = false" @refresh="getDepartments" v-if="addTag"></Add>
+    <Add :open="addTag" @close="addTag = false" @refresh="getDepartments" v-if="addTag"></Add>
     <Edit
-      :show="editTag"
-      @hide="editTag = false"
+      :open="editTag"
+      @close="editTag = false"
       @refresh="getDepartments"
       :id="rowId"
       v-if="editTag"

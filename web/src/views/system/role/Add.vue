@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :model-value="show"
+    :model-value="open"
     title="添加角色"
     width="500"
     :draggable="true"
@@ -40,8 +40,8 @@
 import { ref, watch, onMounted } from "vue";
 import axios from "@/util/axios";
 
-defineProps(["show"]);
-const emits = defineEmits(["hide"]);
+defineProps(["open"]);
+const emits = defineEmits(["close"]);
 const role = ref({
   menu_ids: []
 });
@@ -72,7 +72,7 @@ const init = async () => {
  * 关闭
  */
 const close = () => {
-  emits("hide", false);
+  emits("close", true);
 };
 
 /**
@@ -117,7 +117,7 @@ const submitForm = () => {
       message: response.message,
       type: "success"
     });
-    emits("hide", false);
+    emits("close", true);
     emits("refresh", true);
   });
 };

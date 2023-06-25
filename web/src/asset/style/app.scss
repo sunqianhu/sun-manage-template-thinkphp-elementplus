@@ -10,17 +10,13 @@
 
   // 文字大小
   --font-size: 14px;
-  --extra-small-font-size: 12px;
-  --small-font-size: 13px;
-  --medium-font-size: 16px;
-  --large-font-size: 18px;
-  --extra-large-font-size: 20px;
+  --small-font-size: 12px;
+  --big-font-size: 16px;
 
   // 文字颜色
   --font-color: #303133;
   --gray-font-color: #909399;
   --a-font-color: #409eff;
-  --a-hover-font-color: #79bbff;
 
   // 边框颜色
   --border-color: #dcdfe6;
@@ -31,8 +27,6 @@
   --fill-color: #f0f2f5;
   --light-fill-color: #f5f7fa;
   --dark-fill-color: #ebedf0;
-  --blank-fill-color: #ffffff;
-  --section-fill-color: #ffffff;
 
   // 遮罩
   --overlay-color: rgba(0, 0, 0, 0.8);
@@ -69,8 +63,8 @@ html {
       color: var(--a-font-color);
       text-decoration: none;
       &:hover {
-        color: var(--a-hover-font-color);
         text-decoration: underline;
+        opacity: var(--opacity);
       }
     }
   }
@@ -78,5 +72,5 @@ html {
 
 .form-message {
   color: var(--gray-font-color);
-  font-size: var(--extra-small-font-size);
+  font-size: var(--small-font-size);
 }

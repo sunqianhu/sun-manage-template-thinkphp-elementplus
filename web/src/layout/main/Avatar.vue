@@ -17,8 +17,8 @@
     </el-dropdown>
 
     <EditPassword
-      :show="editPasswordTag"
-      @hide="editPasswordTag = false"
+      :open="editPasswordTag"
+      @close="editPasswordTag = false"
       v-if="editPasswordTag"
     ></EditPassword>
   </div>

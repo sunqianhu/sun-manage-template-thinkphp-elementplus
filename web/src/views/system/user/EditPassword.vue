@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="show" title="修改密码" width="500" :draggable="true" @close="close">
+  <el-dialog :model-value="open" title="修改密码" width="500" :draggable="true" @close="close">
     <div class="edit-password">
       <el-form :model="user" :rules="rules" ref="userRef" label-width="120px">
         <el-form-item label="新密码" prop="password1">
@@ -21,8 +21,8 @@
 import { ref } from "vue";
 import axios from "@/util/axios";
 
-const props = defineProps(["show", "id"]);
-const emits = defineEmits(["hide"]);
+const props = defineProps(["open", "id"]);
+const emits = defineEmits(["close"]);
 const user = ref({
   id: props.id
 });
@@ -36,7 +36,7 @@ const rules = {
  * 关闭
  */
 const close = () => {
-  emits("hide", false);
+  emits("close", true);
 };
 
 /**
@@ -61,7 +61,7 @@ const submitForm = () => {
       message: response.message,
       type: "success"
     });
-    emits("hide", false);
+    emits("close", true);
     emits("refresh", true);
   });
 };

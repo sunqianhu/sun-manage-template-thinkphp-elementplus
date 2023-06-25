@@ -41,6 +41,7 @@
 		css
 			容器：container
 			栏：toolbar、sidebar
+			css命名采用简单的，不带前缀的命名方法。
 			
 	UI
 		间距

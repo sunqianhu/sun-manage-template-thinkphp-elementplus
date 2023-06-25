@@ -45,10 +45,10 @@
       </el-table>
     </div>
 
-    <Add :show="addTag" @hide="addTag = false" @refresh="getMenus" v-if="addTag"></Add>
+    <Add :open="addTag" @close="addTag = false" @refresh="getMenus" v-if="addTag"></Add>
     <Edit
-      :show="editTag"
-      @hide="editTag = false"
+      :open="editTag"
+      @close="editTag = false"
       @refresh="getMenus"
       :id="rowId"
       v-if="editTag"

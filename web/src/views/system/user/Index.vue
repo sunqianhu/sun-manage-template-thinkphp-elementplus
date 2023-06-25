@@ -80,18 +80,18 @@
       />
     </div>
 
-    <Add :show="addTag" @hide="addTag = false" @refresh="getUsers" v-if="addTag"></Add>
+    <Add :open="addTag" @close="addTag = false" @refresh="getUsers" v-if="addTag"></Add>
     <Edit
-      :show="editTag"
-      @hide="editTag = false"
+      :open="editTag"
+      @close="editTag = false"
       @refresh="getUsers"
       :id="rowId"
       v-if="editTag"
     ></Edit>
     <EditPassword
-      :show="editPasswordTag"
+      :open="editPasswordTag"
       :id="rowId"
-      @hide="editPasswordTag = false"
+      @close="editPasswordTag = false"
       v-if="editPasswordTag"
     ></EditPassword>
   </div>
