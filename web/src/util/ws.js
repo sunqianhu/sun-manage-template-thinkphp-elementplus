@@ -5,7 +5,7 @@ function Ws(url) {
   this.url = url;
   this.ws = null;
   this.reconnetNumber = 1000 * 10; // 重连间隔
-  this.reconnetTag = false; // 重连标识
+  this.reconnetFlag = false; // 重连标识
   this.pingTimer = null; // 心跳定时器
   this.pingNumber = 1000 * 40; // 心跳间隔
 
@@ -71,15 +71,15 @@ function Ws(url) {
    */
   this.reconnet = function () {
     var that = this;
-    if (that.reconnetTag) {
+    if (that.reconnetFlag) {
       return;
     }
-    that.reconnetTag = true;
+    that.reconnetFlag = true;
 
     setTimeout(() => {
       console.log("webSocket：断线重连");
       that.connect();
-      that.reconnetTag = false;
+      that.reconnetFlag = false;
     }, that.reconnetNumber);
   };
 

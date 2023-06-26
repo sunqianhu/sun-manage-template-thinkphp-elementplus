@@ -55,18 +55,18 @@ class Str
     }
 
     /**
-     * 截取字符串返回节点
+     * 从0开始截取
      * @param string $string 字符串
      * @param int $length 截取长度
      * @return string 截取后的字符串
      */
-    function subNode($string, $length)
+    function zeroSub($string, $length)
     {
-        $node = '';
+        $new = '';
         $total = 0; // 字符串总长度
 
         if ($string === '') {
-            return $node;
+            return $string;
         }
 
         $total = $this->length($string);
@@ -74,8 +74,8 @@ class Str
             return $string;
         }
 
-        $node = '<span title="' . $string . '">' . $this->sub($string, 0, $length) . '...</span>';
-        return $node;
+        $new = $this->sub($string, 0, $length).'...';
+        return $new;
     }
 
     /**

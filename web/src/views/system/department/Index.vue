@@ -36,13 +36,13 @@
         </el-table-column>
       </el-table>
     </div>
-    <Add :open="addTag" @close="addTag = false" @refresh="getDepartments" v-if="addTag"></Add>
+    <Add :open="addFlag" @close="addFlag = false" @refresh="getDepartments" v-if="addFlag"></Add>
     <Edit
-      :open="editTag"
-      @close="editTag = false"
+      :open="editFlag"
+      @close="editFlag = false"
       @refresh="getDepartments"
       :id="rowId"
-      v-if="editTag"
+      v-if="editFlag"
     ></Edit>
   </div>
 </template>
@@ -58,8 +58,8 @@ const rowId = ref(0);
 const query = ref({});
 const departments = ref([]);
 const loading = ref(true);
-const addTag = ref(false);
-const editTag = ref(false);
+const addFlag = ref(false);
+const editFlag = ref(false);
 
 /**
  * 加载数据
@@ -92,14 +92,14 @@ const search = () => {
  * 打开添加页面
  */
 const openAdd = () => {
-  addTag.value = true;
+  addFlag.value = true;
 };
 
 /**
  * 打开修改
  */
 const openEdit = (id) => {
-  editTag.value = true;
+  editFlag.value = true;
   rowId.value = id;
 };
 

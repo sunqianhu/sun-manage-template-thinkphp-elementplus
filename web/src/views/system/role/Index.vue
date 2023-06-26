@@ -42,13 +42,13 @@
       />
     </div>
 
-    <Add :open="addTag" @close="addTag = false" @refresh="getRoles" v-if="addTag"></Add>
+    <Add :open="addFlag" @close="addFlag = false" @refresh="getRoles" v-if="addFlag"></Add>
     <Edit
-      :open="editTag"
-      @close="editTag = false"
+      :open="editFlag"
+      @close="editFlag = false"
       @refresh="getRoles"
       :id="rowId"
-      v-if="editTag"
+      v-if="editFlag"
     ></Edit>
   </div>
 </template>
@@ -67,8 +67,8 @@ const query = ref({
 });
 const roles = ref([]);
 const loading = ref(true);
-const addTag = ref(false);
-const editTag = ref(false);
+const addFlag = ref(false);
+const editFlag = ref(false);
 const total = ref(0);
 
 /**
@@ -103,14 +103,14 @@ const search = () => {
  * 打开添加页面
  */
 const openAdd = () => {
-  addTag.value = true;
+  addFlag.value = true;
 };
 
 /**
  * 打开修改
  */
 const openEdit = (id) => {
-  editTag.value = true;
+  editFlag.value = true;
   rowId.value = id;
 };
 

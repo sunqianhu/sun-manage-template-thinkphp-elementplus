@@ -17,9 +17,9 @@
     </el-dropdown>
 
     <EditPassword
-      :open="editPasswordTag"
-      @close="editPasswordTag = false"
-      v-if="editPasswordTag"
+      :open="editPasswordFlag"
+      @close="editPasswordFlag = false"
+      v-if="editPasswordFlag"
     ></EditPassword>
   </div>
 </template>
@@ -32,13 +32,13 @@ import { useAppStore } from "../../store/app";
 import EditPassword from "@/views/my/EditPassword.vue";
 
 const router = useRouter();
-const editPasswordTag = ref(false);
+const editPasswordFlag = ref(false);
 
 /**
  * 打开修改密码
  */
 const openEditPassword = async () => {
-  editPasswordTag.value = true;
+  editPasswordFlag.value = true;
 };
 
 /**

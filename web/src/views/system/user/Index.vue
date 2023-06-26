@@ -80,19 +80,19 @@
       />
     </div>
 
-    <Add :open="addTag" @close="addTag = false" @refresh="getUsers" v-if="addTag"></Add>
+    <Add :open="addFlag" @close="addFlag = false" @refresh="getUsers" v-if="addFlag"></Add>
     <Edit
-      :open="editTag"
-      @close="editTag = false"
+      :open="editFlag"
+      @close="editFlag = false"
       @refresh="getUsers"
       :id="rowId"
-      v-if="editTag"
+      v-if="editFlag"
     ></Edit>
     <EditPassword
-      :open="editPasswordTag"
+      :open="editPasswordFlag"
       :id="rowId"
-      @close="editPasswordTag = false"
-      v-if="editPasswordTag"
+      @close="editPasswordFlag = false"
+      v-if="editPasswordFlag"
     ></EditPassword>
   </div>
 </template>
@@ -116,9 +116,9 @@ const roles = ref([]);
 const users = ref([]);
 const total = ref(0);
 const rowId = ref(0);
-const addTag = ref(false);
-const editTag = ref(false);
-const editPasswordTag = ref(false);
+const addFlag = ref(false);
+const editFlag = ref(false);
+const editPasswordFlag = ref(false);
 
 /**
  * 初始化
@@ -189,7 +189,7 @@ const changePageCurrent = (page) => {
  * 打开添加
  */
 const openAdd = () => {
-  addTag.value = true;
+  addFlag.value = true;
 };
 
 /**
@@ -197,7 +197,7 @@ const openAdd = () => {
  */
 const openEdit = (id) => {
   rowId.value = id;
-  editTag.value = true;
+  editFlag.value = true;
 };
 
 /**
@@ -229,7 +229,7 @@ const editStatus = async (row) => {
  */
 const openEditPassword = async (id) => {
   rowId.value = id;
-  editPasswordTag.value = true;
+  editPasswordFlag.value = true;
 };
 
 /**
