@@ -1,4 +1,7 @@
 <?php
+/**
+ * 文件
+ */
 
 namespace app\helper;
 
@@ -12,6 +15,6 @@ class File
      */
     public function getUrl($path)
     {
-        return Config::get('filesystem.access_prefix').$path;
+        return Config::get('filesystem.access_prefix') . $path;
     }
 }

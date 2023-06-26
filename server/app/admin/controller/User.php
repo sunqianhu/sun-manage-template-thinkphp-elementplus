@@ -3,7 +3,7 @@
 namespace app\admin\controller;
 
 use app\model\Token as TokenModel;
-use app\helper\Tree;
+use app\helper\Arr;
 use app\model\Department as DepartmentModel;
 use app\model\Role as RoleModel;
 use app\model\User as UserModel;
@@ -27,8 +27,8 @@ class User extends Base
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $tree = new Tree();
-        $treeDepartments = $tree->convertTree($departments, 'id', 'department_id', 'children');
+        $arr = new Arr();
+        $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
 
         // 角色
         $roleModels = RoleModel::field('id,name')->select();
@@ -92,8 +92,8 @@ class User extends Base
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $tree = new Tree();
-        $treeDepartments = $tree->convertTree($departments, 'id', 'department_id', 'children');
+        $arr = new Arr();
+        $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
 
         // 角色
         $roleModels = RoleModel::field('id,name')->select();
@@ -172,8 +172,8 @@ class User extends Base
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $tree = new Tree();
-        $treeDepartments = $tree->convertTree($departments, 'id', 'department_id', 'children');
+        $arr = new Arr();
+        $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
 
         // 角色
         $roleModels = RoleModel::field('id,name')->select();

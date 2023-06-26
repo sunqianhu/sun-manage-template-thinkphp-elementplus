@@ -1,4 +1,7 @@
 <?php
+/**
+ * 字符串
+ */
 
 namespace app\helper;
 
@@ -32,10 +35,10 @@ class Str
      * 截取字符串
      * @param string $string 字符串
      * @param int $start 开始位置
-     * @param int $end 结束位置
+     * @param int $length 长度
      * @return string 截取后的字符串
      */
-    function sub($string, $start, $end)
+    function sub($string, $start, $length)
     {
         $new = '';
         $matchs = array();
@@ -45,22 +48,22 @@ class Str
         }
 
         if (function_exists('mb_substr')) {
-            $new = mb_substr($string, $start, $end, 'utf-8');
+            $new = mb_substr($string, $start, $length, 'utf-8');
         } else {
             preg_match_all('/./u', $string, $matchs);
-            $new = join('', array_slice($matchs[0], $start, $end));
+            $new = join('', array_slice($matchs[0], $start, $length));
         }
 
         return $new;
     }
 
     /**
-     * 从0开始截取
+     * 从0开始带省略号截取
      * @param string $string 字符串
      * @param int $length 截取长度
      * @return string 截取后的字符串
      */
-    function zeroSub($string, $length)
+    function zeroEllipsisSub($string, $length)
     {
         $new = '';
         $total = 0; // 字符串总长度
@@ -74,7 +77,7 @@ class Str
             return $string;
         }
 
-        $new = $this->sub($string, 0, $length).'...';
+        $new = $this->sub($string, 0, $length) . '...';
         return $new;
     }
 
@@ -84,8 +87,9 @@ class Str
      * @param $split
      * @return void
      */
-    function toSmallPascal($word, $delimiters = '/'){
-        if($word === ''){
+    function toSmallPascal($word, $delimiters = '/')
+    {
+        if ($word === '') {
             return $word;
         }
 

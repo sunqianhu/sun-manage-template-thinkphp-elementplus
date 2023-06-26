@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 消息
  */
@@ -25,12 +24,12 @@ class Message
     public function send($user, $title, $url)
     {
         $userIds = $this->getUserId($user);
-        if(empty($userIds)){
+        if (empty($userIds)) {
             throw new Exception('没有找到消息接收用户');
         }
 
         // 入库
-        foreach($userIds as $userId){
+        foreach ($userIds as $userId) {
             $messageData = [];
             $messageData['user_id'] = $userId;
             $messageData['title'] = $title;
@@ -45,9 +44,9 @@ class Message
             'type' => 'send',
             'user' => $user,
             'data' => [
-                'type'=>'send',
-                'title'=>$title,
-                'url'=>$url
+                'type' => 'send',
+                'title' => $title,
+                'url' => $url
             ]
         ];
         $payload = json_encode($serverData);
@@ -62,8 +61,9 @@ class Message
      * @param $user
      * @return void
      */
-    public function getUserId($user){
-        if($user === 'all'){
+    public function getUserId($user)
+    {
+        if ($user === 'all') {
             return UserModel::column('id');
         }
 

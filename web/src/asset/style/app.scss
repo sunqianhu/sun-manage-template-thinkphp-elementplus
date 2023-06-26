@@ -74,3 +74,8 @@ html {
   color: var(--gray-font-color);
   font-size: var(--small-font-size);
 }
+.text-ellipsis-view {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

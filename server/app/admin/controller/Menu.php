@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\helper\Tree;
+use app\helper\Arr;
 use app\model\Menu as MenuModel;
 use app\validate\Menu as MenuValidate;
 use think\exception\ValidateException;
@@ -30,8 +30,8 @@ class Menu extends Base
             ->select();
         $menus = $menuModels->toArray();
 
-        $tree = new Tree();
-        $treeMenus = $tree->convertTree($menus, 'id', 'menu_id', 'children');
+        $arr = new Arr();
+        $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
 
         return $this->success('获取成功', $treeMenus);
     }
@@ -47,8 +47,8 @@ class Menu extends Base
             ->select();
         $menus = $menuModels->toArray();
 
-        $tree = new Tree();
-        $treeMenus = $tree->convertTree($menus, 'id', 'menu_id', 'children');
+        $arr = new Arr();
+        $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
 
         $data = [
             'treeMenus' => $treeMenus
@@ -93,8 +93,8 @@ class Menu extends Base
 
         $menuModels = MenuModel::field('id, id as value,menu_id,name as label')->order('sort', 'asc')->select();
         $menus = $menuModels->toArray();
-        $tree = new Tree();
-        $treeMenus = $tree->convertTree($menus, 'id', 'menu_id', 'children');
+        $arr = new Arr();
+        $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
 
         $data = [
             'treeMenus' => $treeMenus,

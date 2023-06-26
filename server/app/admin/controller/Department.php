@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\helper\Tree;
+use app\helper\Arr;
 use app\model\Department as DepartmentModel;
 use app\validate\Department as DepartmentValidate;
 use think\exception\ValidateException;
@@ -30,8 +30,8 @@ class Department extends Base
             ->select();
         $departments = $departmentModels->toArray();
 
-        $tree = new Tree();
-        $treeDepartments = $tree->convertTree($departments, 'id', 'department_id', 'children');
+        $arr = new Arr();
+        $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
 
         return $this->success('获取成功', $treeDepartments);
     }
@@ -46,8 +46,8 @@ class Department extends Base
             ->select();
         $departments = $departmentModels->toArray();
 
-        $tree = new Tree();
-        $treeDepartments = $tree->convertTree($departments, 'id', 'department_id', 'children');
+        $arr = new Arr();
+        $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
 
         return $this->success('获取成功', $treeDepartments);
     }
@@ -92,8 +92,8 @@ class Department extends Base
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $tree = new Tree();
-        $treeDepartments = $tree->convertTree($departments, 'id', 'department_id', 'children');
+        $arr = new Arr();
+        $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
 
         $data = [
             'treeDepartments' => $treeDepartments,

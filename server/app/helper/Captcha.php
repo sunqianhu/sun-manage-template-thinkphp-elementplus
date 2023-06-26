@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 验证码
  */
@@ -91,7 +90,7 @@ class Captcha
         for ($px = $px1; $px <= $px2; $px = $px + 1) {
             if (0 != $w) {
                 $py = $A * sin($w * $px + $f) + $b + $this->height / 2; // y = Asin(ωx+φ) + b
-                $i  = (int) (15 / 5);
+                $i = (int)(15 / 5);
                 while ($i > 0) {
                     imagesetpixel($this->image, (int)($px + $i), (int)($py + $i), $color); // 这里(while)循环画像素点比imagettftext和imagestring用字体大小一次画出（不用这while循环）性能要好很多
                     $i--;
@@ -100,18 +99,18 @@ class Captcha
         }
 
         // 曲线后部分
-        $A   = mt_rand(1, (int)($this->height / 2)); // 振幅
-        $f   = mt_rand((int)(-$this->height / 4), (int)($this->height / 4)); // X轴方向偏移量
-        $T   = mt_rand((int)$this->height, (int)$this->width * 2); // 周期
-        $w   = (2 * M_PI) / $T;
-        $b   = $py - $A * sin($w * $px + $f) - $this->height / 2;
+        $A = mt_rand(1, (int)($this->height / 2)); // 振幅
+        $f = mt_rand((int)(-$this->height / 4), (int)($this->height / 4)); // X轴方向偏移量
+        $T = mt_rand((int)$this->height, (int)$this->width * 2); // 周期
+        $w = (2 * M_PI) / $T;
+        $b = $py - $A * sin($w * $px + $f) - $this->height / 2;
         $px1 = $px2;
         $px2 = $this->width;
 
         for ($px = $px1; $px <= $px2; $px = $px + 1) {
             if (0 != $w) {
                 $py = $A * sin($w * $px + $f) + $b + $this->height / 2; // y = Asin(ωx+φ) + b
-                $i  = (int) (15 / 5);
+                $i = (int)(15 / 5);
                 while ($i > 0) {
                     imagesetpixel($this->image, (int)($px + $i), (int)($py + $i), $color);
                     $i--;
@@ -123,8 +122,8 @@ class Captcha
     /**
      * 创建base64图片
      * @param $code 验证码
-     * @param $this->width 宽度
-     * @param $this->height 高度
+     * @param $this- >width 宽度
+     * @param $this- >height 高度
      * @return string
      */
     public function createBase64Image()
@@ -152,7 +151,8 @@ class Captcha
      * 获取验证码
      * @return string
      */
-    public function getCode(){
+    public function getCode()
+    {
         return $this->code;
     }
 }

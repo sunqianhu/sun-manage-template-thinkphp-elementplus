@@ -1,12 +1,11 @@
 <?php
-
 /**
- * 树
+ * 数组
  */
 
 namespace app\helper;
 
-class Tree
+class Arr
 {
     /**
      * 转换为树数组
