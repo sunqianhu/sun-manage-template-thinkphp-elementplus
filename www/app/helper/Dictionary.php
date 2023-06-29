@@ -76,6 +76,7 @@ class Dictionary
 
         $values = DictionaryModel::where('type', '=', $type)
             ->where('key', 'in', $keyString)
+            ->field('value')
             ->order('sort', 'asc')
             ->column('value');
         $valueString = implode($glue, $values);

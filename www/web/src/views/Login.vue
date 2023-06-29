@@ -222,7 +222,7 @@ html {
     z-index: 1;
     text-align: center;
     font-size: 12px;
-    color: var(--gray-font-color);
+    color: var(--font-color-light);
   }
 }
 </style>

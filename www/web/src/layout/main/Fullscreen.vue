@@ -27,7 +27,7 @@ const toggleFullScreen = () => {
     height: 20px;
     cursor: pointer;
     &:hover {
-      opacity: var(--hover-opacity);
+      opacity: var(--opacity);
     }
   }
 }

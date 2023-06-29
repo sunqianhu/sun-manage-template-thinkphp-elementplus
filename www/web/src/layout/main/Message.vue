@@ -123,7 +123,7 @@ onMounted(() => {
     padding: 16px 16px 0px 16px;
     .close {
       cursor: pointer;
-      color: var(--gray-font-color);
+      color: var(--font-color-light);
       &:hover {
         color: var(--font-color);
       }
@@ -133,7 +133,7 @@ onMounted(() => {
     .scrollbar {
       padding: 16px;
       .item {
-        border-bottom: 1px solid var(--light-border-color);
+        border-bottom: 1px solid var(--border-color-light);
         padding: 8px 0px;
         &:last-child {
           border-bottom: none;

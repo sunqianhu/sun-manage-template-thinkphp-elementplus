@@ -1,7 +1,7 @@
 <template>
   <el-col :xs="props.xs" :sm="props.sm" :md="props.md" class="col">
-    <div class="key">{{ label }}</div>
-    <div class="value"><slot></slot></div>
+    <div class="label">{{ label }}</div>
+    <div class="content"><slot></slot></div>
   </el-col>
 </template>
 
@@ -28,12 +28,12 @@ const props = defineProps({
 
 <style scoped lang="scss">
 .col {
-  .key {
-    color: var(--gray-font-color);
+  .label {
+    color: var(--font-color-light);
     width: 80px;
     display: inline-block;
   }
-  .value {
+  .content {
     display: inline-block;
     margin-left: 16px;
   }

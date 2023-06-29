@@ -37,8 +37,8 @@ const props = defineProps(["title", "description"]);
     .description {
       flex: 1;
       margin-left: 16px;
-      color: var(--gray-font-color);
-      font-size: var(--small-font-size);
+      color: var(--font-color-light);
+      font-size: var(--font-size-small);
     }
     &::after {
       content: "";

@@ -37,7 +37,7 @@ const toggleSider = () => {
   &:hover {
     background: rgba(0, 0, 0, 0.025);
     .icon {
-      opacity: var(--hover-opacity);
+      opacity: var(--opacity);
     }
   }
 }

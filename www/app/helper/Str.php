@@ -100,4 +100,26 @@ class Str
 
         return $word;
     }
+
+    /**
+     * 分隔排序
+     * @param $string
+     * @param $sort
+     * @return void
+     */
+    function delimiterSort($string, $sort = 'asc', $delimiter = ',')
+    {
+        if (empty($string)) {
+            return $string;
+        }
+
+        $array = explode(',', $string);
+        if ($sort == 'desc') {
+            arsort($array);
+        } else {
+            sort($array);
+        }
+
+        return implode($delimiter, $array);
+    }
 }
