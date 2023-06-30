@@ -1,5 +1,5 @@
 <template>
-  <div class="panel">
+  <div class="card-panel">
     <div class="header">
       <div class="title">{{ props.title }}</div>
       <div class="description" v-if="props.description">{{ props.description }}</div>
@@ -18,21 +18,18 @@ const props = defineProps(["title", "description"]);
 </script>
 
 <style lang="scss" scoped>
-.panel {
+.card-panel {
+  background-color: var(--fill-color-extra-light);
+  border-radius: var(--border-radius);
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
+    padding: 16px 16px 0px 16px;
+
     .title {
-      padding: 0px 4px;
-      color: var(--color-primary);
-      border-bottom: 2px solid var(--color-primary);
-      position: relative;
-      z-index: 2;
-      height: 35px;
-      line-height: 35px;
       font-weight: bold;
+      font-size: var(--font-size-big);
     }
     .description {
       flex: 1;
@@ -40,17 +37,9 @@ const props = defineProps(["title", "description"]);
       color: var(--font-color-light);
       font-size: var(--font-size-small);
     }
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 0px;
-      width: 100%;
-      height: 1px;
-      background-color: var(--border-color);
-    }
   }
   .body {
-    margin-top: 12px;
+    padding: 16px;
   }
 }
 </style>
