@@ -2,9 +2,9 @@
 
 namespace app\admin\controller;
 
+use app\admin\validate\Department as DepartmentValidate;
 use app\helper\Arr;
 use app\model\Department as DepartmentModel;
-use app\validate\Department as DepartmentValidate;
 use think\exception\ValidateException;
 
 /**

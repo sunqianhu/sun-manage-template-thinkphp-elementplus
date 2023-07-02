@@ -2,12 +2,12 @@
 
 namespace app\admin\controller;
 
-use app\helper\AdminJwt;
+use app\admin\validate\Login as LoginValidate;
 use app\entity\User as UserEntity;
+use app\helper\AdminJwt;
 use app\helper\Captcha;
 use app\model\LoginLog as LoginLogModel;
 use app\model\User as UserModel;
-use app\validate\Login as LoginValidate;
 use think\exception\ValidateException;
 use think\facade\Cache;
 

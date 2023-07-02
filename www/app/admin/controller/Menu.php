@@ -2,9 +2,9 @@
 
 namespace app\admin\controller;
 
+use app\admin\validate\Menu as MenuValidate;
 use app\helper\Arr;
 use app\model\Menu as MenuModel;
-use app\validate\Menu as MenuValidate;
 use think\exception\ValidateException;
 
 /**

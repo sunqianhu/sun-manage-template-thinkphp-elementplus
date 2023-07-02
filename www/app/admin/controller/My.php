@@ -2,8 +2,8 @@
 
 namespace app\admin\controller;
 
+use app\admin\validate\User as UserValidate;
 use app\model\User as UserModel;
-use app\validate\User as UserValidate;
 use think\exception\ValidateException;
 
 /**

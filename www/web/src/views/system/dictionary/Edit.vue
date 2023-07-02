@@ -12,8 +12,8 @@
         <el-form-item label="字典类型" prop="type">
           <el-input v-model="dictionary.type" />
         </el-form-item>
-        <el-form-item label="字典名称" prop="name">
-          <el-input v-model="dictionary.name" />
+        <el-form-item label="字典键" prop="name">
+          <el-input v-model="dictionary.key" />
         </el-form-item>
         <el-form-item label="字典值" prop="value">
           <el-input v-model="dictionary.value" />
@@ -40,7 +40,7 @@ const dictionary = ref({});
 const dictionaryRef = ref();
 const rules = {
   type: [{ required: true, message: "请输入字典类型", trigger: "blur" }],
-  name: [{ required: true, message: "请输入字典名称", trigger: "blur" }],
+  key: [{ required: true, message: "请输入字典键", trigger: "blur" }],
   value: [{ required: true, message: "请输入字典值", trigger: "blur" }],
   sort: [{ required: true, message: "请输入排序", trigger: "blur" }]
 };

@@ -6,8 +6,11 @@
         <el-form-item label="字典类型">
           <el-input v-model="query.type" />
         </el-form-item>
-        <el-form-item label="字典名称">
-          <el-input v-model="query.name" />
+        <el-form-item label="字典键">
+          <el-input v-model="query.key" />
+        </el-form-item>
+        <el-form-item label="字典值">
+          <el-input v-model="query.value" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :icon="Search" @click="search">搜索</el-button>
@@ -22,7 +25,7 @@
     <div class="list">
       <el-table :data="dictionarys" v-loading="loading" row-key="id" style="width: 100%">
         <el-table-column prop="type" label="字典类型" />
-        <el-table-column prop="name" label="字典名称" />
+        <el-table-column prop="key" label="字典键" />
         <el-table-column prop="value" label="字典值" />
         <el-table-column prop="sort" label="排序" width="100" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">

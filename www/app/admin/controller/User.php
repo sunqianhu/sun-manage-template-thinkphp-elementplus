@@ -2,13 +2,13 @@
 
 namespace app\admin\controller;
 
-use app\model\Token as TokenModel;
+use app\admin\validate\User as UserValidate;
 use app\helper\Arr;
 use app\model\Department as DepartmentModel;
 use app\model\Role as RoleModel;
+use app\model\Token as TokenModel;
 use app\model\User as UserModel;
 use app\model\UserRole as UserRoleModel;
-use app\validate\User as UserValidate;
 use think\exception\ValidateException;
 
 /**

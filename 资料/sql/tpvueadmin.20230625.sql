@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2023-06-25 12:29:00
+Date: 2023-07-02 10:35:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -43,8 +43,8 @@ DROP TABLE IF EXISTS `dictionary`;
 CREATE TABLE `dictionary` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `type` varchar(64) NOT NULL DEFAULT '' COMMENT '字典类型',
-  `name` varchar(64) NOT NULL DEFAULT '' COMMENT '字典名称',
-  `value` varchar(64) NOT NULL DEFAULT '' COMMENT '字典值',
+  `key` varchar(64) NOT NULL DEFAULT '' COMMENT '字典值',
+  `value` varchar(64) NOT NULL DEFAULT '' COMMENT '字典名称',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='字典';
@@ -52,9 +52,9 @@ CREATE TABLE `dictionary` (
 -- ----------------------------
 -- Records of dictionary
 -- ----------------------------
-INSERT INTO `dictionary` VALUES ('1', 'menu_type', '目录', '1', '1');
-INSERT INTO `dictionary` VALUES ('2', 'menu_type', '页面', '2', '2');
-INSERT INTO `dictionary` VALUES ('3', 'menu_type', '按钮', '3', '3');
+INSERT INTO `dictionary` VALUES ('1', 'menu_type', '1', '目录', '1');
+INSERT INTO `dictionary` VALUES ('2', 'menu_type', '2', '页面', '2');
+INSERT INTO `dictionary` VALUES ('3', 'menu_type', '3', '按钮', '3');
 
 -- ----------------------------
 -- Table structure for login_log
@@ -66,7 +66,7 @@ CREATE TABLE `login_log` (
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
@@ -82,6 +82,8 @@ INSERT INTO `login_log` VALUES ('8', '10', '1686299381', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('9', '10', '1686623574', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('10', '10', '1686623614', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('11', '10', '1687666953', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('12', '10', '1688265215', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('13', '10', '1688265237', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for menu
@@ -254,7 +256,7 @@ CREATE TABLE `operation_log` (
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '操作ip',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '操作地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=244 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=253 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
@@ -502,6 +504,15 @@ INSERT INTO `operation_log` VALUES ('240', '10', '1687667324', '127.0.0.1', '/ad
 INSERT INTO `operation_log` VALUES ('241', '10', '1687667326', '127.0.0.1', '/admin/user/initedit');
 INSERT INTO `operation_log` VALUES ('242', '10', '1687667332', '127.0.0.1', '/admin/user/saveedit');
 INSERT INTO `operation_log` VALUES ('243', '10', '1687667333', '127.0.0.1', '/admin/user/getindexusers');
+INSERT INTO `operation_log` VALUES ('244', '10', '1688265247', '127.0.0.1', '/admin/user/initindex');
+INSERT INTO `operation_log` VALUES ('245', '10', '1688265247', '127.0.0.1', '/admin/user/getindexusers');
+INSERT INTO `operation_log` VALUES ('246', '10', '1688265250', '127.0.0.1', '/admin/dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('247', '10', '1688265252', '127.0.0.1', '/admin/user/initindex');
+INSERT INTO `operation_log` VALUES ('248', '10', '1688265252', '127.0.0.1', '/admin/user/getindexusers');
+INSERT INTO `operation_log` VALUES ('249', '10', '1688265258', '127.0.0.1', '/admin/user/initindex');
+INSERT INTO `operation_log` VALUES ('250', '10', '1688265258', '127.0.0.1', '/admin/user/getindexusers');
+INSERT INTO `operation_log` VALUES ('251', '10', '1688265261', '127.0.0.1', '/admin/dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('252', '10', '1688265270', '127.0.0.1', '/admin/dictionary/getindexdictionarys');
 
 -- ----------------------------
 -- Table structure for role
@@ -582,7 +593,7 @@ CREATE TABLE `token` (
   PRIMARY KEY (`id`),
   KEY `token` (`token`(128)) USING BTREE,
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COMMENT='token';
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COMMENT='token';
 
 -- ----------------------------
 -- Records of token
@@ -594,6 +605,8 @@ INSERT INTO `token` VALUES ('33', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6
 INSERT INTO `token` VALUES ('34', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTViNTlcdTRlN2VcdTYyMzciLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC4yNjg0MzUwMCAxNjg2NjIzNTc0In0.LG5xFWgBI07fvbNrvGaSDxi6V--emTUFbDyYDgbwPE0', '1686630775', '10');
 INSERT INTO `token` VALUES ('35', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTViNTlcdTRlN2VcdTYyMzciLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43Njc2MzkwMCAxNjg2NjIzNjE0In0.alrwDCWBnhQGKe7x_qAzMA995123-QtHNxD1FSIO37k', '1686632755', '10');
 INSERT INTO `token` VALUES ('36', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC4zMjUzNzQwMCAxNjg3NjY2OTUzIn0.9HwP7aONzy-DDaNqDD8eyfn7TV8-Rc872ra_yTizyTk', '1687674533', '10');
+INSERT INTO `token` VALUES ('37', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC4wMDM0MDMwMCAxNjg4MjY1MjE1In0.3DUvwCXfcldWQ20kQhMbY7R02dAAjzhAgHx8BlI7tAU', '1688272415', '10');
+INSERT INTO `token` VALUES ('38', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC4zMzY3NzUwMCAxNjg4MjY1MjM3In0.n5CEy19Qd8zZutLB5HOTnczE4NYEbOejbSkdlGbFTdA', '1688272470', '10');
 
 -- ----------------------------
 -- Table structure for user

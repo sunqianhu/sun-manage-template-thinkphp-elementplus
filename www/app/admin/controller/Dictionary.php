@@ -2,8 +2,8 @@
 
 namespace app\admin\controller;
 
+use app\admin\validate\Dictionary as DictionaryValidate;
 use app\model\Dictionary as DictionaryModel;
-use app\validate\Dictionary as DictionaryValidate;
 use think\exception\ValidateException;
 
 /**
@@ -17,15 +17,18 @@ class Dictionary extends Base
      */
     public function getIndexDictionarys()
     {
-        $get = $this->request->get(['type' => '', 'name' => '', 'size' => '30', 'page' => '1']);
+        $get = $this->request->get(['type' => '', 'key' => '', 'value' => '', 'size' => '30', 'page' => '1']);
         $wheres = [];
         if ($get['type'] !== '') {
             $wheres[] = ['type', 'LIKE', '%' . $get['type'] . '%'];
         }
-        if ($get['name'] !== '') {
-            $wheres[] = ['name', 'LIKE', '%' . $get['name'] . '%'];
+        if ($get['key'] !== '') {
+            $wheres[] = ['key', 'LIKE', '%' . $get['key'] . '%'];
         }
-        $dictionarys = DictionaryModel::field('id,type,name,`value`,sort')
+        if ($get['value'] !== '') {
+            $wheres[] = ['value', 'LIKE', '%' . $get['value'] . '%'];
+        }
+        $dictionarys = DictionaryModel::field('id,type,key,value,sort')
             ->where($wheres)
             ->order([
                 'type' => 'asc',
@@ -43,7 +46,7 @@ class Dictionary extends Base
      */
     public function saveAdd()
     {
-        $post = $this->request->post(['type', 'name', 'value', 'sort']);
+        $post = $this->request->post(['type', 'key', 'value', 'sort']);
 
         // 验证
         try {
@@ -69,7 +72,7 @@ class Dictionary extends Base
         }
 
         // 部门
-        $dictionaryModel = DictionaryModel::field('id,type,name,`value`,sort')->find($id);
+        $dictionaryModel = DictionaryModel::field('id,type,key,value,sort')->find($id);
         if (empty($dictionaryModel)) {
             return $this->error('没有找到记录');
         }
@@ -83,7 +86,7 @@ class Dictionary extends Base
      */
     public function saveEdit()
     {
-        $post = $this->request->post(['id', 'type', 'name', 'value', 'sort']);
+        $post = $this->request->post(['id', 'type', 'key', 'value', 'sort']);
 
         // 验证
         try {

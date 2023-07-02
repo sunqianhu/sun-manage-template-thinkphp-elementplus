@@ -2,11 +2,11 @@
 
 namespace app\admin\controller;
 
+use app\admin\validate\Role as RoleValidate;
 use app\helper\Arr;
 use app\model\Menu as MenuModel;
 use app\model\Role as RoleModel;
 use app\model\RoleMenu as RoleMenuModel;
-use app\validate\Role as RoleValidate;
 use think\exception\ValidateException;
 
 /**
