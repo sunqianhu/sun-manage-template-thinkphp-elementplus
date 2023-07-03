@@ -6,7 +6,7 @@
 
 <script setup>
 import { computed } from "vue";
-import { useAppStore } from "@/store/app";
+import { useAppStore } from "@/stores/app";
 import { Fold, Expand } from "@element-plus/icons-vue";
 
 const appStore = useAppStore();

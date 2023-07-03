@@ -28,7 +28,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { Edit, SwitchButton } from "@element-plus/icons-vue";
-import { useAppStore } from "../../store/app";
+import { useAppStore } from "../../stores/app";
 import EditPassword from "@/views/my/EditPassword.vue";
 
 const router = useRouter();

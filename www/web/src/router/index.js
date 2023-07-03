@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import axios from "@/util/axios";
-import { useAppStore } from "@/store/app";
+import { useAppStore } from "@/stores/app";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

@@ -3,7 +3,7 @@
     <el-container :class="{ container: true, close: !siderStatus }">
       <el-aside class="aside">
         <div class="system-name">
-          <img src="@/asset/image/logo.png" class="logo" />
+          <img src="@/assets/image/logo.png" class="logo" />
           <span class="name">管理后台</span>
         </div>
         <Menu></Menu>
@@ -28,7 +28,7 @@
 
 <script setup>
 import { computed, onMounted } from "vue";
-import { useAppStore } from "@/store/app";
+import { useAppStore } from "@/stores/app";
 import Menu from "./Menu.vue";
 import Hamburger from "./Hamburger.vue";
 import FullScreen from "./FullScreen.vue";

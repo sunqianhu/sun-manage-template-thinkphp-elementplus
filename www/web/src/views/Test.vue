@@ -18,8 +18,8 @@
 
 <script setup>
 import { ref } from "vue";
-import Panel from "../component/Panel.vue";
-import DescriptionItem from "../component/DescriptionItem.vue";
+import Panel from "../components/Panel.vue";
+import DescriptionItem from "../components/DescriptionItem.vue";
 </script>
 
 <style scoped></style>

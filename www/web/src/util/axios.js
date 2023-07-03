@@ -1,6 +1,6 @@
 import axios from "axios";
 import router from "../router";
-import { useAppStore } from "../store/app";
+import { useAppStore } from "../stores/app";
 import { config } from "../../config.js";
 
 const instance = axios.create({

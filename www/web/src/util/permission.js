@@ -1,4 +1,4 @@
-import { useAppStore } from "../store/app";
+import { useAppStore } from "../stores/app";
 import axios from "../util/axios";
 
 /**

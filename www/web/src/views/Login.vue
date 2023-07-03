@@ -3,7 +3,7 @@
     <div class="wrap">
       <div class="header">
         <div class="title">
-          <img src="@/asset/image/logo.png" class="logo" alt="logo" />
+          <img src="@/assets/image/logo.png" class="logo" alt="logo" />
           <span class="name">管理后台</span>
         </div>
         <div class="subtitle">基于thinkphp和vue的组件化管理后台框架</div>
@@ -158,7 +158,7 @@ html {
 .login {
   height: 100%;
   background-color: #f0f2f5;
-  background-image: url(@/asset/image/login/background.svg);
+  background-image: url(@/assets/image/login/background.svg);
   background-repeat: no-repeat;
   background-size: 100%;
   position: relative;
