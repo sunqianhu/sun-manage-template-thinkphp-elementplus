@@ -41,7 +41,7 @@
         </el-form-item>
         <el-form-item label="组件路径" prop="component" v-if="menu.type_id == 2">
           <el-input v-model="menu.component" />
-          <div class="form-message">相对于views目录</div>
+          <div class="form-message">相对于view目录</div>
         </el-form-item>
         <el-form-item label="菜单图标" prop="icon" v-if="menu.type_id == 1 || menu.type_id == 2">
           <el-input v-model="menu.icon" />

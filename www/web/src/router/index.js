@@ -19,17 +19,17 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
-      component: () => import("../views/Login.vue")
+      component: () => import("../view/Login.vue")
     },
     {
       path: "/test",
       name: "test",
-      component: () => import("../views/Test.vue")
+      component: () => import("../view/Test.vue")
     },
     {
       path: "/:pathMatch(.*)*",
       name: "404",
-      component: () => import("../views/404.vue")
+      component: () => import("../view/404.vue")
     }
   ]
 });
@@ -79,7 +79,7 @@ router.beforeEach(async (to, from) => {
     if (response.data && response.data.length > 0) {
       dynamicRoutes = response.data;
       dynamicRoutes.forEach((dynamicRoute) => {
-        let componentPath = "../views/" + dynamicRoute.component;
+        let componentPath = "../view/" + dynamicRoute.component;
         dynamicRoute.component = () => import(/* @vite-ignore */ componentPath);
         mainRoute.children.push(dynamicRoute);
       });

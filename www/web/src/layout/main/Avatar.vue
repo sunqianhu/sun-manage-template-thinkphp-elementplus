@@ -29,7 +29,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { Edit, SwitchButton } from "@element-plus/icons-vue";
 import { useAppStore } from "../../stores/app";
-import EditPassword from "@/views/my/EditPassword.vue";
+import EditPassword from "@/view/my/EditPassword.vue";
 
 const router = useRouter();
 const editPasswordFlag = ref(false);
