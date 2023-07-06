@@ -7,7 +7,7 @@
       </div>
       <div class="content">
         <el-scrollbar max-height="250px" class="scrollbar">
-          <div class="item" v-for="message in messages" :key="message.id">
+          <div class="item" v-for="(message, index) in messages" :key="message.id">
             <a href="javascript:;" @click="navigateTo(message.url)"> {{ message.title }} </a>
           </div>
         </el-scrollbar>
@@ -95,7 +95,15 @@ const close = () => {
  * 导航
  * @param {string} url 路由地址
  */
-const navigateTo = (url) => {
+const navigateTo = (index, url) => {
+  messages.value.splice(index, 1);
+  if (messages.value.length <= 0) {
+    show.value = false;
+  }
+
+  if (!url) {
+    return;
+  }
   router.push(url);
 };
 
