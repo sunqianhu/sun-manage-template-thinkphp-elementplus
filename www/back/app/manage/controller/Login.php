@@ -4,7 +4,7 @@ namespace app\manage\controller;
 
 use app\manage\validate\Login as LoginValidate;
 use app\entity\User as UserEntity;
-use app\helper\AdminJwt;
+use app\helper\ManageJwt;
 use app\helper\Captcha;
 use app\model\LoginLog as LoginLogModel;
 use app\model\User as UserModel;
@@ -72,7 +72,7 @@ class Login extends Base
             return $this->error("账号已停用");
         }
 
-        $adminJwt = new AdminJwt();
+        $adminJwt = new ManageJwt();
         $userEntity = new UserEntity();
         $userEntity->setId($userModel->id);
         $userEntity->setName($userModel->name);

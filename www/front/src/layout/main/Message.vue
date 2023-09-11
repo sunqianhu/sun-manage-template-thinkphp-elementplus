@@ -50,7 +50,7 @@ ws.connect();
  * 获取未读消息
  */
 const getNoReads = async () => {
-  const response = await axios.get("computer/message/getNoReads");
+  const response = await axios.get("manage/message/getNoReads");
   if (response.data.length == 0) {
     return;
   }
@@ -81,7 +81,7 @@ const send = async (data) => {
   };
   messages.value.unshift(message);
 
-  await axios.get("computer/message/readAll");
+  await axios.get("manage/message/readAll");
   playAudio();
 };
 

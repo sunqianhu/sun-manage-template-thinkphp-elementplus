@@ -32,7 +32,7 @@ const siderStatus = computed(() => {
  * 初始化
  */
 const init = async () => {
-  const response = await axios.get("computer/Main/getMenus");
+  const response = await axios.get("manage/Main/getMenus");
   menus.value = response.data;
 };
 

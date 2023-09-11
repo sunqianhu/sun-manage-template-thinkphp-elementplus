@@ -12,7 +12,7 @@ use Exception;
 use Firebase\JWT\JWT as FirebaseJWT;
 use Firebase\JWT\Key;
 
-class AdminJwt
+class ManageJwt
 {
     private $key = 'axjeJXKlA836x7s@#';
     private $leeway = 180;

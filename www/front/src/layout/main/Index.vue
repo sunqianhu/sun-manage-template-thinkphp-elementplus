@@ -22,7 +22,7 @@
         </el-main>
       </el-container>
     </el-container>
-    <Message></Message>
+    <!--<Message></Message>-->
     <watermark />
   </div>
 </template>

@@ -60,7 +60,7 @@ const logout = async () => {
   const appStore = useAppStore();
   let url;
 
-  const response = await axios.get("computer/Login/logout");
+  const response = await axios.get("manage/Login/logout");
   if (response.code != 1) {
     ElMessage({
       message: response.message,

@@ -12,6 +12,18 @@ use think\exception\ValidateException;
 class My extends Base
 {
     /**
+     * 账号信息
+     */
+    public function info()
+    {
+        $userModel = UserModel::field('id,account,name,phone,login_time,login_ip,department_id')
+            ->find($this->user->id);
+        $user = $userModel->toArray();
+        $user['department_name'] = $userModel->department->name;
+        return $this->success('获取成功', $user);
+    }
+
+    /**
      * 修改密码
      */
     public function editPassword()

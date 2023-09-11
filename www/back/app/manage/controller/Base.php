@@ -3,7 +3,7 @@
 namespace app\manage\controller;
 
 use app\BaseController;
-use app\helper\AdminJwt;
+use app\helper\ManageJwt;
 use app\model\Menu as MenuModel;
 use app\model\OperationLog as OperationLogModel;
 use app\model\Role as RoleModel;
@@ -16,24 +16,31 @@ use think\Response;
 class Base extends BaseController
 {
     /**
-     * @var Str[] 不登录网址
+     * @var string[] 不登录网址
      */
     private $noLoginUrls = [
-        '/manage/login/getcaptcha',
-        '/manage/login/login',
-        '/manage/test/index'
+        'manage/login/getcaptcha',
+        'manage/login/login',
+        'manage/sso/getauthurl',
+        'manage/sso/login',
+        'manage/sso/mainLogout',
+        'manage/test/index'
     ];
 
     /**
-     * @var Str[] 不判断权限网址
+     * @var string[] 不判断权限网址
      */
     private $noPermissionUrls = [
-        '/manage/main/getpermissions',
-        '/manage/main/getroutes',
-        '/manage/main/getmenus',
-        '/manage/message/readall',
-        '/manage/message/getnoreads',
-        '/manage/uploadfile/uploadfile'
+        'manage/sso/logout',
+        'manage/main/getpermissions',
+        'manage/main/getroutes',
+        'manage/main/getmenus',
+        'manage/main/getwatermark',
+        'manage/message/readall',
+        'manage/message/getnoreads',
+        'manage/uploadfile/uploadfile',
+        'manage/my/info',
+        'manage/my/editpassword'
     ];
 
     /**
@@ -66,9 +73,13 @@ class Base extends BaseController
      */
     function auth()
     {
-        // 登录
-        $url = $this->request->baseUrl();
+        $appName = app('http')->getName();
+        $controller = $this->request->controller();
+        $action = $this->request->action();
+        $url = $appName . '/' . $controller . '/' . $action;
         $url = strtolower($url);
+
+        // 登录
         if (in_array($url, $this->noLoginUrls)) {
             return;
         }
@@ -78,8 +89,8 @@ class Base extends BaseController
             throw new Exception('token错误');
         }
 
-        $adminJwt = new AdminJwt();
-        $user = $adminJwt->resolverToken($token);
+        $manageJwt = new ManageJwt();
+        $user = $manageJwt->resolverToken($token);
         $this->user = $user;
 
         // 权限
@@ -95,8 +106,10 @@ class Base extends BaseController
         }
 
         $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
-            ->field('api')
+            ->field('menu.api')
             ->where('role_menu.role_id', 'in', $roleIds)
+            ->where('menu.api', '<>', '')
+            ->group('menu.id')
             ->select();
         if ($menuModels->isEmpty()) {
             throw new Exception('无权限');
@@ -117,7 +130,7 @@ class Base extends BaseController
             }
         }
         if (!$has) {
-            throw new Exception('无权限22');
+            throw new Exception('无权限');
         }
     }
 
