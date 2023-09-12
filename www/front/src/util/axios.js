@@ -34,10 +34,6 @@ instance.interceptors.response.use(
     const data = response.data;
 
     if (data && data.code != 1 && data.message.indexOf("登录已失效") !== -1) {
-      ElMessage({
-        message: data.message,
-        type: "error"
-      });
       logout();
       return Promise.reject(data);
     }

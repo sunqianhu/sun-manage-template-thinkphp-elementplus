@@ -4,6 +4,15 @@ import "nprogress/nprogress.css";
 import axios from "@/util/axios";
 import { useAppStore } from "@/store/app";
 
+/**
+ * 得到登录路由路径
+ * @returns
+ */
+const getLoginRoutePath = () => {
+  return "/login";
+};
+
+// 路由对象
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -12,7 +21,7 @@ const router = createRouter({
       name: "main",
       component: () => import("../layout/main/Index.vue"),
       meta: {
-        name: "主布局"
+        name: "首页"
       },
       children: []
     },
@@ -56,7 +65,7 @@ router.beforeEach(async (to, from) => {
   // 登录
   const token = localStorage.getItem("token");
   if (!token) {
-    return "/login";
+    return getLoginRoutePath();
   }
 
   const appStore = useAppStore();
@@ -66,7 +75,7 @@ router.beforeEach(async (to, from) => {
   if (!appStore.isSetPermission) {
     response = await axios.get("manage/main/getPermissions");
     if (response.code != 1) {
-      return "/login";
+      return getLoginRoutePath();
     }
     appStore.setPermissions(response.data);
   }
@@ -75,7 +84,7 @@ router.beforeEach(async (to, from) => {
   if (!appStore.isSetRoute) {
     response = await axios.get("manage/main/getRoutes");
     if (response.code != 1) {
-      return "/login";
+      return getLoginRoutePath();
     }
     appStore.setRoutes(response.data);
 

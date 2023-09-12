@@ -14,9 +14,9 @@ use Workerman\Connection\TcpConnection;
 use Workerman\Timer;
 
 /**
- * 消息服务
+ * websocket服务端
  */
-class Message extends Command
+class WebSocketServer extends Command
 {
     /**
      * @var object 容器类
@@ -28,37 +28,61 @@ class Message extends Command
      */
     private $actions = ['start', 'stop', 'reload', 'restart', 'status'];
 
+    /**
+     * 配置
+     * @return void
+     */
     protected function configure()
     {
         // 指令配置
-        $this->setName('message')
+        $this->setName('webSocketServer')
             ->addArgument('action', Argument::OPTIONAL, "操作参数[start|stop|reload|restart|status]", 'start')
-            ->addOption('daemon', 'd', Option::VALUE_OPTIONAL, '以守护进程运行workerman')
-            ->setDescription('消息提醒websocket服务');
+            ->addOption('daemon', null, Option::VALUE_OPTIONAL, '以守护进程运行')
+            ->setDescription('websocket服务端，windows：php think webSocketServer，linux：php think webSocketServer start --daemon true');
     }
 
+    /**
+     * 执行
+     * @param Input $input
+     * @param Output $output
+     * @return int|void|null
+     */
     protected function execute(Input $input, Output $output)
     {
         // linux系统命令参数
-        if (strtolower(PHP_OS) == "linux") {
+        if (strtolower(PHP_OS) == 'linux') {
+            /**
+             * 参数
+             * 0：文件名（随意）
+             * 1：参数
+             * 2：选项
+             */
             global $argv;
             $action = trim($input->getArgument('action'));
             if (!in_array($action, $this->actions)) {
                 echo 'action参数错误';
                 exit;
             }
-            $argv[0] = 'message';
+            $argv[0] = 'webSocketServer';
             $argv[1] = $action;
             if ($input->hasOption('daemon')) {
                 $argv[2] = '-d';
             }
+            if (isset($argv[3])) {
+                unset($argv[3]);
+            }
+            if (isset($argv[4])) {
+                unset($argv[4]);
+            }
+        } else {
+            // window不支持命令参数
         }
 
         // 容器
-        $config = Config::get('message');
+        $config = Config::get('websocket');
         $url = 'websocket://' . $config['server_ip'] . ':' . $config['port'];
         $this->worker = new Worker($url);
-        $this->worker->name = 'message';
+        $this->worker->name = 'webSocketServer';
         $this->worker->count = 1;
 
         // 事件

@@ -1,6 +1,6 @@
 <?php
 /**
- * 消息设置
+ * websocket配置
  */
 return [
     'server_ip' => '0.0.0.0', // 服务器端监听ip

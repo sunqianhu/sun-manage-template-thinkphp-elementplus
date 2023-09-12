@@ -20,7 +20,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { Close } from "@element-plus/icons-vue";
-import { useWs } from "@/util/ws.js";
+import { useWebSocketClient } from "@/util/web_socket_client.js";
 import { config } from "@/../config.js";
 import axios from "@/util/axios";
 import audioPath from "@/asset/message.mp3";
@@ -29,27 +29,26 @@ const router = useRouter();
 const messages = ref([]); // 消息
 const show = ref(false); // 显示
 
-// websocket
-const ws = useWs(config.messageWebSocket);
-ws.onOpen = () => {
+// websocket客户端
+const webSocketClient = useWebSocketClient(config.messageWebSocketServerUrl);
+webSocketClient.onOpen = () => {
   bind();
 };
-ws.onMessage = (event) => {
+webSocketClient.onMessage = (event) => {
   const data = JSON.parse(event.data);
   if (!data) {
     return;
   }
-
-  if (data.type == "send") {
-    send(data);
+  if (data.type == "message_send") {
+    handleMessage(data);
   }
 };
-ws.connect();
+webSocketClient.connect();
 
 /**
  * 获取未读消息
  */
-const getNoReads = async () => {
+const getNoReadMessages = async () => {
   const response = await axios.get("manage/message/getNoReads");
   if (response.data.length == 0) {
     return;
@@ -67,30 +66,31 @@ const bind = () => {
     user_id: localStorage.getItem("user_id")
   };
   const payload = JSON.stringify(data);
-  ws.send(payload);
+  webSocketClient.send(payload);
 };
 
 /**
- * 推送消息处理
+ * 处理消息
  */
-const send = async (data) => {
+const handleMessage = async (data) => {
   show.value = true;
   const message = {
     title: data.title,
     url: data.url
   };
   messages.value.unshift(message);
+  playAudio();
 
   await axios.get("manage/message/readAll");
-  playAudio();
 };
 
 /**
  * 关闭
  */
-const close = () => {
+const close = async () => {
   messages.value = [];
   show.value = false;
+  await axios.get("manage/message/readAll");
 };
 
 /**
@@ -118,7 +118,7 @@ function playAudio() {
 }
 
 onMounted(() => {
-  getNoReads();
+  getNoReadMessages();
 });
 </script>
 

@@ -6,7 +6,8 @@ class Test
 {
     public function index()
     {
-        echo 'test > index';
-
+//        $message = new \app\helper\Message();
+//        $message->send('all', '标题'.time(), '/user');
+//        echo 'ok';
     }
 }

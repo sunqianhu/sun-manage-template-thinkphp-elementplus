@@ -5,6 +5,6 @@
 return [
     // 指令定义
     'commands' => [
-        'message' => 'app\command\Message'
+        'webSocketServer' => 'app\command\WebSocketServer' // webSocket服务端
     ],
 ];

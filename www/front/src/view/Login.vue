@@ -107,32 +107,22 @@ const submitForm = () => {
       return;
     }
 
-    let response;
     loading.value = true;
-    try {
-      response = await axios.post("manage/login/login", login.value);
-    } catch (error) {
-      loading.value = false;
-      return;
-    }
-
+    let response = await axios.post("manage/login/login", login.value);
     loading.value = false;
     if (response.code != 1) {
       ElMessage({
         message: response.message,
         type: "error"
       });
-      if (response.message.indexOf("验证码错误") !== -1) {
+      if (response.message.indexOf("验证码") !== -1) {
         getCaptcha();
       }
       return;
     }
 
-    // 存储
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("user_id", response.data.user_id);
-
-    // 导航
     router.push("/");
   });
 };
@@ -168,8 +158,8 @@ html {
     left: 0px;
     right: 0px;
     position: absolute;
-    top: 50%;
     z-index: 2;
+    top: 50%;
     margin-top: -200px;
 
     .header {
@@ -179,23 +169,22 @@ html {
         .logo {
           height: 44px;
           vertical-align: top;
-          margin-right: 16px;
         }
         .name {
+          margin-left: 16px;
           font-size: 30px;
           font-weight: bold;
         }
       }
       .subtitle {
-        color: rgba(0, 0, 0, 0.45);
+        color: var(--font-color-light);
         margin-top: 12px;
-        margin-bottom: 40px;
       }
     }
 
     .form {
       width: 350px;
-      margin-top: 30px;
+      margin-top: 50px;
       margin-left: auto;
       margin-right: auto;
       .captcha {
@@ -220,11 +209,12 @@ html {
 
   .footer {
     position: absolute;
-    width: 100%;
-    bottom: 10px;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
     z-index: 1;
     text-align: center;
-    font-size: 12px;
+    font-size: var(--font-size-small);
     color: var(--font-color-light);
   }
 }

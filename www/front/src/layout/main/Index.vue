@@ -1,12 +1,12 @@
 <template>
-  <div class="layout">
-    <el-container :class="{ container: true, close: !siderStatus }">
+  <div class="main-layout">
+    <el-container :class="{ close: !appStore.siderStatus }" class="container">
       <el-aside class="aside">
         <div class="system-name">
           <img src="@/asset/image/logo.png" class="logo" />
-          <span class="name">锐群</span>
+          <span class="name">通用后台管理系统</span>
         </div>
-        <el-scrollbar class="menu-wrap"> <Menu></Menu></el-scrollbar>
+        <el-scrollbar class="menu-wrap"><Menu></Menu></el-scrollbar>
       </el-aside>
       <el-container class="workspace">
         <el-header class="header">
@@ -16,19 +16,19 @@
             <Avatar></Avatar>
           </div>
         </el-header>
-        <el-main class="main">
+        <el-main class="body">
           <router-view />
-          <el-backtop :right="15" :bottom="15" target=".workspace .main"> UP </el-backtop>
+          <el-backtop :right="15" :bottom="15" target=".workspace .body"> UP </el-backtop>
         </el-main>
       </el-container>
     </el-container>
-    <!--<Message></Message>-->
+    <Message></Message>
     <watermark />
   </div>
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue";
+import { onMounted } from "vue";
 import { useAppStore } from "@/store/app";
 import Menu from "./Menu.vue";
 import Hamburger from "./Hamburger.vue";
@@ -38,9 +38,6 @@ import Message from "./Message.vue";
 import Watermark from "./Watermark.vue";
 
 const appStore = useAppStore();
-const siderStatus = computed(() => {
-  return appStore.siderStatus;
-});
 
 /**
  * 初始化
@@ -51,6 +48,9 @@ const init = () => {
   }
 };
 
+/**
+ * 窗口大小改变回调
+ */
 window.onresize = () => {
   if (document.body.clientWidth < 768) {
     appStore.setSiderStatus(false);
@@ -65,10 +65,8 @@ onMounted(() => {
 <style lang="scss">
 html {
   height: 100%;
-
   body {
     height: 100%;
-
     #app {
       height: 100%;
     }
@@ -77,7 +75,7 @@ html {
 </style>
 
 <style lang="scss" scoped>
-.layout {
+.main-layout {
   height: 100%;
 
   .container {
@@ -90,8 +88,7 @@ html {
       color: #ffffff;
       z-index: 2;
       transition: width 0.8s;
-      overflow-x: hidden;
-      overflow-y: hidden;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       .system-name {
@@ -100,7 +97,7 @@ html {
         line-height: 50px;
         overflow: hidden;
         transition: all 0.8s;
-        padding-left: 14px;
+        padding-left: 12px;
         .logo {
           height: 20px;
           vertical-align: middle;
@@ -108,7 +105,7 @@ html {
         .name {
           font-size: 20px;
           font-weight: bold;
-          margin-left: 12px;
+          margin-left: 8px;
           display: inline-block;
           vertical-align: middle;
           transition: all 0.8s;
@@ -129,18 +126,18 @@ html {
         background-color: #ffffff;
         box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
         padding: 0px;
-        .full-screen {
-          margin-right: 16px;
-        }
         .right {
           flex: 1;
           display: flex;
           align-items: center;
           justify-content: flex-end;
           margin-right: 16px;
+          .full-screen {
+            margin-right: 16px;
+          }
         }
       }
-      .main {
+      .body {
         padding: 16px;
       }
     }
@@ -148,7 +145,10 @@ html {
       .aside {
         width: 64px;
         .system-name {
-          padding-left: 14px;
+          padding-left: 20px;
+          .name {
+            margin-left: 30px;
+          }
         }
       }
     }

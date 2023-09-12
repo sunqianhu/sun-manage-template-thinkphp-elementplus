@@ -39,17 +39,17 @@ class Message
         }
 
         // 发送
-        $config = Config::get('message');
-        $serverData = [
+        $config = Config::get('websocket');
+        $data = [
             'type' => 'send',
             'user' => $user,
             'data' => [
-                'type' => 'send',
+                'type' => 'message_send',
                 'title' => $title,
                 'url' => $url
             ]
         ];
-        $payload = json_encode($serverData);
+        $payload = json_encode($data);
         $url = 'ws://' . $config['client_ip'] . ':' . $config['port'];
         $client = new Client($url);
         $client->text($payload);
@@ -64,11 +64,9 @@ class Message
     public function getUserId($user)
     {
         if ($user === 'all') {
-            return UserModel::column('id');
+            return UserModel::where('status_id', '=', 1)->column('id');
         }
 
         return explode(',', $user);
     }
-
-
 }
