@@ -21,17 +21,17 @@ class Role extends Base
     public function getIndexRoles()
     {
         $get = $this->request->get(['name' => '', 'size' => '30', 'page' => '1']);
-        $wheres = [];
+
+        $query = RoleModel::field('id,name');
         if ($get['name'] !== '') {
-            $wheres[] = ['name', 'LIKE', '%' . $get['name'] . '%'];
+            $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
-        $roles = RoleModel::field('id,name')
-            ->where($wheres)
-            ->order('id', 'asc')
-            ->paginate([
-                'list_rows' => $get['size'],
-                'page' => $get['page'],
-            ]);
+        $query = $query->order('id', 'asc');
+        $roles = $query->paginate([
+            'list_rows' => $get['size'],
+            'page' => $get['page'],
+        ]);
+
         return $this->success('获取成功', $roles);
     }
 
@@ -119,7 +119,7 @@ class Role extends Base
      */
     public function saveEdit()
     {
-        $post = $this->request->post(['id', 'name', 'menu_ids'=>[]]);
+        $post = $this->request->post(['id', 'name', 'menu_ids' => []]);
 
         // 验证
         try {

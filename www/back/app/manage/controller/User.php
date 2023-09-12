@@ -48,35 +48,31 @@ class User extends Base
     {
         $get = $this->request->get(['department_id', 'role_id', 'account', 'name', 'phone', 'size' => 30, 'page' => 1]);
 
-        $wheres = [];
+        $query = UserModel::field('u.id,u.account,u.name,u.phone,u.status_id,u.add_time,u.department_id')
+            ->with('department')
+            ->alias('u')
+            ->leftJoin('user_role ur', 'u.id = ur.user_id');
         if (!empty($get['department_id'])) {
-            $wheres[] = ['a.department_id', '=', $get['department_id']];
+            $query = $query->where('u.department_id', '=', $get['department_id']);
         }
         if (!empty($get['role_id'])) {
-            $wheres[] = ['b.role_id', '=', $get['role_id']];
+            $query = $query->where('ur.role_id', '=', $get['role_id']);
         }
         if (isset($get['account']) && $get['account'] !== '') {
-            $wheres[] = ['a.account', 'LIKE', '%' . $get['account'] . '%'];
+            $query = $query->where('u.account', 'LIKE', '%' . $get['account'] . '%');
         }
         if (isset($get['name']) && $get['name'] !== '') {
-            $wheres[] = ['a.name', 'LIKE', '%' . $get['name'] . '%'];
+            $query = $query->where('u.name', 'LIKE', '%' . $get['name'] . '%');
         }
         if (isset($get['phone']) && $get['phone'] !== '') {
-            $wheres[] = ['a.phone', 'LIKE', '%' . $get['phone'] . '%'];
+            $query = $query->where('u.phone', 'LIKE', '%' . $get['phone'] . '%');
         }
-
-        $paginate = UserModel::field('a.id,a.account,a.name,a.phone,a.status_id,a.add_time,a.department_id')
-            ->with('department')
-            ->alias('a')
-            ->leftJoin('user_role b', 'a.id = b.user_id')
-            ->where($wheres)
-            ->group('a.id')
-            ->order('a.id', 'desc')
-			->group('a.id')
-            ->paginate([
-                'list_rows' => $get['size'],
-                'page' => $get['page']
-            ]);
+        $query = $query->group('u.id')
+            ->order('u.id', 'desc');
+        $paginate = $query->paginate([
+            'list_rows' => $get['size'],
+            'page' => $get['page']
+        ]);
         $data = $paginate->toArray();
 
         return $this->success('获取成功', $data);
@@ -235,7 +231,6 @@ class User extends Base
     function editStatus()
     {
         $post = $this->request->post(['id', 'status_id' => 0]);
-        //$post['status_id'] = $post['status_id'] == 1 ? 1 : 2;
 
         // 验证
         try {
@@ -245,7 +240,6 @@ class User extends Base
         }
 
         UserModel::update($post);
-
         return $this->success('修改成功');
     }
 

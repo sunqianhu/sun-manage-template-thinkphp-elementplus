@@ -21,13 +21,7 @@
     </div>
 
     <div class="list">
-      <el-table
-        :data="menus"
-        v-loading="loading"
-        row-key="id"
-        default-expand-all
-        style="width: 100%"
-      >
+      <el-table :data="menus" v-loading="loading" row-key="id" style="width: 100%">
         <el-table-column prop="name" label="菜单名称" />
         <el-table-column prop="key" label="菜单key" />
         <el-table-column v-slot="{ row }" prop="type_id" label="菜单类型" width="100">
@@ -158,7 +152,7 @@ onMounted(() => {
   .list {
     margin-top: 16px;
     ::v-deep(th.el-table__cell) {
-      background-color: var(--fill-color);
+      background-color: var(--background-color);
     }
   }
 }

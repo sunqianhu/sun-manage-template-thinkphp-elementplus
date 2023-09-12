@@ -21,9 +21,6 @@ class Base extends BaseController
     private $noLoginUrls = [
         'manage/login/getcaptcha',
         'manage/login/login',
-        'manage/sso/getauthurl',
-        'manage/sso/login',
-        'manage/sso/mainLogout',
         'manage/test/index'
     ];
 
@@ -31,7 +28,7 @@ class Base extends BaseController
      * @var string[] 不判断权限网址
      */
     private $noPermissionUrls = [
-        'manage/sso/logout',
+        'manage/login/logout',
         'manage/main/getpermissions',
         'manage/main/getroutes',
         'manage/main/getmenus',
@@ -63,7 +60,7 @@ class Base extends BaseController
             exit;
         }
 
-        $this->createOperationLog();
+        $this->addOperationLog();
     }
 
     /**
@@ -115,7 +112,7 @@ class Base extends BaseController
             throw new Exception('无权限');
         }
 
-        $has = false;
+        $have = false;
         foreach ($menuModels as $menuModel) {
             $api = $menuModel->api;
             if ($api === '') {
@@ -125,11 +122,11 @@ class Base extends BaseController
             $api = str_replace("\r\n", "\n", $api);
             $apis = explode("\n", $api);
             if (in_array($url, $apis)) {
-                $has = true;
+                $have = true;
                 break;
             }
         }
-        if (!$has) {
+        if (!$have) {
             throw new Exception('无权限');
         }
     }
@@ -168,7 +165,7 @@ class Base extends BaseController
      * 新增操作日志
      * @return void
      */
-    public function createOperationLog()
+    public function addOperationLog()
     {
         if (empty($this->user->id)) {
             return;

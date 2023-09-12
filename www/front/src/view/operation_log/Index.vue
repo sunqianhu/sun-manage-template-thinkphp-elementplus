@@ -139,7 +139,7 @@ onMounted(() => {
   }
   .list {
     ::v-deep(th.el-table__cell) {
-      background-color: var(--fill-color);
+      background-color: var(--background-color);
     }
   }
   .pagination {

@@ -19,7 +19,7 @@ const props = defineProps(["title", "description"]);
 
 <style lang="scss" scoped>
 .card-panel {
-  background-color: var(--fill-color-extra-light);
+  background-color: var(--background-color-extra-light);
   border-radius: var(--border-radius);
   .header {
     display: flex;

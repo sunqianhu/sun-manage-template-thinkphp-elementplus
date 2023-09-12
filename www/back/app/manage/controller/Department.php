@@ -19,15 +19,13 @@ class Department extends Base
     public function getIndexDepartments()
     {
         $get = $this->request->get(['name']);
-        $wheres = [];
-        if (isset($get['name'])) {
-            $wheres[] = ['name', 'LIKE', '%' . $get['name'] . '%'];
-        }
 
-        $departmentModels = DepartmentModel::field('id,department_id,name,sort')
-            ->where($wheres)
-            ->order('sort', 'asc')
-            ->select();
+        $query = DepartmentModel::field('id,department_id,name,sort');
+        if (isset($get['name'])) {
+            $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
+        }
+        $query = $query->order('sort', 'asc');
+        $departmentModels = $query->select();
         $departments = $departmentModels->toArray();
 
         $arr = new Arr();
@@ -141,7 +139,12 @@ class Department extends Base
             return $this->error('该部门下存在子部门，不能删除');
         }
 
-        DepartmentModel::destroy($id);
+        $departmentModel = DepartmentModel::find($id);
+        if(empty($departmentModel)){
+            return $this->error('没有找到记录');
+        }
+        $departmentModel->delete();
+
         return $this->success('删除成功');
     }
 }

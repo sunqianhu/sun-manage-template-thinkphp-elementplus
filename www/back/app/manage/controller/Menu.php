@@ -19,15 +19,12 @@ class Menu extends Base
     public function getIndexMenus()
     {
         $get = $this->request->get(['name']);
-        $wheres = [];
+        $query = MenuModel::field('id,menu_id,type_id,name,key,sort');
         if (isset($get['name'])) {
-            $wheres[] = ['name', 'LIKE', '%' . $get['name'] . '%'];
+            $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
-
-        $menuModels = MenuModel::field('id,menu_id,type_id,name,key,sort')
-            ->where($wheres)
-            ->order('sort', 'asc')
-            ->select();
+        $query = $query->order('sort', 'asc');
+        $menuModels = $query->select();
         $menus = $menuModels->toArray();
 
         $arr = new Arr();
@@ -61,7 +58,7 @@ class Menu extends Base
      */
     public function saveAdd()
     {
-        $post = $this->request->post(['menu_id' => 0, 'type_id' => 0, 'name', 'key', 'path', 'component', 'icon', 'api'=>'', 'show', 'sort']);
+        $post = $this->request->post(['menu_id' => 0, 'type_id' => 0, 'name', 'key', 'path', 'component', 'icon', 'api' => '', 'show', 'sort']);
 
         // 验证
         try {
@@ -108,7 +105,7 @@ class Menu extends Base
      */
     public function saveEdit()
     {
-        $post = $this->request->post(['id', 'menu_id' => 0, 'type_id' => 0, 'name', 'key', 'icon', 'path', 'component', 'api'=>'', 'show', 'sort']);
+        $post = $this->request->post(['id', 'menu_id' => 0, 'type_id' => 0, 'name', 'key', 'icon', 'path', 'component', 'api' => '', 'show', 'sort']);
 
         // 验证
         try {
@@ -118,7 +115,6 @@ class Menu extends Base
         }
 
         MenuModel::update($post);
-
         return $this->success('修改成功');
     }
 
