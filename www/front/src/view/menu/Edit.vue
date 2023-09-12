@@ -8,7 +8,7 @@
     @close="close"
     class="edit"
   >
-    <el-scrollbar max-height="300px" class="scrollbar">
+    <el-scrollbar max-height="300px" class="scrollbar" v-loading="pageLoading">
       <el-form :model="menu" :rules="rules" ref="menuRef" label-width="120px">
         <el-form-item label="上级菜单" prop="menu_id">
           <el-tree-select
@@ -35,7 +35,6 @@
           <el-input v-model="menu.key" />
           <div class="form-message">菜单的唯一标识，用于前端路由名称和权限指令标识</div>
         </el-form-item>
-
         <el-form-item label="路由路径" prop="path" v-if="menu.type_id == 2">
           <el-input v-model="menu.path" />
           <div class="form-message">例如/system/user</div>
@@ -53,9 +52,11 @@
           <el-input v-model="menu.api" type="textarea" rows="3" />
           <div class="form-message">后端接口网址一行一个，格式：/应用/控制器/方法</div>
         </el-form-item>
-
-        <el-form-item label="排序" prop="sort">
-          <el-input v-model="menu.sort" type="number" />
+        <el-form-item label="保活" prop="keep_alive" v-if="menu.type_id == 2">
+          <el-radio-group v-model="menu.keep_alive">
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="2">否</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="菜单显示" prop="show" v-if="menu.type_id == 1 || menu.type_id == 2">
           <el-radio-group v-model="menu.show">
@@ -63,11 +64,14 @@
             <el-radio :label="2">隐藏</el-radio>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="排序" prop="sort">
+          <el-input v-model="menu.sort" type="number" />
+        </el-form-item>
       </el-form>
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" @click="submitForm" :loading="buttonLoading"> 提交 </el-button>
     </template>
   </el-dialog>
 </template>
@@ -87,14 +91,18 @@ const rules = {
   sort: [{ required: true, message: "请输入排序", trigger: "blur" }]
 };
 const treeMenus = ref([]);
+const pageLoading = ref(true);
+const buttonLoading = ref(false);
 
 /**
  * 初始化
  */
 const init = async () => {
+  pageLoading.value = true;
   const response = await axios.get("manage/Menu/initEdit", {
     params: { id: props.id }
   });
+  pageLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -125,7 +133,9 @@ const submitForm = () => {
     if (!valid) {
       return;
     }
+    buttonLoading.value = true;
     const response = await axios.post("manage/Menu/saveEdit", menu.value);
+    buttonLoading.value = false;
     if (response.code != 1) {
       ElMessage({
         message: response.message,

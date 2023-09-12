@@ -17,7 +17,12 @@
           </div>
         </el-header>
         <el-main class="body">
-          <router-view />
+          <router-view v-slot="{ Component, route }">
+            <keep-alive>
+              <component :is="Component" v-if="route.meta.keep_alive == true" />
+            </keep-alive>
+            <component :is="Component" v-if="route.meta.keep_alive != true" />
+          </router-view>
           <el-backtop :right="15" :bottom="15" target=".workspace .body"> UP </el-backtop>
         </el-main>
       </el-container>

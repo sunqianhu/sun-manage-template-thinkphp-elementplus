@@ -53,6 +53,7 @@ class Main extends Base
             $route['name'] = $menuModel->key;
             $route['component'] = $menuModel->component;
             $route['meta']['name'] = $menuModel->name;
+            $route['meta']['keep_alive'] = $menuModel->keep_alive == 1 ? true : false;
             $routes[] = $route;
         }
 

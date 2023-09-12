@@ -52,9 +52,11 @@
           <el-input v-model="menu.api" type="textarea" rows="3" />
           <div class="form-message">后端接口网址一行一个，格式：/应用/控制器/方法</div>
         </el-form-item>
-
-        <el-form-item label="排序" prop="sort">
-          <el-input v-model="menu.sort" type="number" />
+        <el-form-item label="保活" prop="keep_alive" v-if="menu.type_id == 2">
+          <el-radio-group v-model="menu.keep_alive">
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="2">否</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="菜单显示" prop="show" v-if="menu.type_id == 1 || menu.type_id == 2">
           <el-radio-group v-model="menu.show">
@@ -62,11 +64,14 @@
             <el-radio :label="2">隐藏</el-radio>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="排序" prop="sort">
+          <el-input v-model="menu.sort" type="number" />
+        </el-form-item>
       </el-form>
     </el-scrollbar>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" @click="submitForm"> 提交 </el-button>
+      <el-button type="primary" :loading="buttonLoading" @click="submitForm"> 提交 </el-button>
     </template>
   </el-dialog>
 </template>
@@ -77,10 +82,12 @@ import axios from "@/util/axios";
 
 defineProps(["open"]);
 const emits = defineEmits(["close", "refresh"]);
+const buttonLoading = ref(false);
 
 const menu = ref({
   type_id: 1,
   sort: 1,
+  keep_alive: 2,
   show: 1
 });
 const menuRef = ref();
@@ -123,7 +130,9 @@ const submitForm = () => {
       return;
     }
 
+    buttonLoading.value = true;
     const response = await axios.post("manage/Menu/saveAdd", menu.value);
+    buttonLoading.value = false;
     if (response.code != 1) {
       ElMessage({
         message: response.message,
