@@ -113,7 +113,7 @@ class Dictionary extends Base
         if ($id <= 0 || !is_numeric($id)) {
             return $this->error('id参数错误');
         }
-
+        
         $dictionaryModel = DictionaryModel::find($id);
         if (empty($dictionaryModel)) {
             return $this->error('没有找到记录');

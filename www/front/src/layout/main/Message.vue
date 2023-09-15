@@ -39,7 +39,7 @@ webSocketClient.onMessage = (event) => {
   if (!data) {
     return;
   }
-  if (data.type == "message_send") {
+  if (data.type == "send") {
     handleMessage(data);
   }
 };

@@ -14,9 +14,9 @@ use Workerman\Connection\TcpConnection;
 use Workerman\Timer;
 
 /**
- * websocket服务端
+ * 消息服务
  */
-class WebSocketServer extends Command
+class Message extends Command
 {
     /**
      * @var object 容器类
@@ -35,10 +35,10 @@ class WebSocketServer extends Command
     protected function configure()
     {
         // 指令配置
-        $this->setName('webSocketServer')
+        $this->setName('message')
             ->addArgument('action', Argument::OPTIONAL, "操作参数[start|stop|reload|restart|status]", 'start')
             ->addOption('daemon', null, Option::VALUE_OPTIONAL, '以守护进程运行')
-            ->setDescription('websocket服务端，windows：php think webSocketServer，linux：php think webSocketServer start --daemon true');
+            ->setDescription('消息服务端，windows：php think message，linux：php think message start --daemon true');
     }
 
     /**
@@ -63,7 +63,7 @@ class WebSocketServer extends Command
                 echo 'action参数错误';
                 exit;
             }
-            $argv[0] = 'webSocketServer';
+            $argv[0] = 'message';
             $argv[1] = $action;
             if ($input->hasOption('daemon')) {
                 $argv[2] = '-d';
@@ -79,10 +79,10 @@ class WebSocketServer extends Command
         }
 
         // 容器
-        $config = Config::get('websocket');
+        $config = Config::get('message');
         $url = 'websocket://' . $config['server_ip'] . ':' . $config['port'];
         $this->worker = new Worker($url);
-        $this->worker->name = 'webSocketServer';
+        $this->worker->name = 'message';
         $this->worker->count = 1;
 
         // 事件
