@@ -7,7 +7,6 @@ namespace app\helper;
 
 use app\model\Token as TokenModel;
 use app\entity\User;
-use app\helper\token;
 use Exception;
 use Firebase\JWT\JWT as FirebaseJWT;
 use Firebase\JWT\Key;
@@ -75,5 +74,16 @@ class ManageJwt
         $user->setDepartmentId($decoded->department_id);
 
         return $user;
+    }
+
+    /**
+     * 删除token
+     * @param $userId 用户id
+     * @return void
+     */
+    function deleteToken($userId)
+    {
+        TokenModel::where('user_id', '=', $userId)->delete();
+        return true;
     }
 }

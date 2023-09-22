@@ -101,8 +101,8 @@ class Login extends Base
     public function logout()
     {
         $userModel = UserModel::find($this->user->id);
-        $computerJwt = new ComputerJwt();
-        $computerJwt->deleteToken($userModel->id);
+        $manageJwt = new ManageJwt();
+        $manageJwt->deleteToken($userModel->id);
 
         return $this->success("退出成功");
     }
