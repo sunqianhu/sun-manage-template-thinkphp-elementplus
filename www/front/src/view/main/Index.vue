@@ -1,5 +1,5 @@
 <template>
-  <div class="main-layout">
+  <div class="layout-main">
     <el-container :class="{ close: !appStore.siderStatus }" class="container">
       <el-aside class="aside">
         <div class="system-name">
@@ -80,7 +80,7 @@ html {
 </style>
 
 <style lang="scss" scoped>
-.main-layout {
+.layout-main {
   height: 100%;
 
   .container {
