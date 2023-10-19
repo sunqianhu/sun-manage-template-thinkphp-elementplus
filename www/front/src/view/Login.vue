@@ -75,9 +75,9 @@ const router = useRouter();
 const login = ref({});
 const loginRef = ref(null);
 const rules = {
-  account: [{ required: true, message: "请输入账号", trigger: "blur" }],
-  password: [{ required: true, message: "请输入密码", trigger: "blur" }],
-  captcha_code: [{ required: true, message: "请输入验证码", trigger: "blur" }]
+  account: [{ required: true, message: "账号不能为空", trigger: "blur" }],
+  password: [{ required: true, message: "密码不能为空", trigger: "blur" }],
+  captcha_code: [{ required: true, message: "验证码不能为空", trigger: "blur" }]
 };
 const loading = ref(false);
 const captchaImage = ref("");
