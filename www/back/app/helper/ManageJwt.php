@@ -19,7 +19,7 @@ class ManageJwt
     /**
      * 得到token
      * @param User $user
-     * @return Str token
+     * @return StringHandler token
      */
     function getToken(User $user)
     {

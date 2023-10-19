@@ -78,7 +78,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 
 defineProps(["open"]);
 const emits = defineEmits(["close", "refresh"]);
@@ -92,10 +92,10 @@ const menu = ref({
 });
 const menuRef = ref();
 const rules = {
-  type_id: [{ required: true, message: "请选择菜单类型", trigger: "blur" }],
-  name: [{ required: true, message: "请输入菜单名称", trigger: "blur" }],
-  key: [{ required: true, message: "请输入菜单key", trigger: "blur" }],
-  sort: [{ required: true, message: "请输入排序", trigger: "blur" }]
+  type_id: [{ required: true, message: "菜单类型不能为空", trigger: "blur" }],
+  name: [{ required: true, message: "菜单名称不能为空", trigger: "blur" }],
+  key: [{ required: true, message: "菜单key不能为空", trigger: "blur" }],
+  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
 const treeMenus = ref([]);
 

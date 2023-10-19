@@ -32,7 +32,7 @@
 
 <script setup>
 import { ref } from "vue";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 
 defineProps(["open"]);
 const emits = defineEmits(["close"]);
@@ -41,10 +41,10 @@ const dictionary = ref({
 });
 const dictionaryRef = ref({});
 const rules = {
-  type: [{ required: true, message: "请输入字典类型", trigger: "blur" }],
-  key: [{ required: true, message: "请输入字典键", trigger: "blur" }],
-  value: [{ required: true, message: "请输入字典值", trigger: "blur" }],
-  sort: [{ required: true, message: "请输入排序", trigger: "blur" }]
+  type: [{ required: true, message: "字典类型不能为空", trigger: "blur" }],
+  key: [{ required: true, message: "字典键不能为空", trigger: "blur" }],
+  value: [{ required: true, message: "字典值不能为空", trigger: "blur" }],
+  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
 
 /**

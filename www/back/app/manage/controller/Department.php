@@ -3,7 +3,7 @@
 namespace app\manage\controller;
 
 use app\manage\validate\Department as DepartmentValidate;
-use app\helper\Arr;
+use app\helper\ArrayHandler;
 use app\model\Department as DepartmentModel;
 use think\exception\ValidateException;
 
@@ -28,7 +28,7 @@ class Department extends Base
         $departmentModels = $query->select();
         $departments = $departmentModels->toArray();
 
-        $arr = new Arr();
+        $arr = new ArrayHandler();
         $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
 
         return $this->success('获取成功', $treeDepartments);
@@ -44,7 +44,7 @@ class Department extends Base
             ->select();
         $departments = $departmentModels->toArray();
 
-        $arr = new Arr();
+        $arr = new ArrayHandler();
         $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
 
         return $this->success('获取成功', $treeDepartments);
@@ -90,7 +90,7 @@ class Department extends Base
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $arr = new Arr();
+        $arr = new ArrayHandler();
         $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
 
         $data = [

@@ -37,7 +37,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 
 const props = defineProps(["open", "id"]);
 const emits = defineEmits(["close"]);

@@ -99,7 +99,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 import dayjs from "dayjs";
 import { Search, ArrowDown, Plus } from "@element-plus/icons-vue";
 import Add from "./Add.vue";

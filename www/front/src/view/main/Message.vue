@@ -20,9 +20,9 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { Close } from "@element-plus/icons-vue";
-import { useWebSocketClient } from "@/util/web_socket_client.js";
+import { useWebSocketClient } from "@/helper/web_socket_client.js";
 import { config } from "@/../config.js";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 import audioPath from "@/asset/message.mp3";
 
 const router = useRouter();

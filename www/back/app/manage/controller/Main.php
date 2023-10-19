@@ -2,7 +2,7 @@
 
 namespace app\manage\controller;
 
-use app\helper\Arr;
+use app\helper\ArrayHandler;
 use app\model\Menu as MenuModel;
 use app\model\Role as RoleModel;
 use app\model\User as UserModel;
@@ -97,7 +97,7 @@ class Main extends Base
             $menu['icon'] = $menuModel->icon;
             $menus[] = $menu;
         }
-        $arr = new Arr();
+        $arr = new ArrayHandler();
         $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
 
         return $this->success('获取成功', $treeMenus);

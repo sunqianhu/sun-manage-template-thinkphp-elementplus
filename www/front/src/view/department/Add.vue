@@ -37,7 +37,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 
 defineProps(["open"]);
 const emits = defineEmits(["close"]);
@@ -47,8 +47,8 @@ const department = ref({
 });
 const departmentRef = ref({});
 const rules = {
-  name: [{ required: true, message: "请输入部门名称", trigger: "blur" }],
-  sort: [{ required: true, message: "请输入排序", trigger: "blur" }]
+  name: [{ required: true, message: "部门名称不能为空", trigger: "blur" }],
+  sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
 const treeDepartments = ref([]);
 

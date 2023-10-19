@@ -1,4 +1,4 @@
-import { isPermission } from "../util/permission";
+import { isPermission } from "../helper/permission";
 
 export default {
   // 挂载完成后

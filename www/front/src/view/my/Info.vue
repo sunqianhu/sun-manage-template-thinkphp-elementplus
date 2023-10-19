@@ -44,7 +44,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 import dayjs from "dayjs";
 
 const props = defineProps(["open"]);

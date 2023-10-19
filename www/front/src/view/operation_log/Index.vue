@@ -54,7 +54,7 @@
 import { ref, onMounted } from "vue";
 import { dayjs } from "element-plus";
 import { Search } from "@element-plus/icons-vue";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 
 const query = ref({
   time: [

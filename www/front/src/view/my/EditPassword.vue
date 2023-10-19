@@ -19,15 +19,15 @@
 
 <script setup>
 import { ref } from "vue";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 
 const props = defineProps(["open"]);
 const emits = defineEmits(["close"]);
 const user = ref({});
 const formRef = ref();
 const rules = {
-  password1: [{ required: true, message: "请输入新密码", trigger: "blur" }],
-  password2: [{ required: true, message: "请输入确认新密码", trigger: "blur" }]
+  password1: [{ required: true, message: "新密码不能为空", trigger: "blur" }],
+  password2: [{ required: true, message: "确认新密码不能为空", trigger: "blur" }]
 };
 
 /**

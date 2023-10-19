@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 import { useAppStore } from "@/store/app";
 
 /**

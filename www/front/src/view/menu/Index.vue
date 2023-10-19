@@ -53,7 +53,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { Search, Plus } from "@element-plus/icons-vue";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
 import TypeTag from "./TypeTag.vue";

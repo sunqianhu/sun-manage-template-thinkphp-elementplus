@@ -31,7 +31,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { Edit, SwitchButton, User } from "@element-plus/icons-vue";
 import { useAppStore } from "../../store/app";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 import Info from "@/view/my/Info.vue";
 import EditPassword from "@/view/my/EditPassword.vue";
 

@@ -69,7 +69,7 @@
 import { ref, onMounted } from "vue";
 import { User, Lock, Monitor } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 
 const router = useRouter();
 const login = ref({});

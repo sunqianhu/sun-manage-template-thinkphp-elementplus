@@ -9,7 +9,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 
 const data = ref({});
 const loading = ref(true);

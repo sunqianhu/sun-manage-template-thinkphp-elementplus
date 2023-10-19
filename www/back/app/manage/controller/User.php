@@ -3,7 +3,7 @@
 namespace app\manage\controller;
 
 use app\manage\validate\User as UserValidate;
-use app\helper\Arr;
+use app\helper\ArrayHandler;
 use app\model\Department as DepartmentModel;
 use app\model\Role as RoleModel;
 use app\model\Token as TokenModel;
@@ -27,7 +27,7 @@ class User extends Base
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $arr = new Arr();
+        $arr = new ArrayHandler();
         $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
 
         // 角色
@@ -88,7 +88,7 @@ class User extends Base
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $arr = new Arr();
+        $arr = new ArrayHandler();
         $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
 
         // 角色
@@ -168,7 +168,7 @@ class User extends Base
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $arr = new Arr();
+        $arr = new ArrayHandler();
         $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
 
         // 角色

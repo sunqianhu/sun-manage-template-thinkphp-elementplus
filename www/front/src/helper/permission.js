@@ -1,5 +1,5 @@
 import { useAppStore } from "../store/app";
-import axios from "../util/axios";
+import axios from "../helper/axios";
 
 /**
  * 是否有权限

@@ -38,7 +38,7 @@
 
 <script setup>
 import { ref, watch, onMounted } from "vue";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 
 defineProps(["open"]);
 const emits = defineEmits(["close"]);
@@ -47,7 +47,7 @@ const role = ref({
 });
 const roleRef = ref({});
 const rules = {
-  name: [{ required: true, message: "请输入角色名称", trigger: "blur" }]
+  name: [{ required: true, message: "角色名称不能为空", trigger: "blur" }]
 };
 const menus = ref([]);
 const menuRef = ref(null);

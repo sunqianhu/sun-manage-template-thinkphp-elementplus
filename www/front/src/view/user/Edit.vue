@@ -39,7 +39,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "@/util/axios";
+import axios from "@/helper/axios";
 
 const props = defineProps(["open", "id"]);
 const emits = defineEmits(["close"]);
@@ -49,9 +49,9 @@ const user = ref({
 });
 const userRef = ref();
 const rules = {
-  name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-  phone: [{ required: true, message: "请输入手机号码", trigger: "blur" }],
-  department_id: [{ required: true, message: "请选择所属部门", trigger: "blur" }]
+  name: [{ required: true, message: "姓名不能为空", trigger: "blur" }],
+  phone: [{ required: true, message: "手机号码不能为空", trigger: "blur" }],
+  department_id: [{ required: true, message: "所属部门还未选择", trigger: "blur" }]
 };
 const departments = ref([]);
 const roles = ref([]);
