@@ -79,6 +79,10 @@ class Login extends Base
         $userEntity->setDepartmentId($userModel->department_id);
         $token = $adminJwt->getToken($userEntity);
 
+        $userModel->login_time = time();
+        $userModel->login_ip = $this->request->ip();
+        $userModel->save();
+
         Cache::delete('captcha_' . $post['captcha_token']);
         $data = [
             'user_id'=>$userModel->id,

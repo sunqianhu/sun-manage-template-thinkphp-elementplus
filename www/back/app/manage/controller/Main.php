@@ -30,7 +30,7 @@ class Main extends Base
             ->field('menu.*')
             ->where('menu.type_id', 2)
             ->where('role_menu.role_id', 'in', $roleIds)
-            ->order('menu.sort', 'asc')
+            ->order(['menu.menu_id'=>'asc','menu.sort'=>'asc'])
             ->group('menu.id')
             ->select();
         if ($menuModels->isEmpty()) {

@@ -37,4 +37,16 @@ class ArrayHandler
 
         return $tree;
     }
+
+    /**
+     * 二维数组按某字段降序排序
+     * @param $array
+     * @param $field
+     * @return void
+     */
+    function twoDimensionalRsort(&$array, $field){
+        usort($array, function($item1, $item2) use($field) {
+            return $item2[$field] - $item1[$field];
+        });
+    }
 }

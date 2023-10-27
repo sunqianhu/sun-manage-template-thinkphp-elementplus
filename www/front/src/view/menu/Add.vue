@@ -50,7 +50,7 @@
 
         <el-form-item label="接口地址" prop="api" v-if="menu.type_id == 2 || menu.type_id == 3">
           <el-input v-model="menu.api" type="textarea" rows="3" />
-          <div class="form-message">后端接口网址一行一个，格式：/应用/控制器/方法</div>
+          <div class="form-message">后端接口网址一行一个，格式：应用/控制器/方法</div>
         </el-form-item>
         <el-form-item label="保活" prop="keep_alive" v-if="menu.type_id == 2">
           <el-radio-group v-model="menu.keep_alive">
