@@ -6,8 +6,8 @@
     :name="props.name"
     :headers="headers"
     :multiple="props.multiple"
-    :disabled="props.disabled"
     :limit="props.limit"
+    :disabled="props.disabled"
     :on-success="success"
     :on-remove="remove"
     :on-change="change"
@@ -23,10 +23,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 
 const props = defineProps({
   modelValue: {
+    type: Array,
     default: []
   },
   name: {
@@ -43,11 +44,10 @@ const props = defineProps({
   },
   limit: {
     type: Number,
-    default: 4
+    default: 10
   }
 });
 const emits = defineEmits(["update:modelValue"]);
-
 const headers = { token: localStorage.getItem("token") };
 const files = ref([]);
 const uploadRef = ref(null);
@@ -111,21 +111,19 @@ const exceed = (files, uploadFiles) => {
 };
 
 /**
- * 得到文件
+ * 得到文件集合
  */
 const getFiles = () => {
   const dataFiles = files.value;
+  let index = 0;
+  let dataFile = {};
+  let vmodelFiles = [];
+
   if (dataFiles.length == 0) {
-    return [];
+    return vmodelFiles;
   }
 
-  let index = 0;
-  let vmodelFiles = [];
-  let dataFile = {};
-
-  for (index in dataFiles) {
-    dataFile = dataFiles[index];
-
+  for (dataFile of dataFiles) {
     if (dataFile.response) {
       vmodelFiles.push(dataFile.response.data);
       continue;
@@ -136,6 +134,19 @@ const getFiles = () => {
 
   return vmodelFiles;
 };
+
+/**
+ * 侦听props
+ */
+watch(
+  () => props.modelValue,
+  (newModelValue) => {
+    init();
+  },
+  {
+    deep: true
+  }
+);
 
 onMounted(() => {
   init();
