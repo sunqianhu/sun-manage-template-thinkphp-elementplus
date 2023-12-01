@@ -12,7 +12,7 @@ const getLoginRoutePath = () => {
   return "/login";
 };
 
-// 路由对象
+//路由对象
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -52,26 +52,26 @@ const router = createRouter({
   ]
 });
 
-// 前置守卫
+//前置守卫
 router.beforeEach(async (to, from) => {
   NProgress.start();
 
-  // 白名单
+  //白名单
   const writeList = ["/login", "/404", "/test"];
   if (writeList.includes(to.path)) {
     return true;
   }
 
-  // 登录
+  //登录
   const token = localStorage.getItem("token");
   if (!token) {
     return getLoginRoutePath();
   }
 
   const appStore = useAppStore();
-  let response; // 接口响应
+  let response; //接口响应
 
-  // 权限
+  //权限
   if (!appStore.isSetPermission) {
     response = await axios.get("manage/main/getPermissions");
     if (response.code != 1) {
@@ -80,7 +80,7 @@ router.beforeEach(async (to, from) => {
     appStore.setPermissions(response.data);
   }
 
-  // 动态路由
+  //动态路由
   if (!appStore.isSetRoute) {
     response = await axios.get("manage/main/getRoutes");
     if (response.code != 1) {
@@ -110,7 +110,7 @@ router.beforeEach(async (to, from) => {
   return true;
 });
 
-// 后置钩子
+//后置钩子
 router.afterEach((to, from) => {
   NProgress.done();
   document.title = to.meta.name;

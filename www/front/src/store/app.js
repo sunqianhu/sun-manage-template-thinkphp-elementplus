@@ -4,11 +4,11 @@ import router from "../router/index.js";
 export const useAppStore = defineStore("app", {
   state: () => {
     return {
-      siderStatus: true, // 左边状态
-      isSetRoute: false, // 是否设置路由
-      routes: [], // 路由
-      isSetPermission: false, // 是否设置权限
-      permissions: [] // 权限
+      siderStatus: true, //左边状态
+      isSetRoute: false, //是否设置路由
+      routes: [], //路由
+      isSetPermission: false, //是否设置权限
+      permissions: [] //权限
     };
   },
   actions: {

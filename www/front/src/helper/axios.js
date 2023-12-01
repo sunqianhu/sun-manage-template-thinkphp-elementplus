@@ -8,10 +8,10 @@ const instance = axios.create({
   timeout: 1000 * 15
 });
 
-// 请求拦截器
+//请求拦截器
 instance.interceptors.request.use(
   function (config) {
-    // token
+    //token
     let token = localStorage.getItem("token");
     if (token) {
       config.headers.token = token;
@@ -28,7 +28,7 @@ instance.interceptors.request.use(
   }
 );
 
-// 响应拦截器
+//响应拦截器
 instance.interceptors.response.use(
   function (response) {
     const data = response.data;

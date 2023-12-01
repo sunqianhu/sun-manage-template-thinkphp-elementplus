@@ -26,10 +26,10 @@ import axios from "@/helper/axios";
 import audioPath from "@/asset/message.mp3";
 
 const router = useRouter();
-const messages = ref([]); // 消息
-const show = ref(false); // 显示
+const messages = ref([]); //消息
+const show = ref(false); //显示
 
-// websocket客户端
+//websocket客户端
 const webSocketClient = useWebSocketClient(config.messageWebSocketServerUrl);
 webSocketClient.onOpen = () => {
   bind();
@@ -141,7 +141,7 @@ onMounted(() => {
     padding: 16px 16px 0px 16px;
     .close {
       cursor: pointer;
-      color: var(--font-color-light);
+      color: var(--font-color-secondary);
       &:hover {
         color: var(--font-color);
       }

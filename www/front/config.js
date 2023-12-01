@@ -1,4 +1,4 @@
-// 开发环境
+//开发环境
 export const config = {
   proxyPrefix: "/api",
   proxyServer: "http://thinkphpvuemanagetemplate.sunqianhu123.cc",

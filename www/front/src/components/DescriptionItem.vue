@@ -29,7 +29,7 @@ const props = defineProps({
 <style scoped lang="scss">
 .col {
   .label {
-    color: var(--font-color-light);
+    color: var(--font-color-secondary);
     width: 80px;
     display: inline-block;
   }

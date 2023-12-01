@@ -1,7 +1,7 @@
 import { isPermission } from "../helper/permission";
 
 export default {
-  // 挂载完成后
+  //挂载完成后
   mounted(el, binding, vnode, prevVnode) {
     let name = binding.value;
     if (isPermission(name)) {

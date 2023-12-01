@@ -22,7 +22,7 @@ import MenuItem from "./MenuItem.vue";
 
 const appStore = useAppStore();
 const route = useRoute();
-const defaultActive = route.fullPath; // 默认活跃项
+const defaultActive = route.fullPath; //默认活跃项
 const menus = ref([]);
 
 /**

@@ -4,16 +4,16 @@
 function WebSocketClient(url) {
   this.url = url;
   this.webSocketClient = null;
-  this.reconnetInterval = 1000 * 10; // 重连间隔
-  this.reconnetFlag = false; // 重连标识
-  this.pingTimer = 0; // 心跳定时器
-  this.pingInterval = 1000 * 40; // 心跳间隔
+  this.reconnetInterval = 1000 * 10; //重连间隔
+  this.reconnetFlag = false; //重连标识
+  this.pingTimer = 0; //心跳定时器
+  this.pingInterval = 1000 * 40; //心跳间隔
 
-  // 事件
-  this.onOpen; // 打开
-  this.onError; // 错误
-  this.onClose; // 关闭
-  this.onMessage; // 消息
+  //事件
+  this.onOpen; //打开
+  this.onError; //错误
+  this.onClose; //关闭
+  this.onMessage; //消息
 
   /**
    * 连接

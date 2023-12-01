@@ -7,7 +7,7 @@
       <div class="header">
         <div class="title">
           <img src="@/asset/image/logo.png" class="logo" alt="logo" />
-          <span class="name">督查系统</span>
+          <span class="name">vue管理系统</span>
         </div>
       </div>
       <el-form :model="login" :rules="rules" ref="loginRef" class="form" @keyup.enter="submitForm">
@@ -219,7 +219,7 @@ html {
     z-index: 2;
     text-align: center;
     font-size: var(--font-size-small);
-    color: var(--font-color-light);
+    color: var(--font-color-secondary);
   }
 }
 </style>

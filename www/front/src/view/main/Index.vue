@@ -4,7 +4,7 @@
       <el-aside class="aside">
         <div class="system-name">
           <img src="@/asset/image/logo.png" class="logo" />
-          <span class="name">通用后台管理系统</span>
+          <span class="name">vue管理系统</span>
         </div>
         <el-scrollbar class="menu-wrap"><Menu></Menu></el-scrollbar>
       </el-aside>

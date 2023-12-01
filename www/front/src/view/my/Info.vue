@@ -89,7 +89,7 @@ onMounted(() => {
         margin-top: 0px;
       }
       .label {
-        color: var(--font-color-light);
+        color: var(--font-color-secondary);
         width: 100px;
         display: inline-block;
       }

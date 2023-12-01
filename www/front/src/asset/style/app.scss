@@ -1,56 +1,61 @@
 @import "element_plus.scss";
 
-:root {
-  // 颜色
+:root:root {
+  //颜色
   --color-primary: #409eff;
+  --color-success: #07c160;
   --color-warning: #e6a23c;
-  --color-error: #f56c6c;
+  --color-danger: #ee0a24;
 
-  // 文字
+  //文字
   --font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
     "微软雅黑", Arial, sans-serif;
 
-  // 文字大小
+  //文字大小
   --font-size: 14px;
   --font-size-small: 12px;
   --font-size-big: 16px;
-  --font-size-extra-big: 20px;
+  --font-size-title: 20px;
 
-  // 文字颜色
+  //文字颜色
   --font-color: #303133;
-  --font-color-light: #909399;
-  --font-color-dark: #000103;
+  --font-color-secondary: #909399;
+  --font-color-placeholder: #a8abb2;
+  --font-color-conspicuous: #409eff; //引人注目的
+  --font-color-link: #409eff; //链接
 
-  // 边框颜色
+  //边框颜色
   --border-color: #dcdfe6;
   --border-color-light: #e4e7ed;
   --border-color-dark: #d4d7de;
 
-  // 背景颜色
+  //背景颜色
   --background-color: #f0f2f5;
-  --background-color-light: #f5f7fa;
-  --background-color-extra-light: #ffffff;
-  --background-color-dark: #ebedf0;
-  --background-color-emphasis: #90c6fc;
+  --background-color-light: #ffffff;
 
-  // 阴影
-  --shadow-color: rgba(0, 0, 0, 0.6);
-  --shadow-color-light: rgba(0, 0, 0, 0.4);
-  --shadow-color-dark: rgba(0, 0, 0, 0.8);
+  //内边距
+  --padding: 16px;
+  --padding-small: 8px;
+  --padding-big: 32px;
 
-  // 圆角
+  //外边距
+  --margin: 16px;
+  --margin-small: 8px;
+  --margin-big: 32px;
+
+  //圆角
   --border-radius: 4px;
   --border-radius-small: 2px;
   --border-radius-big: 8px;
   --border-radius-round: 20px;
   --border-radius-circle: 100%;
 
-  // 阴影
+  //阴影
   --box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.12);
   --box-shadow-light: 0px 0px 16px rgba(0, 0, 0, 0.08);
   --box-shadow-dark: 0px 0px 16px rgba(0, 0, 0, 0.16);
 
-  // 透明度
+  //透明度
   --opacity: 0.7;
 }
 
@@ -63,9 +68,9 @@ html {
     font-family: var(--font-family);
     font-size: var(--font-size);
     line-height: 150%;
-    color: var(font-color);
+    color: var(--font-color);
     a {
-      color: var(--color-primary);
+      color: var(--font-color-link);
       text-decoration: none;
       &:hover {
         text-decoration: underline;
@@ -80,9 +85,10 @@ pre {
   font-family: var(--font-family);
   margin: 0px;
   padding: 0px;
+  line-height: 150%;
 }
 .form-message {
-  color: var(--font-color-light);
+  color: var(--font-color-secondary);
   font-size: var(--font-size-small);
 }
 .text-ellipsis {
