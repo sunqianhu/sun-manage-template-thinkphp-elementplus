@@ -191,9 +191,10 @@ html {
 
     .form {
       margin-top: 30px;
+      width: 300px;
       .captcha {
         .input {
-          width: 170px;
+          width: 150px;
         }
         img {
           margin-left: 16px;

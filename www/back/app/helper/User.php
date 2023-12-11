@@ -40,4 +40,13 @@ class User
 
         return explode(',', $user);
     }
+
+    /**
+     * 得到姓名
+     * @param $id
+     * @return mixed
+     */
+    public function getName($id){
+        return UserModel::where('id', $id)->value('name');
+    }
 }
