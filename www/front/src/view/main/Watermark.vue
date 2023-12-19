@@ -1,6 +1,6 @@
 <template>
   <div class="watermark" v-if="!loading">
-    <div class="item" v-for="index in 30">
+    <div class="item" v-for="index in 100">
       <div class="name">{{ data.name + data.id }}</div>
       <div class="time">{{ data.time }}</div>
     </div>
