@@ -120,7 +120,6 @@ html {
           transition: all 0.8s;
         }
       }
-
       .menu-wrap {
         flex: 1;
       }
@@ -166,6 +165,9 @@ html {
           .name {
             margin-left: 30px;
           }
+        }
+        .version {
+          display: none;
         }
       }
     }
