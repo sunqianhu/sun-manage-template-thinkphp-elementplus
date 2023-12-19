@@ -1,5 +1,23 @@
-<template><div>系统首页</div></template>
+<template>
+  <div class="index">
+    <div class="page-name">系统首页</div>
+    <div class="welcome">欢迎登录系统</div>
+  </div>
+</template>
 
 <script setup></script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.index {
+  background-color: var(--background-color-panel);
+  padding: 16px;
+  border-radius: var(--border-radius);
+  .page-name {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .welcome {
+    margin-top: var(--margin);
+  }
+}
+</style>
