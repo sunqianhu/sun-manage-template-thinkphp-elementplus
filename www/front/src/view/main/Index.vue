@@ -7,6 +7,7 @@
           <span class="name">vue管理系统模板</span>
         </div>
         <el-scrollbar class="menu-wrap"><Menu></Menu></el-scrollbar>
+        <div class="version">版本：{{ config.version }}</div>
       </el-aside>
       <el-container class="workspace">
         <el-header class="header">
@@ -43,6 +44,7 @@ import FullScreen from "./FullScreen.vue";
 import Avatar from "./Avatar.vue";
 import Message from "./Message.vue";
 import Watermark from "./Watermark.vue";
+import { config } from "../../../config";
 
 const appStore = useAppStore();
 
@@ -121,6 +123,11 @@ html {
 
       .menu-wrap {
         flex: 1;
+      }
+      .version {
+        padding-left: 16px;
+        font-size: var(--font-size-small);
+        color: var(--font-color-secondary);
       }
     }
 
