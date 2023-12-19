@@ -1,4 +1,6 @@
+@import "element-plus/theme-chalk/dark/css-vars.css";
 @import "element_plus.scss";
+@import "dark.scss";
 
 :root:root {
   //颜色
@@ -30,8 +32,10 @@
   --border-color-dark: #d4d7de;
 
   //背景颜色
-  --background-color: #f0f2f5;
-  --background-color-light: #ffffff;
+  --background-color-page: #f0f2f5;
+  --background-color-panel: #ffffff;
+  --background-color-table-header: #e9e9eb;
+  --background-color-main-workspace-header: #ffffff;
 
   //内边距
   --padding: 16px;
@@ -69,12 +73,17 @@ html {
     font-size: var(--font-size);
     line-height: 150%;
     color: var(--font-color);
+    //超链接
     a {
       color: var(--font-color-link);
       text-decoration: none;
       &:hover {
         text-decoration: underline;
       }
+    }
+    //对话框
+    .el-dialog {
+      background-color: var(--background-color-panel);
     }
   }
 }

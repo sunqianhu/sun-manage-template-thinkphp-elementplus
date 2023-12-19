@@ -1,19 +1,20 @@
 <template>
-  <div class="layout-main">
+  <div class="main-layout">
     <el-container :class="{ close: !appStore.siderStatus }" class="container">
       <el-aside class="aside">
         <div class="system-name">
           <img src="@/asset/image/logo.png" class="logo" />
-          <span class="name">vue管理系统</span>
+          <span class="name">vue管理系统模板</span>
         </div>
         <el-scrollbar class="menu-wrap"><Menu></Menu></el-scrollbar>
       </el-aside>
       <el-container class="workspace">
         <el-header class="header">
-          <Hamburger></Hamburger>
+          <hamburger></hamburger>
           <div class="right">
-            <FullScreen class="full-screen"></FullScreen>
-            <Avatar></Avatar>
+            <light-dark class="light-dark"></light-dark>
+            <full-screen class="fullscreen"></full-screen>
+            <avatar></avatar>
           </div>
         </el-header>
         <el-main class="body">
@@ -36,6 +37,7 @@
 import { onMounted } from "vue";
 import { useAppStore } from "@/store/app";
 import Menu from "./Menu.vue";
+import LightDark from "./LightDark.vue";
 import Hamburger from "./Hamburger.vue";
 import FullScreen from "./FullScreen.vue";
 import Avatar from "./Avatar.vue";
@@ -80,7 +82,7 @@ html {
 </style>
 
 <style lang="scss" scoped>
-.layout-main {
+.main-layout {
   height: 100%;
 
   .container {
@@ -123,12 +125,12 @@ html {
     }
 
     .workspace {
-      background-color: var(--background-color);
+      background-color: var(--background-color-page);
       .header {
         display: flex;
         align-items: center;
         height: 50px;
-        background-color: #ffffff;
+        background-color: var(--background-color-main-workspace-header);
         box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
         padding: 0px;
         .right {
@@ -137,7 +139,10 @@ html {
           align-items: center;
           justify-content: flex-end;
           margin-right: 16px;
-          .full-screen {
+          .light-dark {
+            margin-right: 16px;
+          }
+          .fullscreen {
             margin-right: 16px;
           }
         }

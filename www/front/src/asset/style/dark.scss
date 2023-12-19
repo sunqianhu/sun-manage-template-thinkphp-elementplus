@@ -1,0 +1,30 @@
+.dark:root:root {
+  //颜色
+  --color-primary: #409eff;
+  --color-success: #07c160;
+  --color-warning: #e6a23c;
+  --color-danger: #ee0a24;
+
+  //文字颜色
+  --font-color: #e5eaf3;
+  --font-color-secondary: #a3a6ad;
+  --font-color-placeholder: #8d9095;
+  --font-color-conspicuous: #409eff; //引人注目的
+  --font-color-link: #409eff; //链接
+
+  //边框颜色
+  --border-color: #4c4d4f;
+  --border-color-light: #414243;
+  --border-color-dark: #424243;
+
+  //背景颜色
+  --background-color-page: #0a0a0a;
+  --background-color-panel: #001529;
+  --background-color-table-header: #242424;
+  --background-color-main-workspace-header: #001529;
+
+  //阴影
+  --box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.12);
+  --box-shadow-light: 0px 0px 16px rgba(0, 0, 0, 0.08);
+  --box-shadow-dark: 0px 0px 16px rgba(0, 0, 0, 0.16);
+}

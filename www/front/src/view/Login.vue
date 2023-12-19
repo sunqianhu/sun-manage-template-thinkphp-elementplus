@@ -7,7 +7,7 @@
       <div class="header">
         <div class="title">
           <img src="@/asset/image/logo.png" class="logo" alt="logo" />
-          <span class="name">vue管理系统</span>
+          <span class="name">vue管理系统模板</span>
         </div>
       </div>
       <el-form :model="login" :rules="rules" ref="loginRef" class="form" @keyup.enter="submitForm">
@@ -148,7 +148,7 @@ html {
 <style lang="scss" scoped>
 .login {
   height: 100%;
-  background-color: #f0f2f5;
+  background-color: var(--background-color-panel);
   position: relative;
   .background {
     position: absolute;

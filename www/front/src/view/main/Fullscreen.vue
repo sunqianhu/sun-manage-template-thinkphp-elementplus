@@ -16,12 +16,18 @@ import screenfull from "screenfull";
 const toggleFullScreen = () => {
   if (screenfull.isEnabled) {
     screenfull.toggle();
+  } else {
+    ElMessage({
+      message: "你的浏览器不支持全屏，请更换浏览器",
+      type: "error"
+    });
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .fullscreen {
+  line-height: 1px;
   .icon {
     width: 20px;
     height: 20px;

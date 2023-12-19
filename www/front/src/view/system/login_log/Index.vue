@@ -126,7 +126,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .index {
-  background-color: #ffffff;
+  background-color: var(--background-color-panel);
   padding: 16px;
   border-radius: var(--border-radius);
   .page-name {
@@ -138,7 +138,7 @@ onMounted(() => {
   }
   .list {
     ::v-deep(th.el-table__cell) {
-      background-color: var(--background-color);
+      background-color: var(--background-color-table-header);
     }
   }
   .pagination {
