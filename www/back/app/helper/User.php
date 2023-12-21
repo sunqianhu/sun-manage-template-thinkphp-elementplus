@@ -46,7 +46,28 @@ class User
      * @param $id
      * @return mixed
      */
-    public function getName($id){
+    public function getName($id)
+    {
         return UserModel::where('id', $id)->value('name');
+    }
+
+    /**
+     * 得到角色名串
+     * @param $roleModels
+     * @param $split
+     * @return void
+     */
+    public function getRoleNameString($roleModels, $split = '，')
+    {
+        if($roleModels->isEmpty()){
+            return '';
+        }
+
+        $names = [];
+        foreach($roleModels as $roleModel){
+            $names[] = $roleModel->name;
+        }
+        
+        return implode($split, $names);
     }
 }

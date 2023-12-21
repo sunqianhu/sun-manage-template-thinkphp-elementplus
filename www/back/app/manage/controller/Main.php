@@ -25,7 +25,7 @@ class Main extends Base
             return $this->success('获取成功', []);
         }
 
-        // 菜单
+        // 页面
         $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
             ->field('menu.*')
             ->where('menu.type_id', 2)
@@ -54,6 +54,7 @@ class Main extends Base
             $route['component'] = $menuModel->component;
             $route['meta']['name'] = $menuModel->name;
             $route['meta']['keep_alive'] = $menuModel->keep_alive == 1 ? true : false;
+            $route['layout'] = $menuModel->layout;
             $routes[] = $route;
         }
 

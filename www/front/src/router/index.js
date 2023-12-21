@@ -26,6 +26,15 @@ const router = createRouter({
       children: []
     },
     {
+      path: "/blank",
+      name: "blank",
+      component: () => import("../view/blank/Index.vue"),
+      meta: {
+        name: "空白页面"
+      },
+      children: []
+    },
+    {
       path: "/login",
       name: "login",
       component: () => import("../view/Login.vue"),
@@ -69,7 +78,7 @@ router.beforeEach(async (to, from) => {
   }
 
   const appStore = useAppStore();
-  let response; //接口响应
+  let response; //响应
 
   //权限
   if (!appStore.isSetPermission) {
@@ -90,18 +99,30 @@ router.beforeEach(async (to, from) => {
 
     let allRoutes = router.getRoutes();
     let mainRoute = allRoutes.find((route) => route.name == "main");
-    let dynamicRoutes = [];
-    const vueFiles = import.meta.glob(["@/view/*.vue", "@/view/*/*.vue", "@/view/*/*/*.vue"]);
-    //console.log(vueFiles);
+    let blankRoute = allRoutes.find((route) => route.name == "blank");
+    let childRoutes = [];
+    const componentFilePaths = import.meta.glob([
+      "@/view/*.vue",
+      "@/view/*/*.vue",
+      "@/view/*/*/*.vue"
+    ]);
 
-    if (response.data && response.data.length > 0) {
-      dynamicRoutes = response.data;
-      dynamicRoutes.forEach((dynamicRoute) => {
-        dynamicRoute.component = vueFiles["/src/view/" + dynamicRoute.component];
-        mainRoute.children.push(dynamicRoute);
+    if (response.data.length > 0) {
+      childRoutes = response.data;
+      childRoutes.forEach((childRoute) => {
+        childRoute.component = componentFilePaths["/src/view/" + childRoute.component];
+        if (childRoute.layout == "main") {
+          mainRoute.children.push(childRoute);
+        }
+        if (childRoute.layout == "blank") {
+          blankRoute.children.push(childRoute);
+        }
       });
-      mainRoute.redirect = mainRoute.children[0].path;
+      if (mainRoute.children.length > 0) {
+        mainRoute.redirect = mainRoute.children[0].path;
+      }
       router.addRoute(mainRoute);
+      router.addRoute(blankRoute);
     }
 
     return to.path;

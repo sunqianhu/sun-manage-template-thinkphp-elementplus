@@ -53,16 +53,14 @@ export const useAppStore = defineStore("app", {
 
       const allRoutes = router.getRoutes();
       let mainRoute = allRoutes.find((route) => route.name == "main");
-      let childrenLength = mainRoute.children.length;
-      let childrenIndex = 0;
-      if (childrenLength > 0) {
-        for (childrenIndex; childrenIndex < childrenLength; childrenIndex++) {
-          router.removeRoute(mainRoute.children[childrenIndex].name);
-        }
-        mainRoute.children = [];
-      }
+      let blankRoute = allRoutes.find((route) => route.name == "blank");
+
       mainRoute.redirect = undefined;
+      mainRoute.children = [];
       router.addRoute(mainRoute);
+
+      blankRoute.children = [];
+      router.addRoute(blankRoute);
     },
 
     /**

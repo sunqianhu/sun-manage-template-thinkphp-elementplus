@@ -39,7 +39,11 @@
 
     <div class="list">
       <el-table :data="users" v-loading="loading" stripe style="width: 100%">
-        <el-table-column prop="account" label="账号" />
+        <el-table-column v-slot="{ row }" prop="account" label="账号">
+          <el-link :href="'/system/user/' + row.id" type="primary" target="_blank">
+            {{ row.account }}
+          </el-link>
+        </el-table-column>
         <el-table-column prop="name" label="姓名" />
         <el-table-column prop="department.name" label="部门" />
         <el-table-column prop="phone" label="手机号码" />

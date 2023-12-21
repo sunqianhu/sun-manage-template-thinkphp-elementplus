@@ -20,10 +20,10 @@
         </el-header>
         <el-main class="body">
           <router-view v-slot="{ Component, route }">
-            <keep-alive>
-              <component :is="Component" v-if="route.meta.keep_alive == true" />
+            <keep-alive v-if="route.meta.keep_alive == true">
+              <component :is="Component" />
             </keep-alive>
-            <component :is="Component" v-if="route.meta.keep_alive != true" />
+            <component :is="Component" v-else />
           </router-view>
           <el-backtop :right="15" :bottom="15" target=".workspace .body"> UP </el-backtop>
         </el-main>
@@ -131,7 +131,7 @@ html {
     }
 
     .workspace {
-      background-color: var(--background-color-page);
+      background-color: var(--background-color-page-texture);
       .header {
         display: flex;
         align-items: center;

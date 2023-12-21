@@ -110,7 +110,7 @@ const getCaptcha = async () => {
  * 提交表单
  */
 const submitForm = async () => {
-  await userRef.value.validate();
+  await loginRef.value.validate();
 
   loading.value = true;
   let response;

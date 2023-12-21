@@ -3,6 +3,7 @@
 namespace app\manage\controller\system;
 
 use app\helper\ArrayHandler;
+use app\helper\Dictionary as DictionaryHelper;
 use app\manage\controller\Base;
 use app\manage\validate\Menu as MenuValidate;
 use app\model\Menu as MenuModel;
@@ -48,8 +49,12 @@ class Menu extends Base
         $arr = new ArrayHandler();
         $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
 
+        $dictionaryHelper = new DictionaryHelper();
+        $layouts = $dictionaryHelper->getList('menu_layout');
+
         $data = [
-            'treeMenus' => $treeMenus
+            'tree_menus' => $treeMenus,
+            'layouts' => $layouts
         ];
         return $this->success('获取成功', $data);
     }
@@ -59,7 +64,7 @@ class Menu extends Base
      */
     public function saveAdd()
     {
-        $post = $this->request->post(['menu_id' => 0, 'type_id' => 0, 'name', 'key', 'path', 'component', 'icon', 'api' => '', 'keep_alive', 'show', 'sort']);
+        $post = $this->request->post(['menu_id' => 0, 'type_id' => 0, 'name', 'key', 'path', 'component', 'icon', 'api' => '', 'layout'=>'', 'keep_alive', 'show', 'sort']);
 
         // 验证
         try {
@@ -82,7 +87,7 @@ class Menu extends Base
             return $this->error('id参数错误');
         }
 
-        $menuModel = MenuModel::field('id,name,key,type_id,menu_id,icon,path,component,api,keep_alive,show,sort')->find($id);
+        $menuModel = MenuModel::field('id,name,key,type_id,menu_id,icon,path,component,api,layout,keep_alive,show,sort')->find($id);
         if (empty($menuModel)) {
             return $this->error('没有找到记录');
         }
@@ -94,8 +99,12 @@ class Menu extends Base
         $arr = new ArrayHandler();
         $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
 
+        $dictionaryHelper = new DictionaryHelper();
+        $layouts = $dictionaryHelper->getList('menu_layout');
+
         $data = [
-            'treeMenus' => $treeMenus,
+            'tree_menus' => $treeMenus,
+            'layouts' => $layouts,
             'menu' => $menu
         ];
         return $this->success('获取成功', $data);
@@ -106,7 +115,7 @@ class Menu extends Base
      */
     public function saveEdit()
     {
-        $post = $this->request->post(['id', 'menu_id' => 0, 'type_id' => 0, 'name', 'key', 'icon', 'path', 'component', 'api' => '', 'keep_alive', 'show', 'sort']);
+        $post = $this->request->post(['id', 'menu_id' => 0, 'type_id' => 0, 'name', 'key', 'icon', 'path', 'component', 'api' => '', 'layout' => '', 'keep_alive', 'show', 'sort']);
 
         // 验证
         try {

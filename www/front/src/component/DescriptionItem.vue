@@ -28,13 +28,14 @@ const props = defineProps({
 
 <style scoped lang="scss">
 .col {
+  display: flex;
+  padding: 3px 0px;
   .label {
     color: var(--font-color-secondary);
-    width: 80px;
-    display: inline-block;
+    min-width: 85px;
   }
   .content {
-    display: inline-block;
+    min-width: 150px;
     margin-left: 16px;
   }
 }

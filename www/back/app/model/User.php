@@ -22,4 +22,20 @@ class User extends Model
     {
         return $this->belongsToMany(Role::class, 'user_role', 'role_id', 'user_id');
     }
+
+    /**
+     * 得到状态名
+     * @param $value
+     * @param $data
+     * @return null
+     */
+    public function getStatusNameAttr($value, $data)
+    {
+        $name = '启用';
+        if($data['status_id'] != 1){
+            $name = '停用';
+        }
+
+        return $name;
+    }
 }
