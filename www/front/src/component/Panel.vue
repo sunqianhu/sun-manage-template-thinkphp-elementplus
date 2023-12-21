@@ -34,9 +34,9 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .panel {
-  margin: 0px 16px 0px 16px;
   background: var(--background-color-panel);
   border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   .header {
     display: flex;
     justify-content: space-between;

@@ -101,8 +101,12 @@ onMounted(() => {
   background: var(--background-color-page-texture);
 }
 .detail {
+  padding: var(--padding);
   .module {
     margin-top: var(--margin);
+    &:first-child {
+      margin-top: 0px;
+    }
   }
 }
 </style>
