@@ -8,7 +8,7 @@
     class="add"
   >
     <el-scrollbar max-height="300px" class="scrollbar">
-      <el-form :model="role" :rules="rules" ref="roleRef" label-width="120px">
+      <el-form :model="role" :rules="rules" scroll-to-error ref="roleRef" label-width="120px">
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="role.name" />
         </el-form-item>
@@ -41,7 +41,7 @@ import { ref, watch, onMounted } from "vue";
 import axios from "@/helper/axios";
 
 defineProps(["open"]);
-const emits = defineEmits(["close"]);
+const emits = defineEmits(["close", "submited"]);
 const role = ref({
   menu_ids: []
 });
@@ -98,28 +98,23 @@ const checkMenu = () => {
 /**
  * 提交表单
  */
-const submitForm = () => {
-  roleRef.value.validate(async (valid) => {
-    if (!valid) {
-      return;
-    }
+const submitForm = async () => {
+  await roleRef.value.validate();
 
-    const response = await axios.post("manage/system.Role/saveAdd", role.value);
-    if (response.code != 1) {
-      ElMessage({
-        message: response.message,
-        type: "error"
-      });
-      return;
-    }
-
+  const response = await axios.post("manage/system.Role/saveAdd", role.value);
+  if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "success"
+      type: "error"
     });
-    emits("close", true);
-    emits("refresh", true);
+    return;
+  }
+
+  ElMessage({
+    message: response.message,
+    type: "success"
   });
+  emits("submited", true);
 };
 
 watch(menuFilterText, (value) => {

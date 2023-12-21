@@ -8,7 +8,13 @@
     class="add"
   >
     <el-scrollbar max-height="300px" class="scrollbar">
-      <el-form :model="department" :rules="rules" ref="departmentRef" label-width="120px">
+      <el-form
+        :model="department"
+        :rules="rules"
+        scroll-to-error
+        ref="departmentRef"
+        label-width="120px"
+      >
         <el-form-item label="上级部门">
           <el-tree-select
             v-model="department.department_id"
@@ -40,7 +46,7 @@ import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 
 defineProps(["open"]);
-const emits = defineEmits(["close"]);
+const emits = defineEmits(["close", "submited"]);
 
 const department = ref({
   sort: 1
@@ -78,28 +84,23 @@ const close = () => {
 /**
  * 提交表单
  */
-const submitForm = () => {
-  departmentRef.value.validate(async (valid) => {
-    if (!valid) {
-      return;
-    }
+const submitForm = async () => {
+  await departmentRef.value.validate();
 
-    const response = await axios.post("manage/system.Department/saveAdd", department.value);
-    if (response.code != 1) {
-      ElMessage({
-        message: response.message,
-        type: "error"
-      });
-      return;
-    }
-
+  const response = await axios.post("manage/system.Department/saveAdd", department.value);
+  if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "success"
+      type: "error"
     });
-    emits("close", true);
-    emits("refresh", true);
+    return;
+  }
+
+  ElMessage({
+    message: response.message,
+    type: "success"
   });
+  emits("submited", true);
 };
 
 onMounted(() => {

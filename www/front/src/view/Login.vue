@@ -10,7 +10,14 @@
           <span class="name">vue管理系统模板</span>
         </div>
       </div>
-      <el-form :model="login" :rules="rules" ref="loginRef" class="form" @keyup.enter="submitForm">
+      <el-form
+        :model="login"
+        :rules="rules"
+        scroll-to-error
+        ref="loginRef"
+        class="form"
+        @keyup.enter="submitForm"
+      >
         <el-form-item prop="account">
           <el-input
             :prefix-icon="User"
@@ -102,30 +109,32 @@ const getCaptcha = async () => {
 /**
  * 提交表单
  */
-const submitForm = () => {
-  loginRef.value.validate(async (valid) => {
-    if (!valid) {
-      return;
-    }
+const submitForm = async () => {
+  await userRef.value.validate();
 
-    loading.value = true;
-    let response = await axios.post("manage/login/login", login.value);
+  loading.value = true;
+  let response;
+  try {
+    response = await axios.post("manage/login/login", login.value);
+  } catch (error) {
     loading.value = false;
-    if (response.code != 1) {
-      ElMessage({
-        message: response.message,
-        type: "error"
-      });
-      if (response.message.indexOf("验证码") !== -1) {
-        getCaptcha();
-      }
-      return;
+    return;
+  }
+  loading.value = false;
+  if (response.code != 1) {
+    ElMessage({
+      message: response.message,
+      type: "error"
+    });
+    if (response.message.indexOf("验证码") !== -1) {
+      getCaptcha();
     }
+    return;
+  }
 
-    localStorage.setItem("token", response.data.token);
-    localStorage.setItem("user_id", response.data.user_id);
-    router.push("/");
-  });
+  localStorage.setItem("token", response.data.token);
+  localStorage.setItem("user_id", response.data.user_id);
+  router.push("/");
 };
 
 onMounted(() => {

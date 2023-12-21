@@ -51,11 +51,22 @@
       />
     </div>
 
-    <Add :open="addFlag" @close="addFlag = false" @refresh="getDictionarys" v-if="addFlag"></Add>
+    <Add
+      :open="addFlag"
+      @close="addFlag = false"
+      @submited="
+        getDictionarys();
+        addFlag = false;
+      "
+      v-if="addFlag"
+    ></Add>
     <Edit
       :open="editFlag"
       @close="editFlag = false"
-      @refresh="getDictionarys"
+      @submited="
+        getDictionarys();
+        editFlag = false;
+      "
       :id="rowId"
       v-if="editFlag"
     ></Edit>

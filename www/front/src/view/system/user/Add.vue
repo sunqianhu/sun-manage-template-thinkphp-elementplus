@@ -9,7 +9,7 @@
     v-load
   >
     <el-scrollbar max-height="300px" class="scrollbar">
-      <el-form :model="user" :rules="rules" ref="userRef" label-width="120px">
+      <el-form :model="user" :rules="rules" scroll-to-error ref="userRef" label-width="120px">
         <el-form-item label="账号" prop="account">
           <el-input v-model="user.account" autocomplete="off" />
         </el-form-item>
@@ -55,7 +55,7 @@ import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 
 defineProps(["open"]);
-const emits = defineEmits(["close", "refresh"]);
+const emits = defineEmits(["close", "submited"]);
 
 const user = ref({
   status_id: "1"
@@ -98,28 +98,23 @@ const close = () => {
 /**
  * 提交表单
  */
-const submitForm = () => {
-  userRef.value.validate(async (valid) => {
-    if (!valid) {
-      return;
-    }
+const submitForm = async () => {
+  await userRef.value.validate();
 
-    const response = await axios.post("manage/system.user/saveAdd", user.value);
-    if (response.code != 1) {
-      ElMessage({
-        message: response.message,
-        type: "error"
-      });
-      return;
-    }
-
+  const response = await axios.post("manage/system.user/saveAdd", user.value);
+  if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "success"
+      type: "error"
     });
-    emits("close", true);
-    emits("refresh", true);
+    return;
+  }
+
+  ElMessage({
+    message: response.message,
+    type: "success"
   });
+  emits("submited", true);
 };
 
 onMounted(() => {

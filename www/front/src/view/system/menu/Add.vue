@@ -8,7 +8,7 @@
     class="add"
   >
     <el-scrollbar max-height="300px" class="scrollbar">
-      <el-form :model="menu" :rules="rules" ref="menuRef" label-width="120px">
+      <el-form :model="menu" :rules="rules" scroll-to-error ref="menuRef" label-width="120px">
         <el-form-item label="上级菜单" prop="menu_id">
           <el-tree-select
             v-model="menu.menu_id"
@@ -81,7 +81,7 @@ import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 
 defineProps(["open"]);
-const emits = defineEmits(["close", "refresh"]);
+const emits = defineEmits(["close", "submited"]);
 const buttonLoading = ref(false);
 
 const menu = ref({
@@ -124,29 +124,30 @@ const close = () => {
 /**
  * 提交表单
  */
-const submitForm = () => {
-  menuRef.value.validate(async (valid) => {
-    if (!valid) {
-      return;
-    }
+const submitForm = async () => {
+  await menuRef.value.validate();
 
-    buttonLoading.value = true;
-    const response = await axios.post("manage/system.Menu/saveAdd", menu.value);
+  buttonLoading.value = true;
+  let response;
+  try {
+    response = await axios.post("manage/system.Menud/saveAddd", menu.value);
+  } catch (error) {
     buttonLoading.value = false;
-    if (response.code != 1) {
-      ElMessage({
-        message: response.message,
-        type: "error"
-      });
-      return;
-    }
+    return;
+  }
+  buttonLoading.value = false;
+  if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "success"
+      type: "error"
     });
-    emits("close", true);
-    emits("refresh", true);
+    return;
+  }
+  ElMessage({
+    message: response.message,
+    type: "success"
   });
+  emits("submited", true);
 };
 
 onMounted(() => {

@@ -36,11 +36,22 @@
         </el-table-column>
       </el-table>
     </div>
-    <Add :open="addFlag" @close="addFlag = false" @refresh="getDepartments" v-if="addFlag"></Add>
+    <Add
+      :open="addFlag"
+      @close="addFlag = false"
+      @submited="
+        getDepartments();
+        addFlag = false;
+      "
+      v-if="addFlag"
+    ></Add>
     <Edit
       :open="editFlag"
       @close="editFlag = false"
-      @refresh="getDepartments"
+      @submited="
+        getDepartments();
+        editFlag = false;
+      "
       :id="rowId"
       v-if="editFlag"
     ></Edit>

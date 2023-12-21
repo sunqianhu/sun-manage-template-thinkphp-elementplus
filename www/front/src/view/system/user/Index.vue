@@ -80,11 +80,22 @@
       />
     </div>
 
-    <Add :open="addFlag" @close="addFlag = false" @refresh="getUsers" v-if="addFlag"></Add>
+    <Add
+      :open="addFlag"
+      @close="addFlag = false"
+      @submited="
+        getUsers();
+        addFlag = false;
+      "
+      v-if="addFlag"
+    ></Add>
     <Edit
       :open="editFlag"
       @close="editFlag = false"
-      @refresh="getUsers"
+      @submited="
+        getUsers();
+        editFlag = false;
+      "
       :id="rowId"
       v-if="editFlag"
     ></Edit>
@@ -92,6 +103,7 @@
       :open="editPasswordFlag"
       :id="rowId"
       @close="editPasswordFlag = false"
+      @submited="editPasswordFlag = false"
       v-if="editPasswordFlag"
     ></EditPassword>
   </div>

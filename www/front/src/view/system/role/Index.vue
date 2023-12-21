@@ -42,11 +42,22 @@
       />
     </div>
 
-    <Add :open="addFlag" @close="addFlag = false" @refresh="getRoles" v-if="addFlag"></Add>
+    <Add
+      :open="addFlag"
+      @close="addFlag = false"
+      @submited="
+        getRoles();
+        addFlag = false;
+      "
+      v-if="addFlag"
+    ></Add>
     <Edit
       :open="editFlag"
       @close="editFlag = false"
-      @refresh="getRoles"
+      @submited="
+        getRoles();
+        editFlag = false;
+      "
       :id="rowId"
       v-if="editFlag"
     ></Edit>

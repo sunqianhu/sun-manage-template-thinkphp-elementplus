@@ -8,7 +8,13 @@
     class="add"
   >
     <el-scrollbar max-height="300px" class="scrollbar">
-      <el-form :model="dictionary" :rules="rules" ref="dictionaryRef" label-width="120px">
+      <el-form
+        :model="dictionary"
+        :rules="rules"
+        scroll-to-error
+        ref="dictionaryRef"
+        label-width="120px"
+      >
         <el-form-item label="字典类型" prop="type">
           <el-input v-model="dictionary.type" />
         </el-form-item>
@@ -35,7 +41,7 @@ import { ref } from "vue";
 import axios from "@/helper/axios";
 
 defineProps(["open"]);
-const emits = defineEmits(["close"]);
+const emits = defineEmits(["close", "submited"]);
 const dictionary = ref({
   sort: 1
 });
@@ -57,28 +63,22 @@ const close = () => {
 /**
  * 提交表单
  */
-const submitForm = () => {
-  dictionaryRef.value.validate(async (valid) => {
-    if (!valid) {
-      return;
-    }
-
-    const response = await axios.post("manage/system.Dictionary/saveAdd", dictionary.value);
-    if (response.code != 1) {
-      ElMessage({
-        message: response.message,
-        type: "error"
-      });
-      return;
-    }
-
+const submitForm = async () => {
+  await dictionaryRef.value.validate();
+  const response = await axios.post("manage/system.Dictionary/saveAdd", dictionary.value);
+  if (response.code != 1) {
     ElMessage({
       message: response.message,
-      type: "success"
+      type: "error"
     });
-    emits("close", true);
-    emits("refresh", true);
+    return;
+  }
+
+  ElMessage({
+    message: response.message,
+    type: "success"
   });
+  emits("submited", true);
 };
 </script>
 <style lang="scss" scoped>
