@@ -3,9 +3,8 @@
 namespace app\model;
 
 use app\helper\Dictionary as DictionaryHelper;
-use think\Model;
 
-class Department extends Model
+class Department extends Base
 {
     /**
      * 得到类型名称

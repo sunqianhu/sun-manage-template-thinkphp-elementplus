@@ -1,9 +1,7 @@
 <?php
 namespace app\model;
 
-use think\Model;
-
-class Role extends Model
+class Role extends Base
 {
     /**
      * 菜单

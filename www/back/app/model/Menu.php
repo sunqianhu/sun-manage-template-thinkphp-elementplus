@@ -2,10 +2,9 @@
 
 namespace app\model;
 
-use think\Model;
 use app\helper\Dictionary as DictionaryHelper;
 
-class Menu extends Model
+class Menu extends Base
 {
     /**
      * 获取接口地址

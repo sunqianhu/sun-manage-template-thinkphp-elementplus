@@ -2,8 +2,6 @@
 
 namespace app\model;
 
-use think\Model;
-
-class Token extends Model
+class Token extends Base
 {
 }

@@ -1,8 +1,6 @@
 <?php
 namespace app\model;
 
-use think\Model;
-
-class OperationLog extends Model
+class OperationLog extends Base
 {
 }
