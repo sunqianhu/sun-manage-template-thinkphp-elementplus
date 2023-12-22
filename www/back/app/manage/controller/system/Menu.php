@@ -26,6 +26,7 @@ class Menu extends Base
             $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
         $query = $query->order('sort', 'asc');
+        $query->append(['type_name', 'type_tag_type']);
         $menuModels = $query->select();
         $menus = $menuModels->toArray();
 
@@ -50,10 +51,12 @@ class Menu extends Base
         $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
 
         $dictionaryHelper = new DictionaryHelper();
+        $types = $dictionaryHelper->getList('menu_type');
         $layouts = $dictionaryHelper->getList('menu_layout');
 
         $data = [
             'tree_menus' => $treeMenus,
+            'types' => $types,
             'layouts' => $layouts
         ];
         return $this->success('获取成功', $data);
@@ -64,7 +67,7 @@ class Menu extends Base
      */
     public function saveAdd()
     {
-        $post = $this->request->post(['menu_id' => 0, 'type_id' => 0, 'name', 'key', 'path', 'component', 'icon', 'api' => '', 'layout'=>'', 'keep_alive', 'show', 'sort']);
+        $post = $this->request->post(['menu_id' => 0, 'type_id' => 0, 'name'=>'', 'key'=>'', 'path'=>'', 'component', 'icon', 'url'=>'', 'api' => '', 'layout'=>'', 'keep_alive', 'show', 'sort']);
 
         // 验证
         try {
@@ -87,7 +90,7 @@ class Menu extends Base
             return $this->error('id参数错误');
         }
 
-        $menuModel = MenuModel::field('id,name,key,type_id,menu_id,icon,path,component,api,layout,keep_alive,show,sort')->find($id);
+        $menuModel = MenuModel::field('id,name,key,type_id,menu_id,icon,path,component,api,layout,keep_alive,show,sort,url')->find($id);
         if (empty($menuModel)) {
             return $this->error('没有找到记录');
         }
@@ -100,10 +103,12 @@ class Menu extends Base
         $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
 
         $dictionaryHelper = new DictionaryHelper();
+        $types = $dictionaryHelper->getList('menu_type');
         $layouts = $dictionaryHelper->getList('menu_layout');
 
         $data = [
             'tree_menus' => $treeMenus,
+            'types' => $types,
             'layouts' => $layouts,
             'menu' => $menu
         ];
@@ -115,7 +120,7 @@ class Menu extends Base
      */
     public function saveEdit()
     {
-        $post = $this->request->post(['id', 'menu_id' => 0, 'type_id' => 0, 'name', 'key', 'icon', 'path', 'component', 'api' => '', 'layout' => '', 'keep_alive', 'show', 'sort']);
+        $post = $this->request->post(['id', 'menu_id' => 0, 'type_id' => 0, 'name', 'key'=>'', 'icon'=>'', 'path'=>'', 'component'=>'', 'api' => '', 'url'=>'', 'layout' => '', 'keep_alive', 'show', 'sort']);
 
         // 验证
         try {

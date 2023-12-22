@@ -25,7 +25,7 @@
         <el-table-column prop="name" label="菜单名称" />
         <el-table-column prop="key" label="菜单key" />
         <el-table-column v-slot="{ row }" prop="type_id" label="菜单类型" width="100">
-          <TypeTag :type="row.type_id"></TypeTag>
+          <el-tag :type="row.type_tag_type">{{ row.type_name }}</el-tag>
         </el-table-column>
         <el-table-column prop="sort" label="排序" width="100" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
@@ -67,7 +67,6 @@ import { Search, Plus } from "@element-plus/icons-vue";
 import axios from "@/helper/axios";
 import Add from "./Add.vue";
 import Edit from "./Edit.vue";
-import TypeTag from "./TypeTag.vue";
 
 const rowId = ref(0);
 const query = ref({});

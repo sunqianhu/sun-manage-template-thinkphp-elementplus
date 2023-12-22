@@ -1,11 +1,19 @@
 <template>
-  <template v-for="menu in menus">
-    <el-menu-item v-if="!menu.children" :index="menu.url">
-      <el-icon v-if="menu.icon">
-        <component :is="icons[menu.icon]"></component>
-      </el-icon>
-      <span>{{ menu.name }}</span>
-    </el-menu-item>
+  <template v-for="menu in menus" :key="menu.id">
+    <template v-if="!menu.children">
+      <el-menu-item index="" v-if="menu.type_id == 4" @click="openOutLink(menu.url)">
+        <el-icon v-if="menu.icon">
+          <component :is="icons[menu.icon]"></component>
+        </el-icon>
+        <span>{{ menu.name }}</span>
+      </el-menu-item>
+      <el-menu-item :index="menu.path" v-else>
+        <el-icon v-if="menu.icon">
+          <component :is="icons[menu.icon]"></component>
+        </el-icon>
+        <span>{{ menu.name }}</span>
+      </el-menu-item>
+    </template>
     <el-sub-menu v-else :index="'/' + menu.id">
       <template #title>
         <el-icon v-if="menu.icon">
@@ -13,7 +21,7 @@
         </el-icon>
         <span>{{ menu.name }}</span>
       </template>
-      <MenuItem :menus="menu.children"></MenuItem>
+      <menu-item :menus="menu.children"></menu-item>
     </el-sub-menu>
   </template>
 </template>
@@ -22,11 +30,30 @@
 import * as icons from "@element-plus/icons-vue";
 
 const props = defineProps({
-  menus: Array
+  menus: {
+    type: Array,
+    default: []
+  }
 });
+
+/**
+ * 打开外部链接
+ * @param {*} url
+ */
+const openOutLink = (url) => {
+  window.open(url);
+};
 </script>
 
 <style lang="scss" scoped>
+.out-link {
+  position: absolute;
+  display: block;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+}
 .el-sub-menu.is-active {
   ::v-deep(.el-sub-menu__title) {
     color: #ffffff !important;

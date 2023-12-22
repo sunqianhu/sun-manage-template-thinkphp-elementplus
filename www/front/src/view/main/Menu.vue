@@ -1,13 +1,14 @@
 <template>
   <el-menu
-    class="menu"
+    mode="vertical"
     background-color="#001529"
     text-color="rgba(255, 255, 255, 0.65)"
-    :default-active="defaultActive"
     active-text-color="#ffffff"
+    :default-active="defaultActive"
     :collapse="!appStore.siderStatus"
     :unique-opened="true"
     :router="true"
+    class="menu"
   >
     <menu-item :menus="menus"></menu-item>
   </el-menu>

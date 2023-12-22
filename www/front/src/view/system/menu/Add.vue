@@ -2,8 +2,9 @@
   <el-dialog
     :model-value="open"
     title="添加菜单"
-    width="500"
+    width="600"
     :draggable="true"
+    align-center
     @close="close"
     class="add"
   >
@@ -22,9 +23,9 @@
         </el-form-item>
         <el-form-item label="菜单类型" prop="type_id">
           <el-radio-group v-model="menu.type_id">
-            <el-radio :label="1">目录</el-radio>
-            <el-radio :label="2">页面</el-radio>
-            <el-radio :label="3">按钮</el-radio>
+            <el-radio v-for="type in types" :key="type.key" :label="parseInt(type.key)">
+              {{ type.value }}
+            </el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="菜单名称" prop="name">
@@ -42,13 +43,20 @@
           <el-input v-model="menu.component" />
           <div class="form-message">相对于view目录</div>
         </el-form-item>
-        <el-form-item label="菜单图标" prop="icon" v-if="menu.type_id == 1 || menu.type_id == 2">
+        <el-form-item
+          label="菜单图标"
+          prop="icon"
+          v-if="menu.type_id == 1 || menu.type_id == 2 || menu.type_id == 4"
+        >
           <el-input v-model="menu.icon" />
           <div class="form-message">elementplus图标组件名</div>
         </el-form-item>
         <el-form-item label="接口地址" prop="api" v-if="menu.type_id == 2 || menu.type_id == 3">
           <el-input v-model="menu.api" type="textarea" rows="3" />
           <div class="form-message">后端接口网址一行一个，格式：应用/控制器/方法</div>
+        </el-form-item>
+        <el-form-item label="链接网址" prop="url" v-if="menu.type_id == 4">
+          <el-input v-model="menu.url" />
         </el-form-item>
         <el-form-item label="页面布局" prop="layout" v-if="menu.type_id == 2">
           <el-select v-model="menu.layout" clearable>
@@ -61,7 +69,11 @@
             <el-radio :label="2">否</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="菜单显示" prop="show" v-if="menu.type_id == 1 || menu.type_id == 2">
+        <el-form-item
+          label="菜单显示"
+          prop="show"
+          v-if="menu.type_id == 1 || menu.type_id == 2 || menu.type_id == 4"
+        >
           <el-radio-group v-model="menu.show">
             <el-radio :label="1">显示</el-radio>
             <el-radio :label="2">隐藏</el-radio>
@@ -101,6 +113,7 @@ const rules = {
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
 const treeMenus = ref([]);
+const types = ref([]);
 const layouts = ref([]);
 
 /**
@@ -116,6 +129,7 @@ const init = async () => {
     return;
   }
   treeMenus.value = response.data.tree_menus;
+  types.value = response.data.types;
   layouts.value = response.data.layouts;
 };
 

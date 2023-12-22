@@ -78,7 +78,7 @@ class Main extends Base
         // 菜单
         $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
             ->field('menu.*')
-            ->where('menu.type_id', 'in', '1,2')
+            ->where('menu.type_id', 'in', '1,2,4')
             ->where('role_menu.role_id', 'in', $roleIds)
             ->where('show', 1)
             ->order('menu.sort', 'asc')
@@ -93,8 +93,10 @@ class Main extends Base
             $menu = [];
             $menu['id'] = $menuModel->id;
             $menu['menu_id'] = $menuModel->menu_id;
+            $menu['type_id'] = $menuModel->type_id;
             $menu['name'] = $menuModel->name;
-            $menu['url'] = $menuModel->path;
+            $menu['path'] = $menuModel->path;
+            $menu['url'] = $menuModel->url;
             $menu['icon'] = $menuModel->icon;
             $menus[] = $menu;
         }
