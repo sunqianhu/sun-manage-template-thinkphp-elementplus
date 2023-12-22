@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, nextTick } from "vue";
 import axios from "@/helper/axios";
 
 const props = defineProps(["open", "id"]);
@@ -63,6 +63,7 @@ const init = async () => {
   const response = await axios.get("manage/system.Role/initEdit", {
     params: { id: props.id }
   });
+  loading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -73,11 +74,8 @@ const init = async () => {
 
   menus.value = response.data.menus;
   role.value = response.data.role;
-
-  setTimeout(() => {
-    menuDefaultCheckKeys.value = getMenuDefaultCheckKeys(response.data.role.menu_ids);
-    loading.value = false;
-  }, 800);
+  await nextTick();
+  menuDefaultCheckKeys.value = getMenuDefaultCheckKeys(response.data.role.menu_ids);
 };
 
 /**

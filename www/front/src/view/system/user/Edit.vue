@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import axios from "@/helper/axios";
 
 const props = defineProps(["open", "id"]);
@@ -72,6 +72,7 @@ const init = async () => {
   }
   departments.value = response.data.departments;
   roles.value = response.data.roles;
+  await nextTick();
   user.value = response.data.user;
 };
 

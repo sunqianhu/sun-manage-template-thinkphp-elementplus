@@ -25,6 +25,7 @@
         style="width: 100%"
       >
         <el-table-column prop="name" label="部门名称" />
+        <el-table-column prop="type_name" label="部门类型" />
         <el-table-column prop="sort" label="排序" width="100" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>

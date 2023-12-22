@@ -26,6 +26,11 @@
             clearable
           />
         </el-form-item>
+        <el-form-item label="部门类型" prop="type_id">
+          <el-select v-model="department.type_id">
+            <el-option v-for="type in types" :label="type.value" :value="parseInt(type.key)" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="部门名称" prop="name">
           <el-input v-model="department.name" />
         </el-form-item>
@@ -53,10 +58,12 @@ const department = ref({
 });
 const departmentRef = ref({});
 const rules = {
+  type_id: [{ required: true, message: "部门类型不能为空", trigger: "blur" }],
   name: [{ required: true, message: "部门名称不能为空", trigger: "blur" }],
   sort: [{ required: true, message: "排序不能为空", trigger: "blur" }]
 };
 const treeDepartments = ref([]);
+const types = ref([]);
 
 /**
  * 初始化
@@ -71,7 +78,8 @@ const init = async () => {
     return;
   }
 
-  treeDepartments.value = response.data;
+  treeDepartments.value = response.data.tree_departments;
+  types.value = response.data.types;
 };
 
 /**

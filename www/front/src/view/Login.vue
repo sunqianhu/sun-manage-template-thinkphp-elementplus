@@ -157,7 +157,7 @@ html {
 <style lang="scss" scoped>
 .login {
   height: 100%;
-  background-color: var(--background-color-panel);
+  background-color: var(--background-color-page);
   position: relative;
   .background {
     position: absolute;

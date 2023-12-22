@@ -2,6 +2,7 @@
 
 namespace app\manage\controller\system;
 
+use app\helper\Dictionary as DictionaryHelper;
 use app\helper\ArrayHandler;
 use app\manage\controller\Base;
 use app\manage\validate\Department as DepartmentValidate;
@@ -21,11 +22,12 @@ class Department extends Base
     {
         $get = $this->request->get(['name']);
 
-        $query = DepartmentModel::field('id,department_id,name,sort');
+        $query = DepartmentModel::field('id,department_id,type_id,name,sort');
         if (isset($get['name'])) {
             $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
         $query = $query->order('sort', 'asc');
+        $query->append(['type_name']);
         $departmentModels = $query->select();
         $departments = $departmentModels->toArray();
 
@@ -48,7 +50,14 @@ class Department extends Base
         $arr = new ArrayHandler();
         $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
 
-        return $this->success('获取成功', $treeDepartments);
+        $dictionaryHelper = new DictionaryHelper();
+        $types = $dictionaryHelper->getList('department_type');
+
+        $data = [
+            'tree_departments'=>$treeDepartments,
+            'types'=>$types
+        ];
+        return $this->success('获取成功', $data);
     }
 
     /**
@@ -56,7 +65,7 @@ class Department extends Base
      */
     public function saveAdd()
     {
-        $post = $this->request->post(['department_id' => 0, 'name', 'sort']);
+        $post = $this->request->post(['department_id' => 0, 'type_id', 'name', 'sort']);
 
         // 验证
         try {
@@ -80,23 +89,27 @@ class Department extends Base
         }
 
         // 部门
-        $departmentModel = DepartmentModel::field('id,name,department_id,sort')->find($id);
+        $departmentModel = DepartmentModel::field('id,name,department_id,type_id,sort')->find($id);
         if (empty($departmentModel)) {
             return $this->error('没有找到记录');
         }
         $department = $departmentModel->toArray();
 
         // 树形部门
-        $departmentModels = DepartmentModel::field('id, id as value, department_id, name as label')
+        $departmentModels = DepartmentModel::field('id, id as value, department_id, type_id, name as label')
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
         $arr = new ArrayHandler();
         $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
 
+        $dictionaryHelper = new DictionaryHelper();
+        $types = $dictionaryHelper->getList('department_type');
+
         $data = [
-            'treeDepartments' => $treeDepartments,
-            'department' => $department
+            'tree_departments' => $treeDepartments,
+            'department' => $department,
+            'types'=>$types
         ];
         return $this->success('获取成功', $data);
     }
@@ -106,7 +119,7 @@ class Department extends Base
      */
     public function saveEdit()
     {
-        $post = $this->request->post(['id', 'department_id' => 0, 'name', 'sort']);
+        $post = $this->request->post(['id', 'department_id' => 0, 'type_id', 'name', 'sort']);
         if (!$post['department_id']) {
             $data['department_id'] = 0;
         }
