@@ -21,6 +21,7 @@
     <edit-password
       :open="editPasswordFlag"
       @close="editPasswordFlag = false"
+      @submited="editPasswordFlag = false"
       v-if="editPasswordFlag"
     ></edit-password>
   </div>
@@ -73,7 +74,7 @@ const logout = async () => {
   appStore.clearPermissions();
   localStorage.removeItem("token");
 
-  location.href = "/logout";
+  router.replace("/login");
 };
 </script>
 

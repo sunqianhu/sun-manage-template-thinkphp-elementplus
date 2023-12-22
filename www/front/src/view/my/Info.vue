@@ -7,38 +7,18 @@
     @close="close"
     class="info"
   >
-    <div class="field-wrap">
-      <div class="field">
-        <div class="label">账号</div>
-        <div class="content">{{ user.account }}</div>
-      </div>
-      <div class="field">
-        <div class="label">姓名</div>
-        <div class="content">{{ user.name }}</div>
-      </div>
-      <div class="field">
-        <div class="label">手机号码</div>
-        <div class="content">{{ user.phone }}</div>
-      </div>
-      <div class="field">
-        <div class="label">所属单位</div>
-        <div class="content">
-          {{ user.department_name }}
-        </div>
-      </div>
-      <div class="field">
-        <div class="label">最后登录时间</div>
-        <div class="content">
-          {{ dayjs.unix(user.login_time).format("YYYY-MM-DD HH:mm:ss") }}
-        </div>
-      </div>
-      <div class="field">
-        <div class="label">最后登录ip</div>
-        <div class="content">
-          {{ user.login_ip }}
-        </div>
-      </div>
-    </div>
+    <description>
+      <description-item label="账号" sm="24" md="24">{{ user.account }}</description-item>
+      <description-item label="姓名" sm="24" md="24">{{ user.name }}</description-item>
+      <description-item label="手机号码" sm="24" md="24">{{ user.phone }}</description-item>
+      <description-item label="所属部门" sm="24" md="24">
+        {{ user.department_name }}
+      </description-item>
+      <description-item label="最后登录时间" sm="24" md="24">
+        {{ dayjs.unix(user.login_time).format("YYYY-MM-DD HH:mm:ss") }}
+      </description-item>
+      <description-item label="最后登录ip" sm="24" md="24">{{ user.login_ip }}</description-item>
+    </description>
   </el-dialog>
 </template>
 
@@ -46,6 +26,8 @@
 import { ref, onMounted } from "vue";
 import axios from "@/helper/axios";
 import dayjs from "dayjs";
+import Description from "@/component/Description.vue";
+import DescriptionItem from "@/component/DescriptionItem.vue";
 
 const props = defineProps(["open"]);
 const emits = defineEmits(["close"]);
