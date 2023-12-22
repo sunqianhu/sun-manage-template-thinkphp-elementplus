@@ -46,16 +46,8 @@ const openOutLink = (url) => {
 </script>
 
 <style lang="scss" scoped>
-.out-link {
-  position: absolute;
-  display: block;
-  left: 0px;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-}
 .el-sub-menu.is-active {
-  ::v-deep(.el-sub-menu__title) {
+  :deep(.el-sub-menu__title) {
     color: #ffffff !important;
   }
 }
