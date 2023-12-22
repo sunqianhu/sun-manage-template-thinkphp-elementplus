@@ -174,10 +174,12 @@ class Base extends BaseController
         // 不记录公共页面
         $url = $this->request->baseUrl();
         $url = strtolower($url);
-        if (in_array($url, $this->noLoginUrls)) {
+
+        $noSlashUrl = substr($url, 1);
+        if (in_array($noSlashUrl, $this->noLoginUrls)) {
             return;
         }
-        if (in_array($url, $this->noPermissionUrls)) {
+        if (in_array($noSlashUrl, $this->noPermissionUrls)) {
             return;
         }
 
