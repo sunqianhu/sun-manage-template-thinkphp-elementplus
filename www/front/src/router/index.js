@@ -82,7 +82,7 @@ router.beforeEach(async (to, from) => {
 
   //权限
   if (!appStore.isSetPermission) {
-    response = await axios.get("manage/main/getPermissions");
+    response = await axios.get("manage/frame/getPermissions");
     if (response.code != 1) {
       return getLoginRoutePath();
     }
@@ -91,7 +91,7 @@ router.beforeEach(async (to, from) => {
 
   //动态路由
   if (!appStore.isSetRoute) {
-    response = await axios.get("manage/main/getRoutes");
+    response = await axios.get("manage/frame/getRoutes");
     if (response.code != 1) {
       return getLoginRoutePath();
     }

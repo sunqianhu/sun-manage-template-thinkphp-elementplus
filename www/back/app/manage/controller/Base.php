@@ -29,10 +29,11 @@ class Base extends BaseController
      */
     private $noPermissionUrls = [
         'manage/login/logout',
-        'manage/main/getpermissions',
-        'manage/main/getroutes',
+        'manage/frame/getroutes',
+        'manage/frame/getpermissions',
+        'manage/frame/getwatermark',
+        'manage/main/init',
         'manage/main/getmenus',
-        'manage/main/getwatermark',
         'manage/message/readall',
         'manage/message/getnoreads',
         'manage/uploadfile/uploadfile',

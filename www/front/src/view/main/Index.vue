@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useAppStore } from "@/store/app";
 import Menu from "./Menu.vue";
 import LightDark from "./LightDark.vue";
@@ -43,18 +43,25 @@ import Hamburger from "./Hamburger.vue";
 import FullScreen from "./FullScreen.vue";
 import Avatar from "./Avatar.vue";
 import Message from "./Message.vue";
-import Watermark from "./Watermark.vue";
-import { config } from "../../../config";
+import Watermark from "@/component/Watermark.vue";
+import axios from "@/helper/axios";
 
 const appStore = useAppStore();
+const config = ref({});
 
 /**
  * 初始化
  */
-const init = () => {
+const init = async () => {
   if (document.body.clientWidth < 768) {
     appStore.setSiderStatus(false);
   }
+
+  const response = await axios.get("manage/main/init");
+  if (response.code != 1) {
+    return;
+  }
+  config.value = response.data.config;
 };
 
 /**

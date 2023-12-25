@@ -6,10 +6,17 @@
       </keep-alive>
       <component :is="Component" v-else />
     </router-view>
+    <watermark />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import Watermark from "@/component/Watermark.vue";
+import { useDark, useToggle } from "@vueuse/core";
+
+const isDark = useDark();
+useToggle(isDark);
+</script>
 
 <style lang="scss" scoped>
 .blank-layout {
