@@ -100,7 +100,7 @@ html {
     .aside {
       width: 220px;
       box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
-      background-color: #0021a5;
+      background-color: #1d1e72;
       color: #ffffff;
       z-index: 2;
       transition: width 0.5s;
