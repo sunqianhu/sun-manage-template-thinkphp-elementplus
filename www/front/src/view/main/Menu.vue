@@ -1,8 +1,7 @@
 <template>
   <el-menu
     mode="vertical"
-    background-color="#001529"
-    text-color="rgba(255, 255, 255, 0.65)"
+    text-color="rgba(255, 255, 255, 0.9)"
     active-text-color="#ffffff"
     :default-active="defaultActive"
     :collapse="!appStore.siderStatus"

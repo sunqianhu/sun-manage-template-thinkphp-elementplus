@@ -1,9 +1,15 @@
 //亮色
 :root:root {
-  --color-primary: #409eff;
+  --el-color-primary: #409eff;
+
+  //菜单
+  --el-menu-bg-color: #0021a5;
+  --el-menu-hover-bg-color: #409eff;
 }
 
 //暗黑
 .dark:root:root {
-  --el-bg-color: #001529;
+  //菜单
+  --el-menu-bg-color: #141414;
+  --el-menu-hover-bg-color: #409eff;
 }

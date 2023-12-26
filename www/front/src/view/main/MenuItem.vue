@@ -46,12 +46,7 @@ const openOutLink = (url) => {
 </script>
 
 <style lang="scss" scoped>
-.el-sub-menu.is-active {
-  :deep(.el-sub-menu__title) {
-    color: #ffffff !important;
-  }
-}
 .el-menu-item.is-active {
-  background-color: #1890ff;
+  background-color: #409eff;
 }
 </style>

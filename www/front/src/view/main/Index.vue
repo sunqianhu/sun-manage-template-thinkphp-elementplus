@@ -100,10 +100,10 @@ html {
     .aside {
       width: 220px;
       box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
-      background-color: #001529;
+      background-color: #0021a5;
       color: #ffffff;
       z-index: 2;
-      transition: width 0.8s;
+      transition: width 0.5s;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -112,7 +112,7 @@ html {
         height: 50px;
         line-height: 50px;
         overflow: hidden;
-        transition: all 0.8s;
+        transition: all 0.5s;
         padding-left: 12px;
         .logo {
           height: 20px;
@@ -124,7 +124,7 @@ html {
           margin-left: 8px;
           display: inline-block;
           vertical-align: middle;
-          transition: all 0.8s;
+          transition: all 0.5s;
         }
       }
       .menu-wrap {
@@ -185,6 +185,22 @@ html {
       &.close {
         .aside {
           width: 0px;
+        }
+      }
+    }
+  }
+}
+
+//暗黑模式
+.dark {
+  .main-layout {
+    .container {
+      .aside {
+        background-color: #141414;
+      }
+      .workspace {
+        .header {
+          background-color: #141414;
         }
       }
     }
