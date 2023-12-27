@@ -3,6 +3,7 @@
 namespace app\manage\controller;
 
 use app\helper\ArrayHandler;
+use app\helper\User as UserHelper;
 use app\model\Config as ConfigModel;
 use app\model\Menu as MenuModel;
 use app\model\Role as RoleModel;
@@ -74,5 +75,20 @@ class Main extends Base
         $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
 
         return $this->success('获取成功', $treeMenus);
+    }
+
+    /**
+     * 得到头像
+     * @return \think\Response
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getAvatar()
+    {
+        $userModel = UserModel::field('avatar')->find($this->user->id);
+        $userHelper = new UserHelper();
+        $avatar = $userHelper->getAvatarUrl($userModel->avatar);
+        return $this->success('获取成功', $avatar);
     }
 }

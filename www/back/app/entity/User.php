@@ -48,6 +48,4 @@ class User
     {
         $this->departmentId = $departmentId;
     }
-
-
 }

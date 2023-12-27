@@ -34,10 +34,13 @@ class Base extends BaseController
         'manage/frame/getwatermark',
         'manage/main/init',
         'manage/main/getmenus',
+        'manage/main/getavatar',
         'manage/message/readall',
         'manage/message/getnoreads',
         'manage/uploadfile/uploadfile',
         'manage/my/info',
+        'manage/my/initeditavatar',
+        'manage/my/saveeditavatar',
         'manage/my/editpassword'
     ];
 

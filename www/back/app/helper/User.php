@@ -3,6 +3,7 @@
 namespace app\helper;
 
 use app\model\User as UserModel;
+use think\facade\Config;
 
 class User
 {
@@ -59,15 +60,41 @@ class User
      */
     public function getRoleNameString($roleModels, $split = '，')
     {
-        if($roleModels->isEmpty()){
+        if ($roleModels->isEmpty()) {
             return '';
         }
 
         $names = [];
-        foreach($roleModels as $roleModel){
+        foreach ($roleModels as $roleModel) {
             $names[] = $roleModel->name;
         }
-        
+
         return implode($split, $names);
+    }
+
+    /**
+     * 得到头像url
+     * @param $path
+     * @return string
+     */
+    public function getAvatarUrl($path)
+    {
+        if($path === ''){
+            $path = 'avatar.png';
+        }
+        return Config::get('filesystem.access_prefix') . $path;
+    }
+
+    /**
+     * 得到前端头像url
+     * @param $path
+     * @return string
+     */
+    public function getFrontAvatarUrl($path)
+    {
+        if($path === ''){
+            $path = 'avatar.png';
+        }
+        return Config::get('filesystem.front_access_prefix') . $path;
     }
 }

@@ -288,7 +288,7 @@ class User extends Base
 
         // 验证
         try {
-            validate(UserValidate::class)->scene('editStatus')->check($post);
+            validate(UserValidate::class)->scene('edit_status')->check($post);
         } catch (ValidateException $e) {
             return $this->error($e->getError());
         }
@@ -306,7 +306,7 @@ class User extends Base
         $post = $this->request->post(['id', 'password1', 'password2']);
 
         try {
-            validate(UserValidate::class)->scene('editPassword')->check($post);
+            validate(UserValidate::class)->scene('edit_password')->check($post);
         } catch (ValidateException $e) {
             return $this->error($e->getError());
         }
@@ -328,7 +328,7 @@ class User extends Base
 
         // 验证
         try {
-            validate(UserValidate::class)->scene('offLine')->check($post);
+            validate(UserValidate::class)->scene('offline')->check($post);
         } catch (ValidateException $e) {
             return $this->error($e->getError());
         }
