@@ -16,16 +16,14 @@ class LoginLog extends Base
      */
     public function getIndexLoginLogs()
     {
-        $get = $this->request->get(['time_start' => '', 'time_end' => '', 'name' => '', 'phone' => '', 'size' => '30', 'page' => '1']);
+        $get = $this->request->get(['time' =>[], 'name' => '', 'phone' => '', 'size' => '30', 'page' => '1']);
 
         $query = LoginLogModel::alias('ll')
             ->field('ll.*,u.name')
             ->leftJoin("user u", "ll.user_id = u.id");
-        if ($get['time_start'] !== '') {
-            $query = $query->where('ll.time', '>', $get['time_start']);
-        }
-        if ($get['time_end'] !== '') {
-            $query = $query->where('ll.time', '<', $get['time_end']);
+        if (!empty($get['time']) && count($get['time']) == 2) {
+            $query = $query->where('ll.time', '>', $get['time'][0]);
+            $query = $query->where('ll.time', '<', $get['time'][1]);
         }
         if ($get['name'] !== '') {
             $query = $query->where('u.name', 'LIKE', '%' . $get['name'] . '%');

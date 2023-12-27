@@ -7,10 +7,13 @@
           <el-date-picker
             v-model="query.time"
             type="datetimerange"
-            value-format="YYYY-MM-DD HH:mm:ss"
+            format="YYYY-MM-DD HH:mm:ss"
+            value-format="X"
             range-separator="至"
             start-placeholder="开始时间"
             end-placeholder="结束时间"
+            editable
+            unlink-panels
           />
         </el-form-item>
         <el-form-item label="用户姓名">
@@ -58,7 +61,7 @@ import axios from "@/helper/axios";
 const query = ref({
   time: [
     dayjs().subtract(3, "month").format("YYYY-MM-DD") + " 00:00:00",
-    dayjs().format("YYYY-MM-DD") + " 23:59:59"
+    dayjs().add(1, "day").format("YYYY-MM-DD") + " 00:00:00"
   ],
   size: 30,
   page: 1
@@ -71,11 +74,6 @@ const total = ref(0);
  * 获取登录日志
  */
 const getLoginLogs = async () => {
-  if (query.value.time) {
-    query.value.start_time = dayjs(query.value.time[0]).unix();
-    query.value.end_time = dayjs(query.value.time[1]).unix();
-  }
-
   loading.value = true;
   const response = await axios.get("manage/system.LoginLog/getIndexLoginLogs", {
     params: query.value
