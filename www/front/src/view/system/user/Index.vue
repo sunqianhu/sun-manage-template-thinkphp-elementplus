@@ -287,18 +287,18 @@ onMounted(() => {
     font-weight: bold;
   }
   .search {
-    margin-top: 16px;
+    margin-top: var(--margin);
   }
   .toolbar {
   }
   .list {
-    margin-top: 16px;
+    margin-top: var(--margin);
     ::v-deep(th.el-table__cell) {
       background-color: var(--background-color-table-header);
     }
   }
   .pagination {
-    margin-top: 16px;
+    margin-top: var(--margin);
   }
 }
 </style>

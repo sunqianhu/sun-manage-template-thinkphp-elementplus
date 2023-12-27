@@ -60,8 +60,8 @@ import axios from "@/helper/axios";
 
 const query = ref({
   time: [
-    dayjs().subtract(3, "month").format("YYYY-MM-DD") + " 00:00:00",
-    dayjs().add(1, "day").format("YYYY-MM-DD") + " 00:00:00"
+    dayjs(dayjs().subtract(3, "month").format("YYYY-MM-DD") + " 00:00:00").unix(),
+    dayjs(dayjs().add(1, "day").format("YYYY-MM-DD") + " 00:00:00").unix()
   ],
   size: 30,
   page: 1
@@ -133,7 +133,7 @@ onMounted(() => {
     font-weight: bold;
   }
   .search {
-    margin-top: 16px;
+    margin-top: var(--margin);
   }
   .list {
     ::v-deep(th.el-table__cell) {
@@ -141,7 +141,7 @@ onMounted(() => {
     }
   }
   .pagination {
-    margin-top: 16px;
+    margin-top: var(--margin);
   }
 }
 </style>

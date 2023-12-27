@@ -32,10 +32,10 @@ class OperationLog extends Base
             $query = $query->where('u.phone', 'LIKE', '%' . $get['phone'] . '%');
         }
         $query = $query->order('ol.id', 'desc');
-        $loginLogs = $query->paginate([
+        $operationLogs = $query->paginate([
             'list_rows' => $get['size'],
             'page' => $get['page'],
         ]);
-        return $this->success('获取成功', $loginLogs);
+        return $this->success('获取成功', $operationLogs);
     }
 }
