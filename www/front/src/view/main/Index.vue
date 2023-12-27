@@ -115,15 +115,14 @@ html {
         transition: all 0.5s;
         padding-left: 12px;
         .logo {
-          height: 20px;
-          vertical-align: middle;
+          height: 25px;
+          vertical-align: text-bottom;
         }
         .name {
-          font-size: 20px;
+          font-size: 2px;
           font-weight: bold;
           margin-left: 8px;
           display: inline-block;
-          vertical-align: middle;
           transition: all 0.5s;
         }
       }
@@ -168,7 +167,7 @@ html {
       .aside {
         width: 64px;
         .system-name {
-          padding-left: 20px;
+          padding-left: 22px;
           .name {
             margin-left: 30px;
           }
