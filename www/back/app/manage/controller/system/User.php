@@ -220,10 +220,15 @@ class User extends Base
         $post['edit_time'] = time();
         $userModel->save($post);
 
-        UserRoleModel::where('user_id', $userModel->id)->delete();
-        if (!empty($post['role_ids'])) {
-            $userRoleBelongsToMany = $userModel->roles();
-            $userRoleBelongsToMany->attach($post['role_ids']);
+        $userRoleBelongsToMany = $userModel->roles();
+        $oldRoleIds = array_column($userModel->roles->toArray(), 'id');
+        $deleteRoleIds = array_values(array_diff($oldRoleIds, $post['role_ids']));
+        $addRoleIds = array_values(array_diff($post['role_ids'], $oldRoleIds));
+        if(!empty($deleteRoleIds)){
+            $userRoleBelongsToMany->detach($deleteRoleIds);
+        }
+        if(!empty($addRoleIds)) {
+            $userRoleBelongsToMany->attach($addRoleIds);
         }
 
         return $this->success('修改成功');
