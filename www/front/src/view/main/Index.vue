@@ -119,7 +119,7 @@ html {
           vertical-align: text-bottom;
         }
         .name {
-          font-size: 2px;
+          font-size: 20px;
           font-weight: bold;
           margin-left: 8px;
           display: inline-block;
@@ -167,7 +167,7 @@ html {
       .aside {
         width: 64px;
         .system-name {
-          padding-left: 22px;
+          padding-left: 19px;
           .name {
             margin-left: 30px;
           }
