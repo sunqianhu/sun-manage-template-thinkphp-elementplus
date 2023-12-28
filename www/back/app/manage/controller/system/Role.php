@@ -42,8 +42,9 @@ class Role extends Base
     public function initAdd()
     {
         // 菜单
-        $menuModels = MenuModel::field('id, id, menu_id, name')
+        $menuModels = MenuModel::field('id, id, menu_id, name, remark')
             ->order('sort', 'asc')
+            ->append(['name_remark'])
             ->select();
         $menus = $menuModels->toArray();
         $arr = new ArrayHandler();
@@ -101,8 +102,9 @@ class Role extends Base
         }
 
         // 菜单
-        $menuModels = MenuModel::field('id, id, menu_id, name')
+        $menuModels = MenuModel::field('id, id, menu_id, name, remark')
             ->order('sort', 'asc')
+            ->append(['name_remark'])
             ->select();
         $menus = $menuModels->toArray();
         $arr = new ArrayHandler();

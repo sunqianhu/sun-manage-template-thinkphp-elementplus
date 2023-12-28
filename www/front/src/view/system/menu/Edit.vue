@@ -9,7 +9,7 @@
     @close="close"
     class="edit"
   >
-    <el-scrollbar max-height="300px" class="scrollbar" v-loading="pageLoading">
+    <el-scrollbar max-height="350px" class="scrollbar" v-loading="pageLoading">
       <el-form :model="menu" :rules="rules" scroll-to-error ref="menuRef" label-width="120px">
         <el-form-item label="上级菜单" prop="menu_id">
           <el-tree-select
@@ -63,6 +63,9 @@
           <el-select v-model="menu.layout" clearable>
             <el-option v-for="layout in layouts" :label="layout.value" :value="layout.key" />
           </el-select>
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="menu.remark" maxlength="32" />
         </el-form-item>
         <el-form-item label="保活" prop="keep_alive" v-if="menu.type_id == 2">
           <el-radio-group v-model="menu.keep_alive">

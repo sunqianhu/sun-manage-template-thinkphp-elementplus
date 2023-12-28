@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2023-12-25 15:28:01
+Date: 2023-12-28 09:48:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -88,7 +88,7 @@ CREATE TABLE `login_log` (
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
@@ -142,6 +142,15 @@ INSERT INTO `login_log` VALUES ('46', '10', '1703215743', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('47', '10', '1703215954', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('48', '10', '1703226745', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('49', '10', '1703485244', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('50', '10', '1703561120', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('51', '10', '1703570391', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('52', '10', '1703578112', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('53', '10', '1703578158', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('54', '10', '1703578196', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('55', '10', '1703578207', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('56', '10', '1703639308', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('57', '10', '1703726655', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('58', '10', '1703727087', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for menu
@@ -162,41 +171,42 @@ CREATE TABLE `menu` (
   `keep_alive` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '保活',
   `show` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '菜单显示',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `remark` varchar(32) NOT NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COMMENT='菜单';
 
 -- ----------------------------
 -- Records of menu
 -- ----------------------------
-INSERT INTO `menu` VALUES ('1', '0', '1', '系统管理', 'system', '', '', '', 'Setting', '', '', '2', '1', '99');
-INSERT INTO `menu` VALUES ('2', '1', '2', '用户管理', 'system_user', '/system/user', 'system/user/Index.vue', '', 'User', 'manage/system.User/initIndex\nmanage/system.User/getIndexUsers', 'main', '2', '1', '3');
-INSERT INTO `menu` VALUES ('3', '2', '3', '添加', 'system_user_add', '', '', '', '', 'manage/system.User/initAdd\nmanage/system.User/saveAdd', '', '2', '1', '1');
-INSERT INTO `menu` VALUES ('4', '2', '3', '修改', 'system_user_edit', '', '', '', '', 'manage/system.User/initEdit\nmanage/system.User/saveEdit', '', '2', '1', '2');
-INSERT INTO `menu` VALUES ('5', '1', '2', '部门管理', 'system_department', '/system/department', 'system/department/Index.vue', '', 'Memo', 'manage/system.Department/getIndexDepartments', 'main', '2', '1', '5');
-INSERT INTO `menu` VALUES ('6', '2', '3', '修改状态', 'system_user_edit_status', '', '', '', '', 'manage/system.User/editStatus', '', '2', '1', '3');
-INSERT INTO `menu` VALUES ('7', '2', '3', '修改密码', 'system_user_edit_password', '', '', '', '', 'manage/system.User/editPassword', '', '2', '1', '5');
-INSERT INTO `menu` VALUES ('8', '5', '3', '添加', 'system_department_add', '', '', '', '', 'manage/system.Department/initAdd\nmanage/system.Department/saveAdd', '', '2', '1', '1');
-INSERT INTO `menu` VALUES ('9', '5', '3', '修改', 'system_department_edit', '', '', '', '', 'manage/system.Department/initEdit\nmanage/system.Department/saveEdit', '', '2', '1', '1');
-INSERT INTO `menu` VALUES ('10', '5', '3', '删除', 'system_department_delete', '', '', '', '', 'manage/system.Department/delete', '', '2', '1', '3');
-INSERT INTO `menu` VALUES ('11', '1', '2', '角色管理', 'system_role', '/system/role', 'system/role/Index.vue', '', 'ChatSquare', 'manage/system.Role/getIndexRoles', 'main', '2', '1', '7');
-INSERT INTO `menu` VALUES ('12', '11', '3', '添加', 'system_role_add', '', '', '', '', 'manage/system.Role/initAdd\nmanage/system.Role/saveAdd', '', '2', '1', '1');
-INSERT INTO `menu` VALUES ('13', '11', '3', '修改', 'system_role_edit', '', '', '', '', 'manage/system.Role/initEdit\nmanage/system.Role/saveEdit', '', '2', '1', '2');
-INSERT INTO `menu` VALUES ('14', '11', '3', '删除', 'system_role_delete', '', '', '', '', 'manage/system.Role/delete', '', '2', '1', '3');
-INSERT INTO `menu` VALUES ('15', '1', '2', '菜单管理', 'system_menu', '/system/menu', 'system/menu/Index.vue', '', 'Reading', 'manage/system.Menu/getIndexMenus', 'main', '2', '1', '9');
-INSERT INTO `menu` VALUES ('16', '15', '3', '添加', 'system_menu_add', '', '', '', '', 'manage/system.Menu/initAdd\nmanage/system.Menu/saveAdd', '', '2', '1', '1');
-INSERT INTO `menu` VALUES ('17', '15', '3', '修改', 'menu_edit', '', '', '', '', 'manage/system.Menu/initEdit\nmanage/system.Menu/saveEdit', '', '2', '1', '2');
-INSERT INTO `menu` VALUES ('18', '15', '3', '删除', 'system_menu_delete', '', '', '', '', 'manage/system.Menu/delete', '', '2', '1', '3');
-INSERT INTO `menu` VALUES ('19', '1', '2', '字典管理', 'system_dictionary', '/system/dictionary', 'system/dictionary/Index.vue', '', 'Document', 'manage/system.Dictionary/getIndexDictionarys', 'main', '2', '1', '11');
-INSERT INTO `menu` VALUES ('20', '19', '3', '添加', 'system_dictionary_add', '', '', '', '', 'manage/system.Dictionary/saveAdd', '', '2', '1', '1');
-INSERT INTO `menu` VALUES ('21', '19', '3', '修改', 'system_dictionary_edit', '', '', '', '', 'manage/system.Dictionary/initEdit\nmanage/system.Dictionary/saveEdit', '', '2', '1', '2');
-INSERT INTO `menu` VALUES ('22', '19', '3', '删除', 'system_dictionary_delete', '', '', '', '', 'manage/system.Dictionary/delete', '', '2', '1', '3');
-INSERT INTO `menu` VALUES ('23', '0', '2', '首页', 'index', '/index', 'Index.vue', '', 'House', '', 'main', '2', '1', '0');
-INSERT INTO `menu` VALUES ('26', '2', '3', '踢下线', 'system_user_offline', '', '', '', '', 'manage/system.User/offLine', '', '2', '1', '5');
-INSERT INTO `menu` VALUES ('27', '1', '2', '登录日志', 'system_login_log', '/system/login-log', 'system/login_log/Index.vue', '', 'MapLocation', 'manage/system.LoginLog/getIndexLoginLogs', 'main', '2', '1', '13');
-INSERT INTO `menu` VALUES ('28', '1', '2', '操作日志', 'system_operation_log', '/system/operation-log', 'system/operation_log/Index.vue', '', 'Mouse', 'manage/system.OperationLog/getIndexOperationLogs', 'main', '2', '1', '15');
-INSERT INTO `menu` VALUES ('29', '2', '2', '用户详情', 'system_user_detail', '/system/user/:id', 'system/user/Detail.vue', '', '', 'manage/system.user/detail', 'blank', '2', '2', '3');
-INSERT INTO `menu` VALUES ('30', '0', '4', '百度搜索', 'baidu', '', '', 'https://www.baidu.com', 'ChatSquare', '', '', '2', '1', '3');
-INSERT INTO `menu` VALUES ('31', '1', '2', '系统设置', 'system_config', '/system/config', 'system/config/Index.vue', '', 'Cpu', 'manage/system.Config/init\nmanage/system.Config/save', 'main', '2', '1', '1');
+INSERT INTO `menu` VALUES ('1', '0', '1', '系统管理', 'system', '', '', '', 'Setting', '', '', '2', '1', '99', '');
+INSERT INTO `menu` VALUES ('2', '1', '2', '用户管理', 'system_user', '/system/user', 'system/user/Index.vue', '', 'User', 'manage/system.User/initIndex\nmanage/system.User/getIndexUsers', 'main', '2', '1', '3', '');
+INSERT INTO `menu` VALUES ('3', '2', '3', '添加', 'system_user_add', '', '', '', '', 'manage/system.User/initAdd\nmanage/system.User/saveAdd', '', '2', '1', '1', '');
+INSERT INTO `menu` VALUES ('4', '2', '3', '修改', 'system_user_edit', '', '', '', '', 'manage/system.User/initEdit\nmanage/system.User/saveEdit', '', '2', '1', '2', '');
+INSERT INTO `menu` VALUES ('5', '1', '2', '部门管理', 'system_department', '/system/department', 'system/department/Index.vue', '', 'Memo', 'manage/system.Department/getIndexDepartments', 'main', '2', '1', '5', '');
+INSERT INTO `menu` VALUES ('6', '2', '3', '修改状态', 'system_user_edit_status', '', '', '', '', 'manage/system.User/editStatus', '', '2', '1', '3', '');
+INSERT INTO `menu` VALUES ('7', '2', '3', '修改密码', 'system_user_edit_password', '', '', '', '', 'manage/system.User/editPassword', '', '2', '1', '5', '');
+INSERT INTO `menu` VALUES ('8', '5', '3', '添加', 'system_department_add', '', '', '', '', 'manage/system.Department/initAdd\nmanage/system.Department/saveAdd', '', '2', '1', '1', '');
+INSERT INTO `menu` VALUES ('9', '5', '3', '修改', 'system_department_edit', '', '', '', '', 'manage/system.Department/initEdit\nmanage/system.Department/saveEdit', '', '2', '1', '1', '');
+INSERT INTO `menu` VALUES ('10', '5', '3', '删除', 'system_department_delete', '', '', '', '', 'manage/system.Department/delete', '', '2', '1', '3', '');
+INSERT INTO `menu` VALUES ('11', '1', '2', '角色管理', 'system_role', '/system/role', 'system/role/Index.vue', '', 'ChatSquare', 'manage/system.Role/getIndexRoles', 'main', '2', '1', '7', '');
+INSERT INTO `menu` VALUES ('12', '11', '3', '添加', 'system_role_add', '', '', '', '', 'manage/system.Role/initAdd\nmanage/system.Role/saveAdd', '', '2', '1', '1', '');
+INSERT INTO `menu` VALUES ('13', '11', '3', '修改', 'system_role_edit', '', '', '', '', 'manage/system.Role/initEdit\nmanage/system.Role/saveEdit', '', '2', '1', '2', '');
+INSERT INTO `menu` VALUES ('14', '11', '3', '删除', 'system_role_delete', '', '', '', '', 'manage/system.Role/delete', '', '2', '1', '3', '');
+INSERT INTO `menu` VALUES ('15', '1', '2', '菜单管理', 'system_menu', '/system/menu', 'system/menu/Index.vue', '', 'Reading', 'manage/system.Menu/getIndexMenus', 'main', '2', '1', '9', '');
+INSERT INTO `menu` VALUES ('16', '15', '3', '添加', 'system_menu_add', '', '', '', '', 'manage/system.Menu/initAdd\nmanage/system.Menu/saveAdd', '', '2', '1', '1', '');
+INSERT INTO `menu` VALUES ('17', '15', '3', '修改', 'menu_edit', '', '', '', '', 'manage/system.Menu/initEdit\nmanage/system.Menu/saveEdit', '', '2', '1', '2', '');
+INSERT INTO `menu` VALUES ('18', '15', '3', '删除', 'system_menu_delete', '', '', '', '', 'manage/system.Menu/delete', '', '2', '1', '3', '');
+INSERT INTO `menu` VALUES ('19', '1', '2', '字典管理', 'system_dictionary', '/system/dictionary', 'system/dictionary/Index.vue', '', 'Document', 'manage/system.Dictionary/getIndexDictionarys', 'main', '2', '1', '11', '');
+INSERT INTO `menu` VALUES ('20', '19', '3', '添加', 'system_dictionary_add', '', '', '', '', 'manage/system.Dictionary/saveAdd', '', '2', '1', '1', '');
+INSERT INTO `menu` VALUES ('21', '19', '3', '修改', 'system_dictionary_edit', '', '', '', '', 'manage/system.Dictionary/initEdit\nmanage/system.Dictionary/saveEdit', '', '2', '1', '2', '');
+INSERT INTO `menu` VALUES ('22', '19', '3', '删除', 'system_dictionary_delete', '', '', '', '', 'manage/system.Dictionary/delete', '', '2', '1', '3', '');
+INSERT INTO `menu` VALUES ('23', '0', '2', '首页', 'index', '/index', 'Index.vue', '', 'House', '', 'main', '2', '1', '0', '');
+INSERT INTO `menu` VALUES ('26', '2', '3', '踢下线', 'system_user_offline', '', '', '', '', 'manage/system.User/offLine', '', '2', '1', '5', '');
+INSERT INTO `menu` VALUES ('27', '1', '2', '登录日志', 'system_login_log', '/system/login-log', 'system/login_log/Index.vue', '', 'MapLocation', 'manage/system.LoginLog/getIndexLoginLogs', 'main', '2', '1', '13', '');
+INSERT INTO `menu` VALUES ('28', '1', '2', '操作日志', 'system_operation_log', '/system/operation-log', 'system/operation_log/Index.vue', '', 'Mouse', 'manage/system.OperationLog/getIndexOperationLogs', 'main', '2', '1', '15', '');
+INSERT INTO `menu` VALUES ('29', '2', '2', '用户详情', 'system_user_detail', '/system/user/:id', 'system/user/Detail.vue', '', '', 'manage/system.user/detail', 'blank', '2', '2', '3', '');
+INSERT INTO `menu` VALUES ('30', '0', '4', '百度搜索', 'baidu', '', '', 'https://www.baidu.com', 'ChatSquare', '', '', '2', '1', '3', '新窗口');
+INSERT INTO `menu` VALUES ('31', '1', '2', '系统设置', 'system_config', '/system/config', 'system/config/Index.vue', '', 'Cpu', 'manage/system.Config/init\nmanage/system.Config/save', 'main', '2', '1', '1', '');
 
 -- ----------------------------
 -- Table structure for message
@@ -422,7 +432,7 @@ CREATE TABLE `operation_log` (
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '操作ip',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '操作地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3877 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=3919 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
@@ -4303,6 +4313,48 @@ INSERT INTO `operation_log` VALUES ('3873', '10', '1703489040', '127.0.0.1', '/m
 INSERT INTO `operation_log` VALUES ('3874', '10', '1703489043', '127.0.0.1', '/manage/system.user/detail');
 INSERT INTO `operation_log` VALUES ('3875', '10', '1703489051', '127.0.0.1', '/manage/system.operationlog/getindexoperationlogs');
 INSERT INTO `operation_log` VALUES ('3876', '10', '1703489065', '127.0.0.1', '/manage/system.config/init');
+INSERT INTO `operation_log` VALUES ('3877', '10', '1703561147', '127.0.0.1', '/manage/system.config/init');
+INSERT INTO `operation_log` VALUES ('3878', '10', '1703561149', '127.0.0.1', '/manage/system.user/initindex');
+INSERT INTO `operation_log` VALUES ('3879', '10', '1703561150', '127.0.0.1', '/manage/system.user/getindexusers');
+INSERT INTO `operation_log` VALUES ('3880', '10', '1703561152', '127.0.0.1', '/manage/system.config/init');
+INSERT INTO `operation_log` VALUES ('3881', '10', '1703561154', '127.0.0.1', '/manage/system.user/initindex');
+INSERT INTO `operation_log` VALUES ('3882', '10', '1703561154', '127.0.0.1', '/manage/system.user/getindexusers');
+INSERT INTO `operation_log` VALUES ('3883', '10', '1703561158', '127.0.0.1', '/manage/system.user/initindex');
+INSERT INTO `operation_log` VALUES ('3884', '10', '1703561158', '127.0.0.1', '/manage/system.user/getindexusers');
+INSERT INTO `operation_log` VALUES ('3885', '10', '1703561160', '127.0.0.1', '/manage/system.department/getindexdepartments');
+INSERT INTO `operation_log` VALUES ('3886', '10', '1703561162', '127.0.0.1', '/manage/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('3887', '10', '1703561164', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('3888', '10', '1703561166', '127.0.0.1', '/manage/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('3889', '10', '1703561177', '127.0.0.1', '/manage/system.loginlog/getindexloginlogs');
+INSERT INTO `operation_log` VALUES ('3890', '10', '1703561179', '127.0.0.1', '/manage/system.operationlog/getindexoperationlogs');
+INSERT INTO `operation_log` VALUES ('3891', '10', '1703561182', '127.0.0.1', '/manage/system.config/init');
+INSERT INTO `operation_log` VALUES ('3892', '10', '1703561184', '127.0.0.1', '/manage/system.department/getindexdepartments');
+INSERT INTO `operation_log` VALUES ('3893', '10', '1703561185', '127.0.0.1', '/manage/system.user/initindex');
+INSERT INTO `operation_log` VALUES ('3894', '10', '1703561185', '127.0.0.1', '/manage/system.user/getindexusers');
+INSERT INTO `operation_log` VALUES ('3895', '10', '1703561186', '127.0.0.1', '/manage/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('3896', '10', '1703561187', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('3897', '10', '1703561188', '127.0.0.1', '/manage/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('3898', '10', '1703561204', '127.0.0.1', '/manage/system.loginlog/getindexloginlogs');
+INSERT INTO `operation_log` VALUES ('3899', '10', '1703727290', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('3900', '10', '1703727292', '127.0.0.1', '/manage/system.menu/initadd');
+INSERT INTO `operation_log` VALUES ('3901', '10', '1703727405', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('3902', '10', '1703727426', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('3903', '10', '1703727428', '127.0.0.1', '/manage/system.menu/initadd');
+INSERT INTO `operation_log` VALUES ('3904', '10', '1703727642', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('3905', '10', '1703727644', '127.0.0.1', '/manage/system.dictionary/getindexdictionarys');
+INSERT INTO `operation_log` VALUES ('3906', '10', '1703727645', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('3907', '10', '1703727648', '127.0.0.1', '/manage/system.menu/initedit');
+INSERT INTO `operation_log` VALUES ('3908', '10', '1703727660', '127.0.0.1', '/manage/system.menu/saveedit');
+INSERT INTO `operation_log` VALUES ('3909', '10', '1703727660', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('3910', '10', '1703727663', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('3911', '10', '1703727675', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('3912', '10', '1703727704', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('3913', '10', '1703727710', '127.0.0.1', '/manage/system.role/getindexroles');
+INSERT INTO `operation_log` VALUES ('3914', '10', '1703727713', '127.0.0.1', '/manage/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('3915', '10', '1703727992', '127.0.0.1', '/manage/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('3916', '10', '1703728012', '127.0.0.1', '/manage/system.role/initadd');
+INSERT INTO `operation_log` VALUES ('3917', '10', '1703728042', '127.0.0.1', '/manage/system.role/initedit');
+INSERT INTO `operation_log` VALUES ('3918', '10', '1703728067', '127.0.0.1', '/manage/system.role/initedit');
 
 -- ----------------------------
 -- Table structure for role
@@ -4382,7 +4434,7 @@ CREATE TABLE `token` (
   PRIMARY KEY (`id`),
   KEY `token` (`token`(128)) USING BTREE,
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COMMENT='token';
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COMMENT='token';
 
 -- ----------------------------
 -- Records of token
@@ -4390,6 +4442,15 @@ CREATE TABLE `token` (
 INSERT INTO `token` VALUES ('34', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC42MDA0MDMwMCAxNzAzMjE1OTU0In0.hCtCWoJvF5UJ_OX2yYvozYIM-tUGYyLbbWHcDkm4_R8', '1703226008', '10');
 INSERT INTO `token` VALUES ('35', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43NzY1MjMwMCAxNzAzMjI2NzQ0In0.o1NW6DuKKk6PRjnpGlGJrjmofBDQQdedmHLOGyHZ4vI', '1703235581', '10');
 INSERT INTO `token` VALUES ('36', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43OTgzNzYwMCAxNzAzNDg1MjQzIn0.owdRQGm9nQQIH3LF4HCFes1GuoxjMhZ090ym3mXTV9s', '1703496265', '10');
+INSERT INTO `token` VALUES ('37', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC4yMzAxOTgwMCAxNzAzNTYxMTE5In0.yMAPpSgE43MQ2VNMJm4qM3560E19d5CJvqC-SFb45Q8', '1703568404', '10');
+INSERT INTO `token` VALUES ('38', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC40Mjc1NTAwMCAxNzAzNTcwMzkxIn0.mwnHb0RhHhIWOQzt94-cpxuM5jliZ754_xOVA2e_xR0', '1703584727', '10');
+INSERT INTO `token` VALUES ('39', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC44Mzg0NTYwMCAxNzAzNTc4MTExIn0.ZcYF9H3xXtI5V9TKq-8XOeSa76wBg_TM1GKnUt47HUA', '1703585312', '10');
+INSERT INTO `token` VALUES ('40', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC41ODYyNDgwMCAxNzAzNTc4MTU4In0.fA36XuiF1BW8F5HGaPJS6CYpIRWQKohzACPwduBti7k', '1703585359', '10');
+INSERT INTO `token` VALUES ('41', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC4xNzM3NTYwMCAxNzAzNTc4MTk2In0.Y8aS9mz7wCq6gWEi-S5UcnmWw5hKWOIGrr_ewrDtsQI', '1703585396', '10');
+INSERT INTO `token` VALUES ('42', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC4xNzQ0MDMwMCAxNzAzNTc4MjA3In0.VjQ5HRcjKYo8gfzH6NoN9DneAE8cFLAPtTLzMaC-TBg', '1703593928', '10');
+INSERT INTO `token` VALUES ('43', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC41OTg5NjEwMCAxNzAzNjM5MzA4In0.uHjXcyEhttgy0V9hDYUS1QykJarzgKSke3J7-nmg99o', '1703657085', '10');
+INSERT INTO `token` VALUES ('44', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43NTk5MTcwMCAxNzAzNzI2NjU0In0.8Fy4Wiw_M13SgOUrIHlRtOEEg_zv4VbcnXy9x1MkRpg', '1703733855', '10');
+INSERT INTO `token` VALUES ('45', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsIm5hbWUiOiJcdTdiYTFcdTc0MDZcdTU0NTgiLCJkZXBhcnRtZW50X2lkIjoxLCJ0aW1lIjoiMC43MzI5NzYwMCAxNzAzNzI3MDg3In0.q7FPU2dFfb_0gnQtn0LsmEn5mEok7ga997gZEPM200U', '1703735267', '10');
 
 -- ----------------------------
 -- Table structure for user
@@ -4415,7 +4476,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('10', '1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '管理员', '15122222222', '', '1684989244', '1687667332', '1703485243', '127.0.0.1');
+INSERT INTO `user` VALUES ('10', '1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '管理员', '15122222222', 'avatar/2023/12/27/5a4bcec63bed248bfda2219fd29096e9.png', '1684989244', '1687667332', '1703727087', '127.0.0.1');
 INSERT INTO `user` VALUES ('11', '1', '1', 'user', 'e10adc3949ba59abbe56e057f20f883e', '用户1', '15111111111', '', '1684992552', '1703148627', '0', '');
 
 -- ----------------------------

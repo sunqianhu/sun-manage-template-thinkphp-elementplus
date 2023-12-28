@@ -16,7 +16,7 @@
           <div>
             <el-input v-model="menuFilterText" placeholder="关键词" />
             <el-tree
-              :props="{ children: 'children', label: 'name' }"
+              :props="{ children: 'children', label: 'name_remark' }"
               :data="menus"
               show-checkbox
               node-key="id"

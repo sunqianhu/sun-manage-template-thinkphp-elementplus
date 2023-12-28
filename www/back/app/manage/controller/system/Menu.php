@@ -21,7 +21,7 @@ class Menu extends Base
     public function getIndexMenus()
     {
         $get = $this->request->get(['name']);
-        $query = MenuModel::field('id,menu_id,type_id,name,key,sort');
+        $query = MenuModel::field('id,menu_id,type_id,name,key,sort,remark');
         if (isset($get['name'])) {
             $query = $query->where('name', 'LIKE', '%' . $get['name'] . '%');
         }
@@ -67,7 +67,7 @@ class Menu extends Base
      */
     public function saveAdd()
     {
-        $post = $this->request->post(['menu_id' => 0, 'type_id' => 0, 'name'=>'', 'key'=>'', 'path'=>'', 'component', 'icon', 'url'=>'', 'api' => '', 'layout'=>'', 'keep_alive', 'show', 'sort']);
+        $post = $this->request->post(['menu_id' => 0, 'type_id' => 0, 'name'=>'', 'key'=>'', 'path'=>'', 'component', 'icon', 'url'=>'', 'api' => '', 'layout'=>'', 'remark'=>'', 'keep_alive', 'show', 'sort']);
 
         // 验证
         try {
@@ -90,7 +90,7 @@ class Menu extends Base
             return $this->error('id参数错误');
         }
 
-        $menuModel = MenuModel::field('id,name,key,type_id,menu_id,icon,path,component,api,layout,keep_alive,show,sort,url')->find($id);
+        $menuModel = MenuModel::field('id,name,key,type_id,menu_id,icon,path,component,api,layout,remark,keep_alive,show,sort,url')->find($id);
         if (empty($menuModel)) {
             return $this->error('没有找到记录');
         }
@@ -120,7 +120,7 @@ class Menu extends Base
      */
     public function saveEdit()
     {
-        $post = $this->request->post(['id', 'menu_id' => 0, 'type_id' => 0, 'name', 'key'=>'', 'icon'=>'', 'path'=>'', 'component'=>'', 'api' => '', 'url'=>'', 'layout' => '', 'keep_alive', 'show', 'sort']);
+        $post = $this->request->post(['id', 'menu_id' => 0, 'type_id' => 0, 'name', 'key'=>'', 'icon'=>'', 'path'=>'', 'component'=>'', 'api' => '', 'url'=>'', 'layout' => '', 'remark'=>'', 'keep_alive', 'show', 'sort']);
 
         // 验证
         try {

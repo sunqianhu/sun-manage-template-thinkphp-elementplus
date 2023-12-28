@@ -51,4 +51,21 @@ class Menu extends Base
         }
         return $type;
     }
+
+    /**
+     * 得到菜单名称和备注
+     * @param $value
+     * @return string
+     */
+    public function getNameRemarkAttr($value, $data)
+    {
+        $nameRemark = '';
+        if(!empty($data['name'])){
+            $nameRemark .= $data['name'];
+        }
+        if(!empty($data['remark'])){
+            $nameRemark .= '（'.$data['remark'].'）';
+        }
+        return $nameRemark;
+    }
 }
