@@ -37,16 +37,16 @@ class Menu extends Base
         $type = '';
         switch ($data['type_id']){
             case 1:
-                $type = 'success';
+                $type = 'warning';
                 break;
             case 2:
-                $type = 'info';
+                $type = '';
                 break;
             case 3:
                 $type = 'warning';
                 break;
             case 4:
-                $type = 'danger';
+                $type = 'info';
                 break;
         }
         return $type;
