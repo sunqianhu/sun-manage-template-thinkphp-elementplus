@@ -19,6 +19,10 @@ useToggle(isDark);
 </script>
 
 <style lang="scss" scoped>
+:global(html body) {
+  max-width: 1440px;
+  margin: 0px auto;
+}
 .blank-layout {
 }
 </style>
