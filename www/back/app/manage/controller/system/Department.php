@@ -5,7 +5,7 @@ namespace app\manage\controller\system;
 use app\helper\ArrayHandler;
 use app\helper\Dictionary as DictionaryHelper;
 use app\manage\controller\Base;
-use app\manage\validate\system\Department as DepartmentValidate;
+use app\manage\validate\Department as DepartmentValidate;
 use app\model\Department as DepartmentModel;
 use think\exception\ValidateException;
 

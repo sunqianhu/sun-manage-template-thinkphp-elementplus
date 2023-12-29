@@ -5,7 +5,7 @@ namespace app\manage\controller\system;
 use app\helper\ArrayHandler;
 use app\helper\User as UserHelper;
 use app\manage\controller\Base;
-use app\manage\validate\system\User as UserValidate;
+use app\manage\validate\User as UserValidate;
 use app\model\Department as DepartmentModel;
 use app\model\LoginLog as LoginLogModel;
 use app\model\OperationLog as OperationLogModel;
