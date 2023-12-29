@@ -3,7 +3,6 @@
 namespace app\manage\controller;
 
 use app\helper\ArrayHandler;
-use app\helper\User as UserHelper;
 use app\model\Config as ConfigModel;
 use app\model\Menu as MenuModel;
 use app\model\Role as RoleModel;
@@ -87,8 +86,7 @@ class Main extends Base
     public function getAvatar()
     {
         $userModel = UserModel::field('avatar')->find($this->user->id);
-        $userHelper = new UserHelper();
-        $avatar = $userHelper->getAvatarUrl($userModel->avatar);
+        $avatar = $userModel->avatar_url;
         return $this->success('获取成功', $avatar);
     }
 }

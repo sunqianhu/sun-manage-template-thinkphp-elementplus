@@ -4,7 +4,6 @@ namespace app\manage\controller;
 
 use app\helper\File;
 use app\helper\Image;
-use app\helper\User as UserHelper;
 use app\manage\validate\User as UserValidate;
 use app\model\User as UserModel;
 use Exception;
@@ -38,8 +37,7 @@ class My extends Base
     public function initEditAvatar()
     {
         $userModel = UserModel::field('avatar')->find($this->user->id);
-        $userHelper = new UserHelper();
-        $avatar = $userHelper->getFrontAvatarUrl($userModel->avatar);
+        $avatar = $userModel->front_avatar_url;
         return $this->success('获取成功', $avatar);
     }
 
