@@ -5,7 +5,7 @@ namespace app\manage\controller;
 use app\helper\File;
 use app\helper\Image;
 use app\helper\User as UserHelper;
-use app\manage\validate\User as UserValidate;
+use app\manage\validate\system\User as UserValidate;
 use app\model\User as UserModel;
 use Exception;
 use think\exception\ValidateException;

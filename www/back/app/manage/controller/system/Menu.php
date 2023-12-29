@@ -5,7 +5,7 @@ namespace app\manage\controller\system;
 use app\helper\ArrayHandler;
 use app\helper\Dictionary as DictionaryHelper;
 use app\manage\controller\Base;
-use app\manage\validate\Menu as MenuValidate;
+use app\manage\validate\system\Menu as MenuValidate;
 use app\model\Menu as MenuModel;
 use think\exception\ValidateException;
 

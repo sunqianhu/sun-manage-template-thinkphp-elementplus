@@ -3,8 +3,8 @@
 namespace app\manage\controller\system;
 
 use app\manage\controller\Base;
+use app\manage\validate\system\Config as ConfigValidate;
 use app\model\Config as ConfigModel;
-use app\manage\validate\Config as ConfigValidate;
 
 /**
  * 系统设置

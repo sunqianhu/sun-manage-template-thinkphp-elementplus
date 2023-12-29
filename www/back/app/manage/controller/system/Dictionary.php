@@ -3,7 +3,7 @@
 namespace app\manage\controller\system;
 
 use app\manage\controller\Base;
-use app\manage\validate\Dictionary as DictionaryValidate;
+use app\manage\validate\system\Dictionary as DictionaryValidate;
 use app\model\Dictionary as DictionaryModel;
 use think\exception\ValidateException;
 
