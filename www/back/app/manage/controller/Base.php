@@ -37,7 +37,7 @@ class Base extends BaseController
         'manage/main/getavatar',
         'manage/message/readall',
         'manage/message/getnoreads',
-        'manage/uploadfile/uploadfile',
+        'manage/uploadfile/upload',
         'manage/my/info',
         'manage/my/initeditavatar',
         'manage/my/saveeditavatar',

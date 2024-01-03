@@ -9,13 +9,13 @@ use think\facade\Filesystem;
 
 class UploadFile extends Base
 {
-    private $allowModules = [''];
+    private $allowModules = ['rich_editor'];
 
     /**
      * 上传
      * @return void
      */
-    public function uploadFile()
+    public function upload()
     {
         $requestFile = $this->request->file();
         $module = $this->request->post('module', ''); // 模块
