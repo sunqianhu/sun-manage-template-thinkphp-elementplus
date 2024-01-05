@@ -23,7 +23,7 @@ class My extends Base
         $userModel = UserModel::field('id,account,name,phone,login_time,login_ip,department_id')
             ->find($this->user->id);
         $user = $userModel->toArray();
-        $user['department_name'] = $userModel->department->name;
+        $user['department_name'] = $userModel->department->name ?? '';
         return $this->success('获取成功', $user);
     }
 
@@ -51,25 +51,26 @@ class My extends Base
 
         try {
             validate(UserValidate::class)->scene('edit_avatar')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
         $file = new File();
         $path = '';
         try {
             $path = $file->saveBase64ContentToFile('avatar', $post['avatar_base64_content']);
-        } catch (Exception $e) {
-            return $this->error($e->getMessage());
+        } catch (Exception $exception) {
+            return $this->error($exception->getMessage());
         }
         $url = $file->getUrl($path);
 
         $rootDir = Config::get('filesystem.root_dir');
+        $fullPath = $rootDir . $path;
         $image = new Image();
         try {
-            $image->thumbnail($rootDir . $path, $rootDir . $path, 100, 100);
-        } catch (Exception $e) {
-            return $this->error($e->getMessage());
+            $image->thumbnail($fullPath, $fullPath, 100, 100);
+        } catch (Exception $exception) {
+            return $this->error($exception->getMessage());
         }
 
         $userModel = UserModel::find($this->user->id);
@@ -85,18 +86,16 @@ class My extends Base
     public function editPassword()
     {
         $post = $this->request->post(['password1', 'password2']);
-        $post['id'] = $this->user->id;
 
         try {
             validate(UserValidate::class)->scene('edit_password')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
-        $post['password'] = md5($post['password1']);
-        unset($post['password1']);
-        unset($post['password2']);
-        UserModel::update($post);
+        $userModel = UserModel::find($this->user->id);
+        $userModel->password = md5($post['password1']);
+        $userModel->save();
 
         return $this->success('修改成功');
     }

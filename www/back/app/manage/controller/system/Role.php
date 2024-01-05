@@ -2,7 +2,7 @@
 
 namespace app\manage\controller\system;
 
-use app\helper\ArrayHandler;
+use app\helper\ArrayHelper;
 use app\manage\controller\Base;
 use app\manage\validate\Role as RoleValidate;
 use app\model\Menu as MenuModel;
@@ -41,14 +41,14 @@ class Role extends Base
      */
     public function initAdd()
     {
-        // 菜单
+        //菜单
         $menuModels = MenuModel::field('id, id, menu_id, name, remark')
             ->order('sort', 'asc')
             ->append(['name_remark'])
             ->select();
         $menus = $menuModels->toArray();
-        $arr = new ArrayHandler();
-        $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
+        $arrayHelper = new ArrayHelper();
+        $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
 
         return $this->success('获取成功', $treeMenus);
     }
@@ -60,17 +60,24 @@ class Role extends Base
     {
         $post = $this->request->post(['name', 'menu_ids' => []]);
 
-        // 验证
+        //验证
         try {
             validate(RoleValidate::class)->scene('add')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
-        $roleModel = RoleModel::create($post);
+        $roleModel = new RoleModel();
+        $roleModel->save($post);
+
         if (!empty($post['menu_ids'])) {
-            $roleMenuBelongsToMany = $roleModel->menus();
-            $roleMenuBelongsToMany->attach($post['menu_ids']);
+            foreach($post['menu_ids'] as $menuId){
+                $roleMenuModel = new RoleMenuModel();
+                $roleMenuModel->save([
+                    'role_id'=>$roleModel->id,
+                    'menu_id'=>$menuId
+                ]);
+            }
         }
 
         return $this->success('添加成功');
@@ -88,7 +95,7 @@ class Role extends Base
             return $this->error('id参数错误');
         }
 
-        // 角色
+        //角色
         $roleModel = RoleModel::with('menus')
             ->field('id,name')
             ->find($id);
@@ -96,19 +103,20 @@ class Role extends Base
             return $this->error('没有找到记录');
         }
         $role = $roleModel->toArray();
+
         $role['menu_ids'] = [];
         if (!empty($role['menus'])) {
             $role['menu_ids'] = array_column($role['menus'], 'id');
         }
 
-        // 菜单
+        //菜单
         $menuModels = MenuModel::field('id, id, menu_id, name, remark')
             ->order('sort', 'asc')
             ->append(['name_remark'])
             ->select();
         $menus = $menuModels->toArray();
-        $arr = new ArrayHandler();
-        $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
+        $arrayHelper = new ArrayHelper();
+        $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
 
         $data = [
             'role' => $role,
@@ -124,11 +132,11 @@ class Role extends Base
     {
         $post = $this->request->post(['id', 'name', 'menu_ids' => []]);
 
-        // 验证
+        //验证
         try {
             validate(RoleValidate::class)->scene('edit')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
         $roleModel = RoleModel::find($post['id']);
@@ -137,9 +145,26 @@ class Role extends Base
         }
         $roleModel->save($post);
 
-        RoleMenuModel::where('role_id', $roleModel->id)->delete();
-        if (!empty($post['menu_ids'])) {
-            $roleModel->menus()->attach($post['menu_ids']);
+        //关联
+        $oldMenuIds = array_column($roleModel->menus->toArray(), 'id');
+        $deleteMenuIds = array_unique(array_values(array_diff($oldMenuIds, $post['menu_ids'])));
+        $addMenuIds = array_unique(array_values(array_diff($post['menu_ids'], $oldMenuIds)));
+        if(!empty($deleteMenuIds)){
+            foreach($deleteMenuIds as $deleteMenuId){
+                $roleMenuModel = RoleMenuModel::where('role_id', $roleModel->id)
+                    ->where('menu_id', $deleteMenuId)
+                    ->findOrEmpty();
+                $roleMenuModel->delete();
+            }
+        }
+        if(!empty($addMenuIds)) {
+            foreach($addMenuIds as $addMenuId){
+                $roleMenuModel = new RoleMenuModel();
+                $roleMenuModel->save([
+                    'role_id'=>$roleModel->id,
+                    'menu_id'=>$addMenuId
+                ]);
+            }
         }
 
         return $this->success('修改成功');
@@ -162,7 +187,9 @@ class Role extends Base
             return $this->error('没有找到记录');
         }
         $roleModel->delete();
-        RoleMenuModel::where('role_id', $roleModel->id)->delete();
+
+        $roleMenuModels = RoleMenuModel::where('role_id', $roleModel->id)->select();
+        $roleMenuModels->delete();
 
         return $this->success('删除成功');
     }

@@ -2,7 +2,6 @@
 
 namespace app\manage\controller;
 
-use app\helper\ArrayHandler;
 use app\model\Menu as MenuModel;
 use app\model\Role as RoleModel;
 use app\model\User as UserModel;
@@ -25,7 +24,7 @@ class Frame extends Base
             return $this->success('获取成功', []);
         }
 
-        // 页面
+        //页面
         $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
             ->field('menu.*')
             ->where('menu.type_id', 2)
@@ -74,7 +73,7 @@ class Frame extends Base
             return $this->success('获取成功', []);
         }
 
-        // 菜单
+        //菜单
         $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
             ->field('menu.key')
             ->where('role_menu.role_id', 'in', $roleIds)

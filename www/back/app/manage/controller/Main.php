@@ -2,7 +2,7 @@
 
 namespace app\manage\controller;
 
-use app\helper\ArrayHandler;
+use app\helper\ArrayHelper;
 use app\model\Config as ConfigModel;
 use app\model\Menu as MenuModel;
 use app\model\Role as RoleModel;
@@ -37,7 +37,6 @@ class Main extends Base
      */
     public function getMenus()
     {
-
         $roleIds = RoleModel::join('user_role', 'role.id = user_role.role_id')
             ->where('user_role.user_id', $this->user->id)
             ->column('role_id');
@@ -45,7 +44,7 @@ class Main extends Base
             return $this->success('获取成功', []);
         }
 
-        // 菜单
+        //菜单
         $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
             ->field('menu.*')
             ->where('menu.type_id', 'in', '1,2,4')
@@ -70,8 +69,8 @@ class Main extends Base
             $menu['icon'] = $menuModel->icon;
             $menus[] = $menu;
         }
-        $arr = new ArrayHandler();
-        $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
+        $arrayHelper = new ArrayHelper();
+        $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
 
         return $this->success('获取成功', $treeMenus);
     }

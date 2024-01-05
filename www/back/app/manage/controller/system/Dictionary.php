@@ -47,14 +47,16 @@ class Dictionary extends Base
     {
         $post = $this->request->post(['type', 'key', 'value', 'sort']);
 
-        // 验证
+        //验证
         try {
             validate(DictionaryValidate::class)->scene('add')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
-        DictionaryModel::create($post);
+        $dictionaryModel = new DictionaryModel();
+        $dictionaryModel->save($post);
+
         return $this->success('添加成功');
     }
 
@@ -70,7 +72,7 @@ class Dictionary extends Base
             return $this->error('id参数错误');
         }
 
-        // 部门
+        //部门
         $dictionaryModel = DictionaryModel::field('id,type,key,value,sort')->find($id);
         if (empty($dictionaryModel)) {
             return $this->error('没有找到记录');
@@ -87,11 +89,11 @@ class Dictionary extends Base
     {
         $post = $this->request->post(['id', 'type', 'key', 'value', 'sort']);
 
-        // 验证
+        //验证
         try {
             validate(DictionaryValidate::class)->scene('edit')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
         $dictionaryModel = DictionaryModel::find($post['id']);

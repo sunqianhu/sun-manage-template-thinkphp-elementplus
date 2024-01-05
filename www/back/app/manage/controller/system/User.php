@@ -2,7 +2,8 @@
 
 namespace app\manage\controller\system;
 
-use app\helper\ArrayHandler;
+use app\helper\ArrayHelper;
+use app\helper\ManageJwt;
 use app\helper\User as UserHelper;
 use app\manage\controller\Base;
 use app\manage\validate\User as UserValidate;
@@ -12,6 +13,7 @@ use app\model\OperationLog as OperationLogModel;
 use app\model\Role as RoleModel;
 use app\model\Token as TokenModel;
 use app\model\User as UserModel;
+use app\model\UserRole as UserRoleModel;
 use think\exception\ValidateException;
 
 /**
@@ -25,15 +27,15 @@ class User extends Base
      */
     public function initIndex()
     {
-        // 部门
+        //部门
         $departmentModels = DepartmentModel::field('id, id as value,department_id, name as label')
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $arr = new ArrayHandler();
-        $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
+        $arrayHelper = new ArrayHelper();
+        $treeDepartments = $arrayHelper->convertTree($departments, 'id', 'department_id', 'children');
 
-        // 角色
+        //角色
         $roleModels = RoleModel::field('id,name')->select();
         $roles = $roleModels->toArray();
 
@@ -51,10 +53,10 @@ class User extends Base
     {
         $get = $this->request->get(['department_id', 'role_id', 'account', 'name', 'phone', 'size' => 30, 'page' => 1]);
 
-        $query = UserModel::field('u.id,u.account,u.name,u.phone,u.status_id,u.add_time,u.department_id')
-            ->with('department')
-            ->alias('u')
-            ->leftJoin('user_role ur', 'u.id = ur.user_id');
+        $query = UserModel::alias('u')
+            ->leftJoin('user_role ur', 'u.id = ur.user_id')
+            ->field('u.id,u.account,u.name,u.phone,u.status_id,u.add_time,u.department_id')
+            ->with('department');
         if (!empty($get['department_id'])) {
             $query = $query->where('u.department_id', '=', $get['department_id']);
         }
@@ -76,9 +78,9 @@ class User extends Base
             'list_rows' => $get['size'],
             'page' => $get['page']
         ]);
-        $data = $paginate->toArray();
+        $user = $paginate->toArray();
 
-        return $this->success('获取成功', $data);
+        return $this->success('获取成功', $user);
     }
 
     /**
@@ -86,15 +88,15 @@ class User extends Base
      */
     public function initAdd()
     {
-        // 部门
+        //部门
         $departmentModels = DepartmentModel::field('id, id as value,department_id, name as label')
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $arr = new ArrayHandler();
-        $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
+        $arrayHelper = new ArrayHelper();
+        $treeDepartments = $arrayHelper->convertTree($departments, 'id', 'department_id', 'children');
 
-        // 角色
+        //角色
         $roleModels = RoleModel::field('id,name')->select();
         $roles = $roleModels->toArray();
 
@@ -112,20 +114,20 @@ class User extends Base
     {
         $post = $this->request->post(['account', 'password', 'name', 'phone', 'department_id', 'role_ids', 'status_id']);
 
-        // 验证
+        //验证
         try {
             validate(UserValidate::class)->scene('add')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
-        // 账号
+        //账号
         $userModel = UserModel::where('account', $post['account'])->find();
         if (!empty($userModel)) {
             return $this->error('账号已经存在');
         }
 
-        // 手机号码
+        //手机号码
         $userModel = UserModel::where('phone', $post['phone'])->find();
         if (!empty($userModel)) {
             return $this->error('手机号码已经存在');
@@ -133,11 +135,17 @@ class User extends Base
 
         $post['password'] = md5($post['password']);
         $post['add_time'] = time();
-        $userModel = UserModel::create($post);
+        $userModel = new UserModel();
+        $userModel->save($post);
 
         if (!empty($post['role_ids'])) {
-            $userRoleBelongsToMany = $userModel->roles();
-            $userRoleBelongsToMany->attach($post['role_ids']);
+            foreach($post['role_ids'] as $roleId){
+                $userRoleModel = new UserRoleModel();
+                $userRoleModel->save([
+                    'user_id'=>$userModel->id,
+                    'role_id'=>$roleId
+                ]);
+            }
         }
 
         return $this->success('添加成功');
@@ -155,7 +163,6 @@ class User extends Base
 
         $userModel = UserModel::field('id,name,phone,department_id')
             ->with('roles')
-            //->fetchSql(true)
             ->find($id);
         if (empty($userModel)) {
             return $this->error('没有找到记录');
@@ -166,15 +173,15 @@ class User extends Base
             $user['role_ids'] = array_column($user['roles'], 'id');
         }
 
-        // 部门
+        //部门
         $departmentModels = DepartmentModel::field('id, id as value,department_id, name as label')
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $arr = new ArrayHandler();
-        $treeDepartments = $arr->convertTree($departments, 'id', 'department_id', 'children');
+        $arrayHelper = new ArrayHelper();
+        $treeDepartments = $arrayHelper->convertTree($departments, 'id', 'department_id', 'children');
 
-        // 角色
+        //角色
         $roleModels = RoleModel::field('id,name')->select();
         $roles = $roleModels->toArray();
 
@@ -193,24 +200,22 @@ class User extends Base
     {
         $post = $this->request->post(['id', 'name', 'phone', 'department_id', 'role_ids']);
 
-        // 验证
+        //验证
         try {
             validate(UserValidate::class)->scene('edit')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
-        // 手机号码
-        $wheres = [
-            ['id', '<>', $post['id']],
-            ['phone', '=', $post['phone']],
-        ];
-        $userModel = UserModel::where($wheres)->find();
+        //手机号码
+        $userModel = UserModel::where('id', '<>', $post['id'])
+            ->where('phone', '=', $post['phone'])
+            ->find();
         if (!empty($userModel)) {
             return $this->error('手机号码已经存在');
         }
 
-        // 账号
+        //账号
         $userModel = UserModel::find($post['id']);
         if (empty($userModel)) {
             return $this->error('没有找到记录');
@@ -219,15 +224,25 @@ class User extends Base
         $post['edit_time'] = time();
         $userModel->save($post);
 
-        $userRoleBelongsToMany = $userModel->roles();
         $oldRoleIds = array_column($userModel->roles->toArray(), 'id');
-        $deleteRoleIds = array_values(array_diff($oldRoleIds, $post['role_ids']));
-        $addRoleIds = array_values(array_diff($post['role_ids'], $oldRoleIds));
+        $deleteRoleIds = array_unique(array_values(array_diff($oldRoleIds, $post['role_ids'])));
+        $addRoleIds = array_unique(array_values(array_diff($post['role_ids'], $oldRoleIds)));
         if(!empty($deleteRoleIds)){
-            $userRoleBelongsToMany->detach($deleteRoleIds);
+            foreach($deleteRoleIds as $deleteRoleId){
+                $userRoleModel = UserRoleModel::where('user_id', $userModel->id)
+                    ->where('role_id', $deleteRoleId)
+                    ->findOrEmpty();
+                $userRoleModel->delete();
+            }
         }
         if(!empty($addRoleIds)) {
-            $userRoleBelongsToMany->attach($addRoleIds);
+            foreach($addRoleIds as $addRoleId){
+                $userRoleModel = new UserRoleModel();
+                $userRoleModel->save([
+                    'user_id'=>$userModel->id,
+                    'role_id'=>$addRoleId
+                ]);
+            }
         }
 
         return $this->success('修改成功');
@@ -290,14 +305,19 @@ class User extends Base
     {
         $post = $this->request->post(['id', 'status_id' => 0]);
 
-        // 验证
+        //验证
         try {
             validate(UserValidate::class)->scene('edit_status')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
-        UserModel::update($post);
+        $userModel = UserModel::find($post['id']);
+        if(empty($userModel)){
+            return $this->error('没有找到用户记录');
+        }
+        $userModel->save($post);
+
         return $this->success('修改成功');
     }
 
@@ -311,14 +331,16 @@ class User extends Base
 
         try {
             validate(UserValidate::class)->scene('edit_password')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
-        $post['password'] = md5($post['password1']);
-        unset($post['password1']);
-        unset($post['password2']);
-        UserModel::update($post);
+        $userModel = UserModel::find($post['id']);
+        if(empty($userModel)){
+            return $this->error('没有找到用户记录');
+        }
+        $userModel->password = md5($post['password1']);
+        $userModel->save();
 
         return $this->success('修改成功');
     }
@@ -330,14 +352,16 @@ class User extends Base
     {
         $post = $this->request->post(['id']);
 
-        // 验证
+        //验证
         try {
             validate(UserValidate::class)->scene('offline')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
-        TokenModel::where('user_id', $post['id'])->delete();
+        $manageJwt = new ManageJwt();
+        $manageJwt->deleteToken($post['id']);
+
         return $this->success('操作成功');
     }
 }

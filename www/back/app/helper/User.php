@@ -36,7 +36,8 @@ class User
     public function stringToIds($user)
     {
         if ($user === 'all') {
-            return UserModel::where('status_id', '=', 1)->column('id');
+            return UserModel::where('status_id', 1)
+                ->column('id');
         }
 
         return explode(',', $user);

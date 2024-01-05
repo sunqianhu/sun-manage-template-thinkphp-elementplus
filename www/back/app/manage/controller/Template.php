@@ -2,8 +2,12 @@
 
 namespace app\manage\controller;
 
-class Test
+class Template extends Base
 {
+    /**
+     * 首页
+     * @return void
+     */
     public function index()
     {
         echo 'ok';

@@ -2,7 +2,7 @@
 
 namespace app\manage\controller\system;
 
-use app\helper\ArrayHandler;
+use app\helper\ArrayHelper;
 use app\helper\Dictionary as DictionaryHelper;
 use app\manage\controller\Base;
 use app\manage\validate\Menu as MenuValidate;
@@ -30,8 +30,8 @@ class Menu extends Base
         $menuModels = $query->select();
         $menus = $menuModels->toArray();
 
-        $arr = new ArrayHandler();
-        $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
+        $arrayHelper = new ArrayHelper();
+        $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
 
         return $this->success('获取成功', $treeMenus);
     }
@@ -43,12 +43,13 @@ class Menu extends Base
     {
         $menuModels = MenuModel::field('id, id as value, menu_id, name as label')
             ->where("type_id", '<>', 3)
+            ->where("type_id", '<>', 4)
             ->order('sort', 'asc')
             ->select();
         $menus = $menuModels->toArray();
 
-        $arr = new ArrayHandler();
-        $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
+        $arrayHelper = new ArrayHelper();
+        $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
 
         $dictionaryHelper = new DictionaryHelper();
         $types = $dictionaryHelper->getList('menu_type');
@@ -69,14 +70,16 @@ class Menu extends Base
     {
         $post = $this->request->post(['menu_id' => 0, 'type_id' => 0, 'name'=>'', 'key'=>'', 'path'=>'', 'component', 'icon', 'url'=>'', 'api' => '', 'layout'=>'', 'remark'=>'', 'keep_alive', 'show', 'sort']);
 
-        // 验证
+        //验证
         try {
             validate(MenuValidate::class)->scene('add')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
-        MenuModel::create($post);
+        $menuModel = new MenuModel();
+        $menuModel->save($post);
+
         return $this->success('添加成功');
     }
 
@@ -99,8 +102,8 @@ class Menu extends Base
 
         $menuModels = MenuModel::field('id, id as value,menu_id,name as label')->order('sort', 'asc')->select();
         $menus = $menuModels->toArray();
-        $arr = new ArrayHandler();
-        $treeMenus = $arr->convertTree($menus, 'id', 'menu_id', 'children');
+        $arrayHelper = new ArrayHelper();
+        $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
 
         $dictionaryHelper = new DictionaryHelper();
         $types = $dictionaryHelper->getList('menu_type');
@@ -122,14 +125,19 @@ class Menu extends Base
     {
         $post = $this->request->post(['id', 'menu_id' => 0, 'type_id' => 0, 'name', 'key'=>'', 'icon'=>'', 'path'=>'', 'component'=>'', 'api' => '', 'url'=>'', 'layout' => '', 'remark'=>'', 'keep_alive', 'show', 'sort']);
 
-        // 验证
+        //验证
         try {
             validate(MenuValidate::class)->scene('edit')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
-        MenuModel::update($post);
+        $menuModel = MenuModel::find($post['id']);
+        if(empty($menuModel)){
+            return $this->error('没有找到菜单记录');
+        }
+        $menuModel->save($post);
+
         return $this->success('修改成功');
     }
 
@@ -143,12 +151,14 @@ class Menu extends Base
             return $this->error('id参数错误');
         }
 
-        $menuModel = MenuModel::where('menu_id', $id)->find();
-        if (!empty($menuModel)) {
+        $childrenMenuModel = MenuModel::where('menu_id', $id)->find();
+        if (!empty($childrenMenuModel)) {
             return $this->error('存在子菜单，不能删除');
         }
 
-        MenuModel::destroy($id);
+        $menuModel = MenuModel::find($id);
+        $menuModel->delete();
+
         return $this->success('删除成功');
     }
 }

@@ -37,19 +37,19 @@ class Config extends Base
     {
         $post = $this->request->post(['version']);
 
-        // 验证
+        //验证
         try {
             validate(ConfigValidate::class)->scene('save')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
         $configModel = ConfigModel::find(1);
         if (empty($configModel)) {
             return $this->error('没有找到记录');
         }
-
         $configModel->save($post);
+
         return $this->success('保存成功');
     }
 }

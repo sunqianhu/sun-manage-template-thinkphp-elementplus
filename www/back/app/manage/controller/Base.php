@@ -59,8 +59,8 @@ class Base extends BaseController
 
         try {
             $this->auth();
-        } catch (Exception $e) {
-            $this->error($e->getMessage())->send();
+        } catch (Exception $exception) {
+            $this->error($exception->getMessage())->send();
             exit;
         }
 
@@ -80,7 +80,7 @@ class Base extends BaseController
         $url = $appName . '/' . $controller . '/' . $action;
         $url = strtolower($url);
 
-        // 登录
+        //登录
         if (in_array($url, $this->noLoginUrls)) {
             return;
         }
@@ -94,7 +94,7 @@ class Base extends BaseController
         $user = $manageJwt->resolverToken($token);
         $this->user = $user;
 
-        // 权限
+        //权限
         if (in_array($url, $this->noPermissionUrls)) {
             return;
         }
@@ -175,7 +175,7 @@ class Base extends BaseController
             return;
         }
 
-        // 不记录公共页面
+        //不记录公共页面
         $url = $this->request->baseUrl();
         $url = strtolower($url);
 
@@ -187,13 +187,14 @@ class Base extends BaseController
             return;
         }
 
-        // 记录
+        //记录
         $data = [
             'user_id' => $this->user->id,
             'time' => time(),
             'ip' => $this->request->ip(),
             'url' => $url
         ];
-        OperationLogModel::create($data);
+        $operationLogModel = new OperationLogModel();
+        $operationLogModel->save($data);
     }
 }

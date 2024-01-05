@@ -7,46 +7,59 @@ use Exception;
 class Curl
 {
     /**
-     * @var array curl选项
+     * @var array 选项
      */
-    public $options = [];
+    public $options = [
+        CURLOPT_TIMEOUT => 25,
+        CURLOPT_HTTPHEADER => [
+            'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'
+        ],
+        CURLOPT_HEADER => false,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_SSL_VERIFYHOST => 0
+    ];
 
     /**
      * 构造函数
      */
     public function __construct()
     {
-        $this->options = [
-            CURLOPT_TIMEOUT => 25,
-            CURLOPT_HTTPHEADER => [
-                'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'
-            ],
-            CURLOPT_HEADER => false,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_SSL_VERIFYHOST => 0,
-        ];
+
     }
 
     /**
-     * 设置选项
+     * 替换选项
      * @param $option
      * @return void
      */
-    public function setOptions($option)
+    public function replaceOptions($option)
     {
         $this->options = $option;
     }
 
     /**
-     * 修改选项
+     * 设置选项
      * @param $key 键
      * @param $value 值
      * @return void
      */
-    public function editOption($key, $value)
+    public function setOption($key, $value)
     {
         $this->options[$key] = $value;
+    }
+
+    /**
+     * 删除选项
+     * @param $key
+     * @return void
+     */
+    public function deleteOption($key)
+    {
+        if (!isset($this->options[$key])) {
+            return;
+        }
+        unset($this->options[$key]);
     }
 
     /**
@@ -78,7 +91,7 @@ class Curl
     /**
      * post请求
      * @param string $url 网址
-     * @param array $fields 请求内容
+     * @param array $fields 字段
      * @return string
      * @throws Exception
      */

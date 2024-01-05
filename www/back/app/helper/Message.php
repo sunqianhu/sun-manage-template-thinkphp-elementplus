@@ -30,12 +30,14 @@ class Message
 
         // 入库
         foreach ($userIds as $userId) {
-            $messageData = [];
-            $messageData['user_id'] = $userId;
-            $messageData['title'] = $title;
-            $messageData['url'] = $url;
-            $messageData['add_time'] = time();
-            MessageModel::create($messageData);
+            $data = [
+                'user_id'=>$userId,
+                'title'=>$title,
+                'url'=>$userId,
+                'add_time'=>time()
+            ];
+            $messageModel = new MessageModel();
+            $messageModel->save($data);
         }
 
         // 消息

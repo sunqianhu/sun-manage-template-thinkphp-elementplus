@@ -22,14 +22,13 @@ class Login extends Base
      */
     public function getCaptcha()
     {
-        $token = time() . rand(10000, 99999);
+        $token = md5(time() . rand(10000, 99999));
 
         $captcha = new Captcha();
         $image = $captcha->createBase64Image();
         $code = $captcha->getCode();
 
         Cache::set('captcha_' . $token, $code, 600);
-
         $data = [
             'token' => $token,
             'image' => $image
@@ -45,11 +44,11 @@ class Login extends Base
     {
         $post = $this->request->post(['account' => '', 'password' => '', 'captcha_token' => '', 'captcha_code' => '']);
 
-        // 验证
+        //验证
         try {
             validate(LoginValidate::class)->scene('login')->check($post);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
 
         $cacheCaptchaCode = Cache::get('captcha_' . $post['captcha_token']);
@@ -58,11 +57,8 @@ class Login extends Base
             return $this->error('验证码错误');
         }
 
-        $wheres = [
-            ['account', '=', $post['account']],
-            ['password', '=', md5($post['password'])]
-        ];
-        $userModel = UserModel::where($wheres)
+        $userModel = UserModel::where('account', $post['account'])
+            ->where('password', md5($post['password']))
             ->field('id,department_id,status_id,name,phone,avatar')
             ->find();
         if (empty($userModel)) {
@@ -83,13 +79,13 @@ class Login extends Base
         $userModel->login_ip = $this->request->ip();
         $userModel->save();
 
-        Cache::delete('captcha_' . $post['captcha_token']);
         $data = [
-            'user_id'=>$userModel->id,
-            'time'=>time(),
-            'ip'=>$this->request->ip()
+            'user_id' => $userModel->id,
+            'time' => time(),
+            'ip' => $this->request->ip()
         ];
-        LoginLogModel::create($data);
+        $loginLogModel = new LoginLogModel();
+        $loginLogModel->save($data);
 
         $data = [
             'token' => $token,

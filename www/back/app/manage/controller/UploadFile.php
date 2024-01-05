@@ -18,13 +18,13 @@ class UploadFile extends Base
     public function upload()
     {
         $requestFile = $this->request->file();
-        $module = $this->request->post('module', ''); // 模块
+        $module = $this->request->post('module', ''); //模块
 
-        // 验证
+        //验证
         try {
             validate(UploadFileValidate::class)->check($requestFile);
-        } catch (ValidateException $e) {
-            return $this->error($e->getError());
+        } catch (ValidateException $exception) {
+            return $this->error($exception->getError());
         }
         if (!in_array($module, $this->allowModules)) {
             return $this->error('模块参数不允许');

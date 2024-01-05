@@ -5,7 +5,7 @@
 
 namespace app\helper;
 
-class ArrayHandler
+class ArrayHelper
 {
     /**
      * 转换为树数组
