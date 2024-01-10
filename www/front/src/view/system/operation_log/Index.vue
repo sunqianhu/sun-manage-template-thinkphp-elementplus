@@ -29,7 +29,7 @@
     </div>
 
     <div class="list">
-      <el-table :data="operationLogs" v-loading="loading" row-key="id" style="width: 100%">
+      <el-table :data="operationLogs" v-loading="loading" row-key="id" class="table">
         <el-table-column prop="name" label="用户姓名" />
         <el-table-column label="操作时间" v-slot="{ row }">
           {{ dayjs.unix(row.time).format("YYYY-MM-DD HH:mm:ss") }}
@@ -139,6 +139,9 @@ onMounted(() => {
   .list {
     ::v-deep(th.el-table__cell) {
       background-color: var(--background-color-table-header);
+    }
+    .table {
+      width: 100%;
     }
   }
   .pagination {

@@ -22,7 +22,7 @@
         v-loading="loading"
         row-key="id"
         default-expand-all
-        style="width: 100%"
+        class="table"
       >
         <el-table-column prop="name" label="部门名称" />
         <el-table-column prop="type_name" label="部门类型" />
@@ -161,6 +161,9 @@ onMounted(() => {
     margin-top: var(--margin);
     ::v-deep(th.el-table__cell) {
       background-color: var(--background-color-table-header);
+    }
+    .table {
+      width: 100%;
     }
   }
   .pagination {

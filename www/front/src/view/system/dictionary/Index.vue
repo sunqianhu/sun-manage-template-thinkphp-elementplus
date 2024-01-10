@@ -23,7 +23,7 @@
     </div>
 
     <div class="list">
-      <el-table :data="dictionarys" v-loading="loading" row-key="id" style="width: 100%">
+      <el-table :data="dictionarys" v-loading="loading" row-key="id" class="table">
         <el-table-column prop="type" label="字典类型" />
         <el-table-column prop="key" label="字典键" />
         <el-table-column prop="value" label="字典值" />
@@ -200,6 +200,9 @@ onMounted(() => {
     margin-top: var(--margin);
     ::v-deep(th.el-table__cell) {
       background-color: var(--background-color-table-header);
+    }
+    .table {
+      width: 100%;
     }
   }
   .pagination {

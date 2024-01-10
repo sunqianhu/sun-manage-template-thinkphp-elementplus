@@ -17,7 +17,7 @@
     </div>
 
     <div class="list">
-      <el-table :data="menus" v-loading="loading" row-key="id" style="width: 100%">
+      <el-table :data="menus" v-loading="loading" row-key="id" class="table">
         <el-table-column v-slot="{ row }" prop="name" label="菜单名称">
           {{ row.name }}
           <span v-if="row.remark" class="remark">{{ row.remark }}</span>
@@ -164,9 +164,13 @@ onMounted(() => {
     ::v-deep(th.el-table__cell) {
       background-color: var(--background-color-table-header);
     }
-    .remark {
-      font-size: var(--font-size-small);
-      color: var(--font-color-secondary);
+    .table {
+      width: 100%;
+
+      .remark {
+        font-size: var(--font-size-small);
+        color: var(--font-color-secondary);
+      }
     }
   }
 }

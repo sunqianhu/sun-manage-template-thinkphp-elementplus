@@ -38,7 +38,7 @@
     </div>
 
     <div class="list">
-      <el-table :data="users" v-loading="loading" stripe style="width: 100%">
+      <el-table :data="users" v-loading="loading" stripe class="table">
         <el-table-column v-slot="{ row }" prop="account" label="账号">
           <el-link :href="'/system/user/' + row.id" type="primary" target="_blank">
             {{ row.account }}
@@ -295,6 +295,9 @@ onMounted(() => {
     margin-top: var(--margin);
     ::v-deep(th.el-table__cell) {
       background-color: var(--background-color-table-header);
+    }
+    .table {
+      width: 100%;
     }
   }
   .pagination {

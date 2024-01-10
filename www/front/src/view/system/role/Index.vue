@@ -17,7 +17,7 @@
     </div>
 
     <div class="list">
-      <el-table :data="roles" v-loading="loading" row-key="id" style="width: 100%">
+      <el-table :data="roles" v-loading="loading" row-key="id" class="table">
         <el-table-column prop="name" label="角色名称" />
         <el-table-column v-slot="{ row }" label="操作" fixed="right" width="140">
           <el-button size="small" @click="openEdit(row.id)">修改</el-button>
@@ -191,6 +191,9 @@ onMounted(() => {
     margin-top: var(--margin);
     ::v-deep(th.el-table__cell) {
       background-color: var(--background-color-table-header);
+    }
+    .table {
+      width: 100%;
     }
   }
   .pagination {
