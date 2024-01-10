@@ -1,13 +1,15 @@
 <template>
   <el-upload
-    ref="uploadRef"
-    action="/api/manage/UploadFile/uploadFile"
+    ref="uploadFileRef"
+    action="/api/manage/UploadFile/upload"
     v-model:file-list="files"
     :name="props.name"
     :headers="headers"
     :multiple="props.multiple"
+    :accept="props.accept"
     :limit="props.limit"
     :disabled="props.disabled"
+    :data="data"
     :on-success="success"
     :on-remove="remove"
     :on-change="change"
@@ -26,6 +28,10 @@
 import { ref, onMounted, watch } from "vue";
 
 const props = defineProps({
+  files: {
+    type: Array,
+    default: []
+  },
   modelValue: {
     type: Array,
     default: []
@@ -38,6 +44,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  accept: {
+    type: Array,
+    default: ""
+  },
   disabled: {
     type: Boolean,
     default: false
@@ -45,12 +55,19 @@ const props = defineProps({
   limit: {
     type: Number,
     default: 10
+  },
+  module: {
+    type: String,
+    default: "file"
   }
 });
 const emits = defineEmits(["update:modelValue"]);
 const headers = { token: localStorage.getItem("token") };
 const files = ref([]);
-const uploadRef = ref(null);
+const data = {
+  module: props.module
+};
+const uploadFileRef = ref(null);
 
 /**
  * 初始化
@@ -71,7 +88,7 @@ const success = (response, uploadFile, uploadFiles) => {
       message: response.message,
       type: "error"
     });
-    uploadRef.value.handleRemove(uploadFile);
+    uploadFileRef.value.handleRemove(uploadFile);
     return;
   }
 
@@ -102,10 +119,8 @@ const change = (uploadFile, uploadFiles) => {
  * @param {Array} uploadFiles 已上传的文件
  */
 const exceed = (files, uploadFiles) => {
-  let totalNumber = files.length + uploadFiles.length;
-  let exceedNumber = totalNumber - props.limit;
   ElMessage({
-    message: "最多上传" + props.limit + "个文件，超出" + exceedNumber + "个，请重新选择",
+    message: "最多上传" + props.limit + "个文件",
     type: "error"
   });
 };
@@ -114,25 +129,24 @@ const exceed = (files, uploadFiles) => {
  * 得到文件集合
  */
 const getFiles = () => {
-  const dataFiles = files.value;
-  let index = 0;
-  let dataFile = {};
-  let vmodelFiles = [];
+  const fileValues = files.value;
+  let fileValue = {};
+  let finalFiles = [];
 
-  if (dataFiles.length == 0) {
-    return vmodelFiles;
+  if (fileValues.length == 0) {
+    return finalFiles;
   }
 
-  for (dataFile of dataFiles) {
-    if (dataFile.response) {
-      vmodelFiles.push(dataFile.response.data);
+  for (fileValue of fileValues) {
+    if (fileValue.response) {
+      finalFiles.push(fileValue.response.data);
       continue;
     }
 
-    vmodelFiles.push(dataFile);
+    finalFiles.push(fileValue);
   }
 
-  return vmodelFiles;
+  return finalFiles;
 };
 
 /**

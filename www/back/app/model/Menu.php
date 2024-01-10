@@ -11,9 +11,12 @@ class Menu extends Base
      * @param $value
      * @return string
      */
-    public function getApisAttr($value)
+    public function getApisAttr($value, $data)
     {
-        return explode("\r\n", $value);
+        if(!isset($data['api'])){
+            return '';
+        }
+        return explode("\r\n", $data['api']);
     }
 
     /**

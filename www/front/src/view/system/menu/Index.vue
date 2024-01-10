@@ -2,17 +2,13 @@
   <div class="index">
     <div class="page-name">菜单管理</div>
     <div class="search">
-      <el-form :model="query">
-        <el-row :gutter="16">
-          <el-col :md="8" :sm="24">
-            <el-form-item label="菜单名称">
-              <el-input v-model="query.name" />
-            </el-form-item>
-          </el-col>
-          <el-col :md="8" :sm="24">
-            <el-button type="primary" :icon="Search" @click="search">查询</el-button>
-          </el-col>
-        </el-row>
+      <el-form :model="query" :inline="true">
+        <el-form-item label="菜单名称">
+          <el-input v-model="query.name" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" :icon="Search" @click="search">查询</el-button>
+        </el-form-item>
       </el-form>
     </div>
 
@@ -26,7 +22,7 @@
           {{ row.name }}
           <span v-if="row.remark" class="remark">{{ row.remark }}</span>
         </el-table-column>
-        <el-table-column prop="key" label="菜单key" />
+        <el-table-column prop="key" label="菜单key" width="300" show-overflow-tooltip />
         <el-table-column v-slot="{ row }" prop="type_id" label="菜单类型" width="100">
           <el-tag :type="row.type_tag_type">{{ row.type_name }}</el-tag>
         </el-table-column>
@@ -42,7 +38,7 @@
       </el-table>
     </div>
 
-    <Add
+    <add
       :open="addFlag"
       @close="addFlag = false"
       @submited="
@@ -50,8 +46,8 @@
         addFlag = false;
       "
       v-if="addFlag"
-    ></Add>
-    <Edit
+    ></add>
+    <edit
       :open="editFlag"
       @close="editFlag = false"
       @submited="
@@ -60,7 +56,7 @@
       "
       :id="rowId"
       v-if="editFlag"
-    ></Edit>
+    ></edit>
   </div>
 </template>
 

@@ -29,7 +29,7 @@
         </el-main>
       </el-container>
     </el-container>
-    <Message></Message>
+    <message></message>
     <watermark />
   </div>
 </template>

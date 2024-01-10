@@ -1,8 +1,8 @@
 <template>
   <div class="panel">
     <slot name="header">
-      <div class="header" v-if="title">
-        <div class="title">{{ title }}</div>
+      <div class="header" v-if="title || subTitle || $slots.extra">
+        <div class="title" v-if="title">{{ title }}</div>
         <div class="sub-title" v-if="subTitle">{{ subTitle }}</div>
         <div class="extra">
           <slot name="extra">{{ extra }}</slot>
@@ -42,14 +42,14 @@ const props = defineProps({
     justify-content: space-between;
     align-items: center;
     position: relative;
+    height: 45px;
     .title {
-      padding: 0px 16px;
+      padding: 0px 8px;
+      margin-left: var(--margin-small);
       color: var(--color-primary);
       border-bottom: 2px solid var(--color-primary);
       position: relative;
       z-index: 2;
-      height: 45px;
-      line-height: 45px;
       font-size: var(--font-size-big);
       font-weight: bold;
     }
@@ -60,6 +60,7 @@ const props = defineProps({
       font-size: var(--font-size-small);
     }
     .extra {
+      margin-left: auto;
       margin-right: 16px;
     }
     &::after {
@@ -69,7 +70,6 @@ const props = defineProps({
       left: 0px;
       right: 0px;
       height: 0.5px;
-      background-color: var(--border-color);
     }
   }
   .body {

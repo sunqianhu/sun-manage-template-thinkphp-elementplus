@@ -37,7 +37,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <Add
+    <add
       :open="addFlag"
       @close="addFlag = false"
       @submited="
@@ -45,8 +45,8 @@
         addFlag = false;
       "
       v-if="addFlag"
-    ></Add>
-    <Edit
+    ></add>
+    <edit
       :open="editFlag"
       @close="editFlag = false"
       @submited="
@@ -55,7 +55,7 @@
       "
       :id="rowId"
       v-if="editFlag"
-    ></Edit>
+    ></edit>
   </div>
 </template>
 

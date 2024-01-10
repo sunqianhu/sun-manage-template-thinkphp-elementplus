@@ -1,6 +1,6 @@
 <template>
-  <el-col :xs="props.xs" :sm="props.sm" :md="props.md" class="col">
-    <div class="label">{{ label }}</div>
+  <el-col :xs="props.xs" :sm="props.sm" :md="props.md" :lg="props.lg" class="col">
+    <div class="label">{{ label }}：</div>
     <div class="content"><slot></slot></div>
   </el-col>
 </template>
@@ -22,6 +22,10 @@ const props = defineProps({
   md: {
     type: Number,
     default: 8
+  },
+  lg: {
+    type: Number,
+    default: 6
   }
 });
 </script>
@@ -32,11 +36,8 @@ const props = defineProps({
   padding: 3px 0px;
   .label {
     color: var(--font-color-secondary);
-    min-width: 85px;
   }
   .content {
-    min-width: 150px;
-    margin-left: 16px;
   }
 }
 </style>

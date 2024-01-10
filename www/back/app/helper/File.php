@@ -20,6 +20,19 @@ class File
     }
 
     /**
+     * 得到全路径
+     * @param $path
+     * @return string
+     */
+    public function getFullPath($path){
+        if($path === ''){
+            return '';
+        }
+        $rootDir = Config::get('filesystem.root_dir');
+        return $rootDir . $path;
+    }
+
+    /**
      * 创建目录
      * @param $module
      * @return string

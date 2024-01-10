@@ -1,6 +1,6 @@
 <template>
   <div class="detail" v-loading="loading">
-    <panel title="用户信息" class="module">
+    <panel title="用户信息" class="pannel">
       <description>
         <description-item label="用户id">{{ user.id }}</description-item>
         <description-item label="账号">{{ user.account }}</description-item>
@@ -22,7 +22,7 @@
       </description>
     </panel>
 
-    <panel title="登录日志" class="module">
+    <panel title="登录日志" class="pannel">
       <template #extra>
         <el-link href="/system/login-log" type="primary" target="_blank"> 更多 </el-link>
       </template>
@@ -34,7 +34,7 @@
       </el-table>
     </panel>
 
-    <panel title="操作日志" class="module">
+    <panel title="操作日志" class="pannel">
       <template #extra>
         <el-link href="/system/operation-log" type="primary" target="_blank"> 更多 </el-link>
       </template>
@@ -102,7 +102,7 @@ onMounted(() => {
 }
 .detail {
   padding: var(--padding);
-  .module {
+  .pannel {
     margin-top: var(--margin);
     &:first-child {
       margin-top: 0px;

@@ -35,6 +35,7 @@
   --background-color-page: #ffffff;
   --background-color-page-texture: #f0f2f5; //纹理页面
   --background-color-panel: #ffffff;
+  --background-color-panel-secondary: #f0f2f5; //次要面板
   --background-color-table-header: #e9e9eb;
 
   //内边距
@@ -99,6 +100,7 @@ pre {
 .form-message {
   color: var(--font-color-secondary);
   font-size: var(--font-size-small);
+  line-height: 150%;
 }
 .text-ellipsis {
   overflow: hidden;
