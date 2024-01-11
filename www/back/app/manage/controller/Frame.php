@@ -2,6 +2,8 @@
 
 namespace app\manage\controller;
 
+use app\helper\ArrayHelper;
+use app\helper\Menu as MenuHelper;
 use app\model\Menu as MenuModel;
 use app\model\Role as RoleModel;
 use app\model\User as UserModel;
@@ -26,20 +28,27 @@ class Frame extends Base
 
         //页面
         $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
-            ->field('menu.*')
-            ->where('menu.type_id', 2)
+            ->field('menu.id,menu.menu_id,menu.type_id,menu.name,menu.path,menu.key,menu.component,menu.keep_alive,menu.layout')
+            ->where('menu.network_terminal_id', 2)
+            ->where('menu.type_id', 'in', '1,2')
             ->where('role_menu.role_id', 'in', $roleIds)
-            ->order(['menu.sort'=>'asc'])
+            ->order('menu.sort','asc')
             ->group('menu.id')
             ->select();
         if ($menuModels->isEmpty()) {
             return $this->success('获取成功', []);
         }
 
+        $menus = $menuModels->toArray();
+        $arrayHelper = new ArrayHelper();
+        $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
+        $menuHelper = new MenuHelper();
+        $mainFirstPageId = $menuHelper->getMainFirstPageId($treeMenus);
+
         $routes = [];
         foreach ($menuModels as $menuModel) {
             if (
-                empty($menuModel) ||
+                $menuModel->type_id != 2 ||
                 $menuModel->path === '' ||
                 $menuModel->name === '' ||
                 $menuModel->component === ''
@@ -51,9 +60,10 @@ class Frame extends Base
             $route['path'] = $menuModel->path;
             $route['name'] = $menuModel->key;
             $route['component'] = $menuModel->component;
-            $route['meta']['name'] = $menuModel->name;
-            $route['meta']['keep_alive'] = $menuModel->keep_alive == 1 ? true : false;
             $route['layout'] = $menuModel->layout;
+            $route['first'] = $menuModel->id == $mainFirstPageId;
+            $route['meta']['name'] = $menuModel->name;
+            $route['meta']['keep_alive'] = $menuModel->keep_alive == 1;
             $routes[] = $route;
         }
 
