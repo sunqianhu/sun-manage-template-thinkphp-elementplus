@@ -44,6 +44,7 @@ class Frame extends Base
         $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
         $menuHelper = new MenuHelper();
         $mainFirstPageId = $menuHelper->getMainFirstPageId($treeMenus);
+        $blankFirstPageId = $menuHelper->getBlankFirstPageId($treeMenus);
 
         $routes = [];
         foreach ($menuModels as $menuModel) {
@@ -56,12 +57,21 @@ class Frame extends Base
                 continue;
             }
 
+            //父页面跳转
+            $parentRedirect = '';
+            if($menuModel->id == $mainFirstPageId){
+                $parentRedirect = 'main';
+            }
+            if($menuModel->id == $blankFirstPageId){
+                $parentRedirect = 'blank';
+            }
+
             $route = [];
             $route['path'] = $menuModel->path;
             $route['name'] = $menuModel->key;
             $route['component'] = $menuModel->component;
             $route['layout'] = $menuModel->layout;
-            $route['first'] = $menuModel->id == $mainFirstPageId;
+            $route['parent_redirect'] = $parentRedirect;
             $route['meta']['name'] = $menuModel->name;
             $route['meta']['keep_alive'] = $menuModel->keep_alive == 1;
             $routes[] = $route;

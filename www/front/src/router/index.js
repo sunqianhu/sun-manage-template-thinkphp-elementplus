@@ -104,7 +104,8 @@ router.beforeEach(async (to, from) => {
     const componentFilePaths = import.meta.glob([
       "@/view/*.vue",
       "@/view/*/*.vue",
-      "@/view/*/*/*.vue"
+      "@/view/*/*/*.vue",
+      "@/view/*/*/*/*.vue"
     ]);
 
     if (response.data.length > 0) {
@@ -114,12 +115,15 @@ router.beforeEach(async (to, from) => {
         childRoute.component = componentFilePaths["/src/view/" + childRoute.component];
         if (childRoute.layout == "main") {
           mainRoute.children.push(childRoute);
-          if (childRoute.first) {
+          if (childRoute.parent_redirect) {
             mainRoute.redirect = childRoute.path;
           }
         }
         if (childRoute.layout == "blank") {
           blankRoute.children.push(childRoute);
+          if (childRoute.parent_redirect) {
+            blankRoute.redirect = childRoute.path;
+          }
         }
       });
 
