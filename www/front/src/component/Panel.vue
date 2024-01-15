@@ -52,6 +52,7 @@ const props = defineProps({
       z-index: 2;
       font-size: var(--font-size-big);
       font-weight: bold;
+      line-height: 43px;
     }
     .sub-title {
       flex: 1;
