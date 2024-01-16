@@ -189,7 +189,7 @@ onMounted(() => {
   }
   .list {
     margin-top: var(--margin);
-    ::v-deep(th.el-table__cell) {
+    :deep(th.el-table__cell) {
       background-color: var(--background-color-table-header);
     }
     .table {
