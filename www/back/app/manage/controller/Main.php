@@ -2,7 +2,7 @@
 
 namespace app\manage\controller;
 
-use app\helper\ArrayHelper;
+use app\helper\ArrayHandler;
 use app\model\Config as ConfigModel;
 use app\model\Menu as MenuModel;
 use app\model\Role as RoleModel;
@@ -69,8 +69,8 @@ class Main extends Base
             $menu['icon'] = $menuModel->icon;
             $menus[] = $menu;
         }
-        $arrayHelper = new ArrayHelper();
-        $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
+        $arrayHandler = new ArrayHandler();
+        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
 
         return $this->success('获取成功', $treeMenus);
     }

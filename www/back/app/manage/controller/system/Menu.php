@@ -2,7 +2,7 @@
 
 namespace app\manage\controller\system;
 
-use app\helper\ArrayHelper;
+use app\helper\ArrayHandler;
 use app\helper\Dictionary as DictionaryHelper;
 use app\manage\controller\Base;
 use app\manage\validate\Menu as MenuValidate;
@@ -30,8 +30,8 @@ class Menu extends Base
         $menuModels = $query->select();
         $menus = $menuModels->toArray();
 
-        $arrayHelper = new ArrayHelper();
-        $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
+        $arrayHandler = new ArrayHandler();
+        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
 
         return $this->success('获取成功', $treeMenus);
     }
@@ -48,8 +48,8 @@ class Menu extends Base
             ->select();
         $menus = $menuModels->toArray();
 
-        $arrayHelper = new ArrayHelper();
-        $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
+        $arrayHandler = new ArrayHandler();
+        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
 
         $dictionaryHelper = new DictionaryHelper();
         $types = $dictionaryHelper->getList('menu_type');
@@ -102,8 +102,8 @@ class Menu extends Base
 
         $menuModels = MenuModel::field('id, id as value,menu_id,name as label')->order('sort', 'asc')->select();
         $menus = $menuModels->toArray();
-        $arrayHelper = new ArrayHelper();
-        $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
+        $arrayHandler = new ArrayHandler();
+        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
 
         $dictionaryHelper = new DictionaryHelper();
         $types = $dictionaryHelper->getList('menu_type');

@@ -2,7 +2,7 @@
 
 namespace app\helper;
 
-class ArrayHelper
+class ArrayHandler
 {
     /**
      * 转换为树数组

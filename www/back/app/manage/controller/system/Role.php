@@ -2,7 +2,7 @@
 
 namespace app\manage\controller\system;
 
-use app\helper\ArrayHelper;
+use app\helper\ArrayHandler;
 use app\manage\controller\Base;
 use app\manage\validate\Role as RoleValidate;
 use app\model\Menu as MenuModel;
@@ -47,8 +47,8 @@ class Role extends Base
             ->append(['name_remark'])
             ->select();
         $menus = $menuModels->toArray();
-        $arrayHelper = new ArrayHelper();
-        $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
+        $arrayHandler = new ArrayHandler();
+        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
 
         return $this->success('获取成功', $treeMenus);
     }
@@ -115,8 +115,8 @@ class Role extends Base
             ->append(['name_remark'])
             ->select();
         $menus = $menuModels->toArray();
-        $arrayHelper = new ArrayHelper();
-        $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
+        $arrayHandler = new ArrayHandler();
+        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
 
         $data = [
             'role' => $role,

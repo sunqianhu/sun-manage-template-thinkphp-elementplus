@@ -2,7 +2,7 @@
 
 namespace app\manage\controller\system;
 
-use app\helper\ArrayHelper;
+use app\helper\ArrayHandler;
 use app\helper\ManageJwt;
 use app\helper\User as UserHelper;
 use app\manage\controller\Base;
@@ -32,8 +32,8 @@ class User extends Base
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $arrayHelper = new ArrayHelper();
-        $treeDepartments = $arrayHelper->convertTree($departments, 'id', 'department_id', 'children');
+        $arrayHandler = new ArrayHandler();
+        $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
 
         //角色
         $roleModels = RoleModel::field('id,name')->select();
@@ -93,8 +93,8 @@ class User extends Base
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $arrayHelper = new ArrayHelper();
-        $treeDepartments = $arrayHelper->convertTree($departments, 'id', 'department_id', 'children');
+        $arrayHandler = new ArrayHandler();
+        $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
 
         //角色
         $roleModels = RoleModel::field('id,name')->select();
@@ -178,8 +178,8 @@ class User extends Base
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $arrayHelper = new ArrayHelper();
-        $treeDepartments = $arrayHelper->convertTree($departments, 'id', 'department_id', 'children');
+        $arrayHandler = new ArrayHandler();
+        $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
 
         //角色
         $roleModels = RoleModel::field('id,name')->select();

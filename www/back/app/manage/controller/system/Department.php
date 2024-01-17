@@ -2,7 +2,7 @@
 
 namespace app\manage\controller\system;
 
-use app\helper\ArrayHelper;
+use app\helper\ArrayHandler;
 use app\helper\Dictionary as DictionaryHelper;
 use app\manage\controller\Base;
 use app\manage\validate\Department as DepartmentValidate;
@@ -31,8 +31,8 @@ class Department extends Base
         $departmentModels = $query->select();
         $departments = $departmentModels->toArray();
 
-        $arrayHelper = new ArrayHelper();
-        $treeDepartments = $arrayHelper->convertTree($departments, 'id', 'department_id', 'children');
+        $arrayHandler = new ArrayHandler();
+        $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
 
         return $this->success('获取成功', $treeDepartments);
     }
@@ -46,8 +46,8 @@ class Department extends Base
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $arrayHelper = new ArrayHelper();
-        $treeDepartments = $arrayHelper->convertTree($departments, 'id', 'department_id', 'children');
+        $arrayHandler = new ArrayHandler();
+        $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
 
         $dictionaryHelper = new DictionaryHelper();
         $types = $dictionaryHelper->getList('department_type');
@@ -101,8 +101,8 @@ class Department extends Base
             ->order('sort', 'asc')
             ->select();
         $departments = $departmentModels->toArray();
-        $arrayHelper = new ArrayHelper();
-        $treeDepartments = $arrayHelper->convertTree($departments, 'id', 'department_id', 'children');
+        $arrayHandler = new ArrayHandler();
+        $treeDepartments = $arrayHandler->convertTree($departments, 'id', 'department_id', 'children');
 
         $dictionaryHelper = new DictionaryHelper();
         $types = $dictionaryHelper->getList('department_type');

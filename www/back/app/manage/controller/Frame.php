@@ -2,7 +2,7 @@
 
 namespace app\manage\controller;
 
-use app\helper\ArrayHelper;
+use app\helper\ArrayHandler;
 use app\helper\Menu as MenuHelper;
 use app\model\Menu as MenuModel;
 use app\model\Role as RoleModel;
@@ -40,8 +40,8 @@ class Frame extends Base
         }
 
         $menus = $menuModels->toArray();
-        $arrayHelper = new ArrayHelper();
-        $treeMenus = $arrayHelper->convertTree($menus, 'id', 'menu_id', 'children');
+        $arrayHandler = new ArrayHandler();
+        $treeMenus = $arrayHandler->convertTree($menus, 'id', 'menu_id', 'children');
         $menuHelper = new MenuHelper();
         $mainFirstPageId = $menuHelper->getMainFirstPageId($treeMenus);
         $blankFirstPageId = $menuHelper->getBlankFirstPageId($treeMenus);

@@ -2,7 +2,7 @@
 
 namespace app\helper;
 
-class StringHelper
+class StringHandler
 {
     /**
      * 字符串长度
