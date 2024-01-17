@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ac92730fa1dde09cf31de872191d735",
+    "content-hash": "6bd4a326f17e39547f873b594ce04c56",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -756,16 +756,16 @@
         },
         {
             "name": "sunqianhu/helper",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunqianhu/helper.git",
-                "reference": "2e1a2a7c62ab0cb1dee82fb77929096d1b9b1f91"
+                "reference": "c91e46d7e9ad3abbfb3352ac15effd471f079f36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/2e1a2a7c62ab0cb1dee82fb77929096d1b9b1f91",
-                "reference": "2e1a2a7c62ab0cb1dee82fb77929096d1b9b1f91",
+                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/c91e46d7e9ad3abbfb3352ac15effd471f079f36",
+                "reference": "c91e46d7e9ad3abbfb3352ac15effd471f079f36",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -793,9 +793,9 @@
             "description": "php助手类，包括数组、字符串、文件和图片等操作类",
             "support": {
                 "issues": "https://github.com/sunqianhu/helper/issues",
-                "source": "https://github.com/sunqianhu/helper/tree/1.0.2"
+                "source": "https://github.com/sunqianhu/helper/tree/1.0.3"
             },
-            "time": "2024-01-17T10:19:59+00:00"
+            "time": "2024-01-17T10:30:35+00:00"
         },
         {
             "name": "textalk/websocket",
