@@ -68,12 +68,12 @@ class Login extends Base
             return $this->error("账号已停用");
         }
 
-        $adminJwt = new ManageJwt();
+        $manageJwt = new ManageJwt();
         $userEntity = new UserEntity();
         $userEntity->setId($userModel->id);
         $userEntity->setName($userModel->name);
         $userEntity->setDepartmentId($userModel->department_id);
-        $token = $adminJwt->getToken($userEntity);
+        $token = $manageJwt->getToken($userEntity);
 
         $userModel->login_time = time();
         $userModel->login_ip = $this->request->ip();

@@ -1,11 +1,8 @@
 <?php
-/**
- * 字符串
- */
 
 namespace app\helper;
 
-class StringHandler
+class StringHelper
 {
     /**
      * 字符串长度

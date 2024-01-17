@@ -1,7 +1,4 @@
 <?php
-/**
- * 数组
- */
 
 namespace app\helper;
 

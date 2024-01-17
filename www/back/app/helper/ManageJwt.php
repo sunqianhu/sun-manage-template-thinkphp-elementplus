@@ -19,7 +19,7 @@ class ManageJwt
     /**
      * 得到token
      * @param UserEntity $user
-     * @return StringHandler token
+     * @return token
      */
     function getToken(UserEntity $user)
     {
