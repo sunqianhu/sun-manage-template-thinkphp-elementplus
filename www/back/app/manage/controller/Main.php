@@ -2,7 +2,7 @@
 
 namespace app\manage\controller;
 
-use app\helper\ArrayHandler;
+use sunqianhu\helper\ArrayHandler;
 use app\model\Config as ConfigModel;
 use app\model\Menu as MenuModel;
 use app\model\Role as RoleModel;

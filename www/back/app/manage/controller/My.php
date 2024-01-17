@@ -3,7 +3,7 @@
 namespace app\manage\controller;
 
 use app\helper\File;
-use app\helper\Image;
+use sunqianhu\helper\Image;
 use app\manage\validate\User as UserValidate;
 use app\model\User as UserModel;
 use Exception;

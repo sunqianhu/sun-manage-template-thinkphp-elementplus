@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a66d85ba1ca7ff538420f357b8c306e",
+    "content-hash": "80bf36d564389e71dff9f568a912867a",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -753,6 +753,46 @@
                 "source": "https://github.com/php-fig/simple-cache/tree/master"
             },
             "time": "2017-10-23T01:57:42+00:00"
+        },
+        {
+            "name": "sunqianhu/helper",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sunqianhu/helper.git",
+                "reference": "b724ba0829a89737365ad92c31b10a398e589369"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/b724ba0829a89737365ad92c31b10a398e589369",
+                "reference": "b724ba0829a89737365ad92c31b10a398e589369",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "sunqianhu\\helper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "sunqianhu",
+                    "email": "469661426@qq.com"
+                }
+            ],
+            "description": "php助手类，包括数组、字符串、文件和图片等操作类",
+            "support": {
+                "issues": "https://github.com/sunqianhu/helper/issues",
+                "source": "https://github.com/sunqianhu/helper/tree/1.0.1"
+            },
+            "time": "2024-01-17T09:44:09+00:00"
         },
         {
             "name": "textalk/websocket",

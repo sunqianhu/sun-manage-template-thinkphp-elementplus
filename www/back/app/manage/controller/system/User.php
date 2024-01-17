@@ -2,7 +2,7 @@
 
 namespace app\manage\controller\system;
 
-use app\helper\ArrayHandler;
+use sunqianhu\helper\ArrayHandler;
 use app\helper\ManageJwt;
 use app\helper\User as UserHelper;
 use app\manage\controller\Base;
