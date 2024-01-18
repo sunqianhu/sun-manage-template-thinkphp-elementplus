@@ -2,23 +2,23 @@
 
 namespace app\helper;
 
-use app\helper\User as UserHelper;
 use app\model\Message as MessageModel;
 use think\Exception;
 use think\facade\Config;
+use think\facade\Queue;
 use WebSocket\Client;
 
 class Message
 {
     /**
-     * 推送消息
+     * 发送消息
      * @param $userIds 接收用户id
      * @param $title 标题
      * @param $url 网址
      * @return void
      * @throws Exception
      */
-    public function send($userIds, $title, $url)
+    public function send($userIds, $title, $url = '')
     {
         if (empty($userIds)) {
             return;
@@ -52,5 +52,21 @@ class Message
         $client = new Client($url);
         $client->text($dataEncode);
         $client->close();
+    }
+
+    /**
+     * 通过队列发送消息
+     * @param $userIds 接收用户id
+     * @param $title 标题
+     * @param $url 网址
+     * @return void
+     */
+    public function sendByQueue($userIds, $title, $url = ''){
+        $data = [
+            'user_ids'=>$userIds,
+            'title'=>$title,
+            'url'=>$url
+        ];
+        Queue::push('app\job\Message', $data, 'message');
     }
 }
