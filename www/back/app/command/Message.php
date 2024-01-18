@@ -34,11 +34,11 @@ class Message extends Command
      */
     protected function configure()
     {
-        // 指令配置
+        //指令配置
         $this->setName('message')
             ->addArgument('action', Argument::OPTIONAL, "操作参数[start|stop|reload|restart|status]", 'start')
             ->addOption('daemon', null, Option::VALUE_OPTIONAL, '以守护进程运行')
-            ->setDescription('消息服务端，windows：php think message，linux：php think message start --daemon true');
+            ->setDescription('websocket消息服务端，windows启动命令：php think message，linux启动命令：php think message start --daemon true');
     }
 
     /**
@@ -49,7 +49,7 @@ class Message extends Command
      */
     protected function execute(Input $input, Output $output)
     {
-        // linux系统命令参数
+        //linux系统命令参数
         if (strtolower(PHP_OS) == 'linux') {
             /**
              * 参数
@@ -75,17 +75,21 @@ class Message extends Command
                 unset($argv[4]);
             }
         } else {
-            // window不支持命令参数
+            //window不支持命令参数
         }
 
-        // 容器
+        //容器
         $config = Config::get('message');
+        if(!isset($config['server_ip']) || !isset($config['port'])){
+            echo '还未配置服务器端监听ip或监听端口';
+            exit;
+        }
         $url = 'websocket://' . $config['server_ip'] . ':' . $config['port'];
         $this->worker = new Worker($url);
         $this->worker->name = 'message';
         $this->worker->count = 1;
 
-        // 事件
+        //事件
         $this->worker->onWorkerStart = [$this, 'onWorkerStart'];
         $this->worker->onMessage = [$this, 'onMessage'];
 
@@ -105,29 +109,29 @@ class Message extends Command
     /**
      * 收到数据
      * @param TcpConnection $connection
-     * @param string $payload 传输中的数据
+     * @param $data 传输中的数据
      * @return void
      */
-    public function onMessage(TcpConnection $connection, string $payload)
+    public function onMessage(TcpConnection $connection, $data)
     {
-        // 活跃时间
+        //活跃时间
         $connection->activeTime = time();
 
-        // 消息
-        $data = json_decode($payload, true);
-        if (empty($data) || empty($data['type'])) {
+        //消息
+        $dataDecode = json_decode($data, true);
+        if (empty($dataDecode) || empty($dataDecode['type'])) {
             return;
         }
 
-        // 处理
-        switch ($data['type']) {
-            // 绑定
+        //处理
+        switch ($dataDecode['type']) {
+            //绑定
             case 'bind':
-                $this->bind($connection, $data['user_id']);
+                $this->bind($connection, $dataDecode['user_id']);
                 break;
-            // 发送
+            //发送
             case 'send':
-                $this->send($data['user'], $data['data']);
+                $this->send($dataDecode['user_ids'], $dataDecode['data']);
                 break;
         }
     }
@@ -161,7 +165,7 @@ class Message extends Command
      */
     public function bind(&$connection, $userId)
     {
-        if (empty($userId)) {
+        if (empty($userId) && !is_numeric($userId)) {
             return;
         }
         $connection->userId = $userId;
@@ -169,35 +173,26 @@ class Message extends Command
 
     /**
      * 发送
-     * @param $user
+     * @param $userIds
      * @param $data
      * @return void
      */
-    public function send($user, $data)
+    public function send($userIds, $data)
     {
-        if ($user === '') {
+        if(empty($userIds)){
             return;
         }
 
-        // 消息
-        $payload = json_encode($data);
+        //消息
+        $dataEncode = json_encode($data);
 
-        // 全部
-        if ($user == 'all') {
-            foreach ($this->worker->connections as $connection) {
-                $connection->send($payload);
-            }
-            return;
-        }
-
-        // 指定
-        $userIds = explode(',', $user);
+        //指定
         foreach ($this->worker->connections as $connection) {
             if (empty($connection->userId)) {
                 continue;
             }
             if (in_array($connection->userId, $userIds)) {
-                $connection->send($payload);
+                $connection->send($dataEncode);
             }
         }
     }

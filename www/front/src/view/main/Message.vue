@@ -39,8 +39,8 @@ webSocketClient.onMessage = (event) => {
   if (!data) {
     return;
   }
-  if (data.type == "send") {
-    handleMessage(data);
+  if (data.type == "message") {
+    showMessage(data);
   }
 };
 webSocketClient.connect();
@@ -65,14 +65,14 @@ const bind = () => {
     type: "bind",
     user_id: localStorage.getItem("user_id")
   };
-  const payload = JSON.stringify(data);
-  webSocketClient.send(payload);
+  const dataString = JSON.stringify(data);
+  webSocketClient.send(dataString);
 };
 
 /**
- * 处理消息
+ * 显示消息
  */
-const handleMessage = async (data) => {
+const showMessage = async (data) => {
   show.value = true;
   const message = {
     title: data.title,

@@ -1,7 +1,4 @@
 <?php
-/**
- * 消息
- */
 
 namespace app\helper;
 
@@ -15,46 +12,45 @@ class Message
 {
     /**
      * 推送消息
-     * @param $user 接收用户
+     * @param $userIds 接收用户id
      * @param $title 标题
      * @param $url 网址
      * @return void
+     * @throws Exception
      */
-    public function send($user, $title, $url)
+    public function send($userIds, $title, $url)
     {
-        $userHelper = new UserHelper();
-        $userIds = $userHelper->stringToIds($user);
         if (empty($userIds)) {
-            throw new Exception('没有找到消息接收用户');
+            return;
         }
 
-        // 入库
+        //入库
         foreach ($userIds as $userId) {
             $data = [
-                'user_id'=>$userId,
-                'title'=>$title,
-                'url'=>$userId,
-                'add_time'=>time()
+                'user_id' => $userId,
+                'title' => $title,
+                'url' => $userId,
+                'add_time' => time()
             ];
             $messageModel = new MessageModel();
             $messageModel->save($data);
         }
 
-        // 消息
+        //消息
         $config = Config::get('message');
         $data = [
             'type' => 'send',
-            'user' => $user,
+            'user_ids' => $userIds,
             'data' => [
-                'type' => 'send',
+                'type' => 'message',
                 'title' => $title,
                 'url' => $url
             ]
         ];
-        $payload = json_encode($data);
+        $dataEncode = json_encode($data);
         $url = 'ws://' . $config['client_ip'] . ':' . $config['port'];
         $client = new Client($url);
-        $client->text($payload);
+        $client->text($dataEncode);
         $client->close();
     }
 }
