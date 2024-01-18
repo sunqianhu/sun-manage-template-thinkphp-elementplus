@@ -2,6 +2,7 @@
 
 namespace app\job;
 
+use Exception;
 use think\queue\Job;
 use app\helper\Message as MessageHelper;
 
@@ -11,12 +12,15 @@ class Message
     {
         $job->delete();
 
-        if(empty($data) || empty($data['user_ids']) || empty($data['title'])){
+        if (empty($data) || empty($data['user_ids']) || empty($data['title']) || !isset($data['url'])) {
             return;
         }
 
         $messageHelper = new MessageHelper();
-        $messageHelper->send($data['user_ids'], $data['title'], $data['url']);
+        try {
+            $messageHelper->send($data['user_ids'], $data['title'], $data['url']);
+        } catch (Exception $exception) {
+        }
     }
 
     public function failed($data)
