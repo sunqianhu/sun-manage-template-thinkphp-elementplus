@@ -24,6 +24,11 @@ class Message
             return;
         }
 
+        $stringHandler = new StringHandler();
+        if($stringHandler->length($title) > 64){
+            $title = $stringHandler->sub($title, 0, 64);
+        }
+
         //入库
         foreach ($userIds as $userId) {
             $data = [
