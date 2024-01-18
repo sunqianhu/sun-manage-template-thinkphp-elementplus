@@ -2,6 +2,7 @@
 
 namespace app\helper;
 
+use app\model\Menu as MenuModel;
 use app\model\User as UserModel;
 use think\facade\Config;
 
@@ -71,6 +72,39 @@ class User
         }
 
         return implode($split, $names);
+    }
+
+    /**
+     * 通过菜单key得到用户ids
+     * @param $menuKey
+     * @param $departmentIds
+     * @return array
+     */
+    public function getUserIdsByMenuKey($menuKey, $departmentIds = []){
+        $userIds = [];
+
+        //角色id
+        $roleIds = MenuModel::alias('m')
+            ->leftJoin('role_menu rm', 'm.id = rm.menu_id')
+            ->where('m.key', $menuKey)
+            ->group('rm.role_id')
+            ->column('rm.role_id');
+        if(empty($roleIds)){
+            return $userIds;
+        }
+
+        //用户id
+        $query = UserModel::alias('u')
+            ->leftJoin('user_role ur', 'u.id = ur.user_id')
+            ->where('ur.role_id', 'in', $roleIds)
+            ->where('u.status_id', 1)
+            ->group('u.id');
+        if(!empty($departmentIds)){
+            $query = $query->where('u.department_id', 'in', $departmentIds);
+        }
+        $userIds = $query->column('u.id');
+
+        return $userIds;
     }
 
     /**
