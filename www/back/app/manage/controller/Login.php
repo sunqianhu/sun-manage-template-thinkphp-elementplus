@@ -5,7 +5,6 @@ namespace app\manage\controller;
 use app\manage\validate\Login as LoginValidate;
 use app\entity\User as UserEntity;
 use app\helper\ManageJwt;
-use sunqianhu\helper\Captcha;
 use app\model\LoginLog as LoginLogModel;
 use app\model\User as UserModel;
 use think\exception\ValidateException;
@@ -16,25 +15,6 @@ use think\facade\Cache;
  */
 class Login extends Base
 {
-    /**
-     * 得到验证码
-     * @return void
-     */
-    public function getCaptcha()
-    {
-        $token = md5(time() . rand(10000, 99999));
-
-        $captcha = new Captcha();
-        $image = $captcha->createBase64Image();
-        $code = $captcha->getCode();
-
-        Cache::set('captcha_' . $token, $code, 600);
-        $data = [
-            'token' => $token,
-            'image' => $image
-        ];
-        return $this->success("获取成功", $data);
-    }
 
     /**
      * 登录
@@ -42,7 +22,7 @@ class Login extends Base
      */
     public function login()
     {
-        $post = $this->request->post(['account' => '', 'password' => '', 'captcha_token' => '', 'captcha_code' => '']);
+        $post = $this->request->post(['account' => '', 'password' => '']);
 
         //验证
         try {
@@ -51,10 +31,11 @@ class Login extends Base
             return $this->error($exception->getError());
         }
 
-        $cacheCaptchaCode = Cache::get('captcha_' . $post['captcha_token']);
-        if (strtolower($post['captcha_code']) != strtolower($cacheCaptchaCode)) {
-            Cache::delete('captcha_' . $post['captcha_token']);
-            return $this->error('验证码错误');
+        //登录次数
+        $cacheKey = 'login_'.$post['account'];
+        $number = Cache::get($cacheKey) ?? 0;
+        if($number >= 5){
+            return $this->error('连续登录失败5次，请10分钟后再试');
         }
 
         $userModel = UserModel::where('account', $post['account'])
@@ -62,8 +43,11 @@ class Login extends Base
             ->field('id,department_id,status_id,name,phone,avatar')
             ->find();
         if (empty($userModel)) {
+            $number ++;
+            Cache::set($cacheKey, $number, 600);
             return $this->error('账号或密码错误');
         }
+        Cache::delete($cacheKey);
         if ($userModel->status_id == 2) {
             return $this->error("账号已停用");
         }

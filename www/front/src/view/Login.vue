@@ -36,30 +36,8 @@
             v-model="login.password"
           />
         </el-form-item>
-        <el-form-item prop="captcha_code" class="captcha">
-          <el-input
-            type="text"
-            placeholder="验证码"
-            size="large"
-            :prefix-icon="Monitor"
-            v-model="login.captcha_code"
-            maxlength="4"
-            class="input"
-          />
-          <img
-            :src="captchaImage"
-            v-if="captchaImage"
-            @click="getCaptcha()"
-            title="点击更换验证码"
-          />
-        </el-form-item>
         <el-form-item class="submit">
-          <el-button
-            type="primary"
-            size="large"
-            @click="submitForm"
-            class="button"
-            :loading="loading"
+          <el-button type="primary" size="large" @click="verify" class="button" :loading="loading"
             >登录</el-button
           >
         </el-form-item>
@@ -69,49 +47,46 @@
       <div class="browser">浏览器支持：Edge ≥ 79 Firefox≥78 Chrome≥64 Safari≥12</div>
       <div class="copyright">Copyright &copy; 2023 asun</div>
     </div>
+    <Vcode
+      :show="vCodeFlag"
+      @success="
+        vCodeFlag = false;
+        submitForm();
+      "
+      @close="vCodeFlag = false"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { User, Lock, Monitor } from "@element-plus/icons-vue";
+import { ref } from "vue";
+import { User, Lock } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
 import axios from "@/helper/axios";
+import Vcode from "vue3-puzzle-vcode";
 
 const router = useRouter();
 const login = ref({});
 const loginRef = ref(null);
 const rules = {
   account: [{ required: true, message: "账号不能为空", trigger: "blur" }],
-  password: [{ required: true, message: "密码不能为空", trigger: "blur" }],
-  captcha_code: [{ required: true, message: "验证码不能为空", trigger: "blur" }]
+  password: [{ required: true, message: "密码不能为空", trigger: "blur" }]
 };
 const loading = ref(false);
-const captchaImage = ref("");
+const vCodeFlag = ref(false);
 
 /**
- * 得到验证码
+ * 验证
  */
-const getCaptcha = async () => {
-  const response = await axios.get("manage/login/getCaptcha");
-  if (response.code != 1) {
-    ElMessage({
-      message: response.message,
-      type: "error"
-    });
-    return;
-  }
-  login.value.captcha_token = response.data.token;
-  login.value.captcha_code = "";
-  captchaImage.value = response.data.image;
+const verify = async () => {
+  await loginRef.value.validate();
+  vCodeFlag.value = true;
 };
 
 /**
  * 提交表单
  */
 const submitForm = async () => {
-  await loginRef.value.validate();
-
   loading.value = true;
   let response;
   try {
@@ -126,9 +101,6 @@ const submitForm = async () => {
       message: response.message,
       type: "error"
     });
-    if (response.message.indexOf("验证码") !== -1) {
-      getCaptcha();
-    }
     return;
   }
 
@@ -136,10 +108,6 @@ const submitForm = async () => {
   localStorage.setItem("user_id", response.data.user_id);
   router.push("/");
 };
-
-onMounted(() => {
-  getCaptcha();
-});
 </script>
 
 <style lang="scss">
@@ -200,21 +168,10 @@ html {
     }
 
     .form {
-      margin-top: 30px;
+      margin-top: 50px;
       width: 300px;
-      .captcha {
-        .input {
-          width: 150px;
-        }
-        img {
-          margin-left: 16px;
-          height: 35px;
-          border-radius: 4px;
-          cursor: pointer;
-        }
-      }
       .submit {
-        margin-top: 30px;
+        margin-top: 50px;
         .button {
           width: 100%;
         }

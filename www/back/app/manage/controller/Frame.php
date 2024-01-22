@@ -29,7 +29,6 @@ class Frame extends Base
         //页面
         $menuModels = MenuModel::join('role_menu', 'menu.id = role_menu.menu_id')
             ->field('menu.id,menu.menu_id,menu.type_id,menu.name,menu.path,menu.key,menu.component,menu.keep_alive,menu.layout')
-            ->where('menu.network_terminal_id', 2)
             ->where('menu.type_id', 'in', '1,2')
             ->where('role_menu.role_id', 'in', $roleIds)
             ->order('menu.sort','asc')
