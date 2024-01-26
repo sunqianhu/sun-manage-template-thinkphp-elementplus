@@ -3,6 +3,11 @@
     <div class="page-header">
       <span class="name">订单趋势统计</span>
       <span class="description">统计每天订单数量</span>
+      <div class="operation">
+        <el-button type="primary" @click="exportExcel" :loading="exportExcelButtonLoading"
+          >导出</el-button
+        >
+      </div>
     </div>
     <div class="search">
       <el-form :model="query" :inline="true">
@@ -24,9 +29,7 @@
         </el-form-item>
       </el-form>
     </div>
-
-    <div class="chart" id="chart" v-loading="loading"></div>
-
+    <div class="chart" id="chart" v-loading="initLoading"></div>
     <panel title="订单明细" class="list">
       <el-table :data="order" row-key="name" class="table">
         <el-table-column prop="full_name" label="日期" />
@@ -52,17 +55,18 @@ const query = ref({
   ]
 });
 const order = ref([]);
-const loading = ref(true);
+const initLoading = ref(true);
+const exportExcelButtonLoading = ref(false);
 
 /**
  * 初始化
  */
 const init = async () => {
-  loading.value = true;
+  initLoading.value = true;
   const response = await axios.get("manage/statistic.order.Trend/init", {
     params: query.value
   });
-  loading.value = false;
+  initLoading.value = false;
   if (response.code != 1) {
     ElMessage({
       message: response.message,
@@ -142,6 +146,38 @@ const drawChart = () => {
 };
 
 /**
+ * 导出excel
+ */
+const exportExcel = async () => {
+  exportExcelButtonLoading.value = true;
+  let response;
+  try {
+    response = await axios.get("manage/statistic.order.trend/exportExcel", {
+      params: query.value,
+      responseType: "blob"
+    });
+  } catch (error) {
+    exportExcelButtonLoading.value = false;
+    return;
+  }
+  exportExcelButtonLoading.value = false;
+
+  const blob = new Blob([response], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  });
+  const url = window.URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "订单趋势统计.xlsx";
+  document.body.appendChild(link);
+  link.click();
+
+  window.URL.revokeObjectURL(url);
+  link.remove();
+};
+
+/**
  * 搜索
  */
 const search = () => {
@@ -161,6 +197,7 @@ onMounted(() => {
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   .page-header {
+    display: flex;
     .name {
       font-size: 20px;
       font-weight: bold;
@@ -169,6 +206,9 @@ onMounted(() => {
       color: var(--font-color-secondary);
       margin-left: var(--margin);
       font-size: var(--font-size-small);
+      flex: 1;
+    }
+    .operation {
     }
   }
   .search {

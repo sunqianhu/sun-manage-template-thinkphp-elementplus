@@ -15,6 +15,7 @@ class Order extends Validate
     ];
     protected $scene = [
         'statistic_trend'=>['add_time'],
-        'statistic_department'=>['add_time']
+        'statistic_department'=>['add_time'],
+        'statistic_trend_export_excel'=>['add_time']
     ];
 }
