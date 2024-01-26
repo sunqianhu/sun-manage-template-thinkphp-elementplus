@@ -20,20 +20,20 @@ class Dictionary
     public function getList($type)
     {
         $cacheKey = 'dictionary_' . $type;
-        $dictionarys = Cache::get($cacheKey);
-        if (!empty($dictionarys)) {
-            return $dictionarys;
+        $list = Cache::get($cacheKey);
+        if (!empty($list)) {
+            return $list;
         }
 
         $dictionaryModels = DictionaryModel::where('type', '=', $type)
             ->field('key,value')
             ->order('sort', 'asc')
             ->select();
-        $dictionarys = $dictionaryModels->toArray();
+        $list = $dictionaryModels->toArray();
 
-        Cache::set($cacheKey, $dictionarys, $this->cacheExpire);
+        Cache::set($cacheKey, $list, $this->cacheExpire);
 
-        return $dictionarys;
+        return $list;
     }
 
     /**
@@ -63,11 +63,12 @@ class Dictionary
     /**
      * 获取值串
      * @param $type
-     * @param $keyString
+     * @param $keys
      * @return void
      */
-    public function getValueString($type, $keyString, $glue = '，')
+    public function getValueString($type, $keys, $glue = '，')
     {
+        $keyString = implode(',', $keys);
         $cacheKey = 'dictionary_' . $type . '_' . $keyString;
         $valueString = Cache::get($cacheKey);
         if (!empty($valueString)) {
