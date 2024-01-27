@@ -8,16 +8,16 @@
     class="info"
   >
     <description>
-      <description-item label="账号" sm="24" md="24">{{ user.account }}</description-item>
-      <description-item label="姓名" sm="24" md="24">{{ user.name }}</description-item>
-      <description-item label="手机号码" sm="24" md="24">{{ user.phone }}</description-item>
-      <description-item label="所属部门" sm="24" md="24">
+      <description-item label="账号" sm="24" md="24" lg="24">{{ user.account }}</description-item>
+      <description-item label="姓名" sm="24" md="24" lg="24">{{ user.name }}</description-item>
+      <description-item label="手机号码" sm="24" md="24" lg="24">{{ user.phone }}</description-item>
+      <description-item label="所属部门" sm="24" md="24" lg="24">
         {{ user.department_name }}
       </description-item>
-      <description-item label="最后登录时间" sm="24" md="24">
+      <description-item label="最后登录时间" sm="24" md="24" lg="24">
         {{ dayjs.unix(user.login_time).format("YYYY-MM-DD HH:mm:ss") }}
       </description-item>
-      <description-item label="最后登录ip" sm="24" md="24">{{ user.login_ip }}</description-item>
+      <description-item label="最后登录ip" sm="24" md="24" lg="24">{{ user.login_ip }}</description-item>
     </description>
   </el-dialog>
 </template>

@@ -40,7 +40,7 @@ class Menu
                 continue;
             }
 
-            return $this->getMainFirstPageId($treeMenu['children']);
+            return $this->getBlankFirstPageId($treeMenu['children']);
         }
 
         return 0;

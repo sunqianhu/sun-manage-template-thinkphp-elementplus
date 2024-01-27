@@ -3,14 +3,14 @@ Navicat MySQL Data Transfer
 
 Source Server         : 127.0.0.1
 Source Server Version : 50529
-Source Host           : 127.0.0.1:3306
-Source Database       : thinkphpvuemanage
+Source Host           : localhost:3306
+Source Database       : thinkphpvuemanagetemplate
 
 Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2024-01-26 11:56:34
+Date: 2024-01-27 12:36:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -87,7 +87,7 @@ CREATE TABLE `login_log` (
   `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '登录ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 
 -- ----------------------------
 -- Records of login_log
@@ -103,6 +103,7 @@ INSERT INTO `login_log` VALUES ('8', '1', '1706067117', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('9', '1', '1706234571', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('10', '1', '1706234582', '127.0.0.1');
 INSERT INTO `login_log` VALUES ('11', '1', '1706239367', '127.0.0.1');
+INSERT INTO `login_log` VALUES ('12', '1', '1706329395', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for menu
@@ -387,7 +388,7 @@ CREATE TABLE `operation_log` (
   `ip` varchar(64) NOT NULL DEFAULT '' COMMENT '操作ip',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '操作地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=208 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=215 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of operation_log
@@ -599,6 +600,13 @@ INSERT INTO `operation_log` VALUES ('204', '1', '1706241347', '127.0.0.1', '/man
 INSERT INTO `operation_log` VALUES ('205', '1', '1706241348', '127.0.0.1', '/manage/system.menu/getindexmenus');
 INSERT INTO `operation_log` VALUES ('206', '1', '1706241363', '127.0.0.1', '/manage/system.user/initindex');
 INSERT INTO `operation_log` VALUES ('207', '1', '1706241364', '127.0.0.1', '/manage/system.user/getindexusers');
+INSERT INTO `operation_log` VALUES ('208', '1', '1706329634', '127.0.0.1', '/manage/statistic.order.trend/init');
+INSERT INTO `operation_log` VALUES ('209', '1', '1706329767', '127.0.0.1', '/manage/statistic.order.trend/init');
+INSERT INTO `operation_log` VALUES ('210', '1', '1706329883', '127.0.0.1', '/manage/statistic.order.trend/init');
+INSERT INTO `operation_log` VALUES ('211', '1', '1706329925', '127.0.0.1', '/manage/statistic.order.trend/init');
+INSERT INTO `operation_log` VALUES ('212', '1', '1706330019', '127.0.0.1', '/manage/system.menu/getindexmenus');
+INSERT INTO `operation_log` VALUES ('213', '1', '1706330034', '127.0.0.1', '/manage/system.menu/initedit');
+INSERT INTO `operation_log` VALUES ('214', '1', '1706330046', '127.0.0.1', '/manage/system.menu/initedit');
 
 -- ----------------------------
 -- Table structure for role
@@ -681,7 +689,7 @@ CREATE TABLE `token` (
   PRIMARY KEY (`id`),
   KEY `token` (`token`(128)) USING BTREE,
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COMMENT='token';
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COMMENT='token';
 
 -- ----------------------------
 -- Records of token
@@ -704,6 +712,7 @@ INSERT INTO `token` VALUES ('55', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6
 INSERT INTO `token` VALUES ('56', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjY4NDY5NzAwIDE3MDYyMzQ1NzAifQ.-D-uefcu41R_vCqAi4Ck5BLh82ExqiNljwlvi24or-s', '1706263372', '1');
 INSERT INTO `token` VALUES ('57', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjY0NDQ2NDAwIDE3MDYyMzQ1ODIifQ.ERz_RAm1Dd535JicSBaLcZv5cwG1asVr_BHhfdgPlQo', '1706268098', '1');
 INSERT INTO `token` VALUES ('58', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjA0ODQxNzAwIDE3MDYyMzkzNjcifQ._xujttJMpW-ED6pVWpNfDSBx-m8u2tBPkxzjk4WXMWY', '1706270164', '1');
+INSERT INTO `token` VALUES ('59', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6Ilx1NWYyMFx1NGUwOSIsImRlcGFydG1lbnRfaWQiOjEsInRpbWUiOiIwLjc3NDY0MDAwIDE3MDYzMjkzOTUifQ.JCoxiPg_0NE2IWAfrAJxbrt2IrY1Z-g5h2C63anqmzY', '1706358887', '1');
 
 -- ----------------------------
 -- Table structure for user
@@ -729,7 +738,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '15122222222', '', '1684989244', '1687667332', '1706239367', '127.0.0.1');
+INSERT INTO `user` VALUES ('1', '1', '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '张三', '15122222222', '', '1684989244', '1687667332', '1706329395', '127.0.0.1');
 INSERT INTO `user` VALUES ('2', '1', '1', 'user', 'e10adc3949ba59abbe56e057f20f883e', '李四', '15111111111', '', '1684992552', '1703148627', '0', '');
 
 -- ----------------------------
