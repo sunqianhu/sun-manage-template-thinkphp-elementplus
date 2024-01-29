@@ -60,7 +60,12 @@ class Base extends BaseController
         try {
             $this->auth();
         } catch (Exception $exception) {
-            $this->error($exception->getMessage())->send();
+            $message = $exception->getMessage();
+            $code = 0;
+            if(strpos($message, '登录已失效') !== false){
+                $code = 2;
+            }
+            $this->error($message, null, $code)->send();
             exit;
         }
 
