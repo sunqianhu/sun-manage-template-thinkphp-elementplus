@@ -38,9 +38,9 @@ class Trend extends Base
 //            ->whereBetween('add_time', $get['add_time']);
 //        $infoModels = $query->select();
 
-        $infos = [];
+        $trend = [];
         for ($time = $startTime; $time < $endTime; $time += 24 * 60 * 60) {
-            $info = [
+            $day = [
                 'name' => date('j日', $time),
                 'full_name' => date('Y年m月j日', $time),
                 'number' => rand(0, 50)
@@ -50,12 +50,12 @@ class Trend extends Base
 //                if ($infoModel->add_time < $time || $infoModel->add_time >= $time + 24 * 60 * 60) {
 //                    continue;
 //                }
-//                $info['number']++;
+//                $day['number']++;
 //            }
-            $infos[] = $info;
+            $trend[] = $day;
         }
 
-        return $this->success('获取成功', $infos);
+        return $this->success('获取成功', $trend);
     }
 
     /**
@@ -82,9 +82,9 @@ class Trend extends Base
             return $this->error("统计日期不能大于90天");
         }
 
-        $infos = [];
+        $trend = [];
         for ($time = $startTime; $time < $endTime; $time += 24 * 60 * 60) {
-            $info = [
+            $day = [
                 'name' => date('j日', $time),
                 'full_name' => date('Y年m月j日', $time),
                 'number' => rand(0, 50)
@@ -94,9 +94,9 @@ class Trend extends Base
 //                if ($infoModel->add_time < $time || $infoModel->add_time >= $time + 24 * 60 * 60) {
 //                    continue;
 //                }
-//                $info['number']++;
+//                $day['number']++;
 //            }
-            $infos[] = $info;
+            $trend[] = $day;
         }
 
         //excel
@@ -106,10 +106,10 @@ class Trend extends Base
         $activeSheet->setCellValue('A1', '日期');
         $activeSheet->setCellValue('B1', '订单数量');
         $row = 1;
-        foreach ($infos as $info) {
+        foreach ($trend as $day) {
             $row++;
-            $activeSheet->setCellValue('A' . $row, $info['full_name']);
-            $activeSheet->setCellValue('B' . $row, $info['number']);
+            $activeSheet->setCellValue('A' . $row, $day['full_name']);
+            $activeSheet->setCellValue('B' . $row, $day['number']);
         }
         $activeSheet->getColumnDimension('A')->setAutoSize(true);
         $activeSheet->getColumnDimension('B')->setAutoSize(true);

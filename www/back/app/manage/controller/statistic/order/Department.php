@@ -30,7 +30,7 @@ class Department extends Base
         //部门
         $streetModels = DepartmentModel::select();
 
-        $streets = [];
+        $proportion = [];
         foreach($streetModels as $streetModel){
 //            $number = InfoModel::alias('i')
 //                ->leftJoin('local_opinion_info_street is', 'i.id=is.info_id')
@@ -43,11 +43,11 @@ class Department extends Base
                 'name'=>$streetModel->name,
                 'number'=>$number
             ];
-            $streets[] = $street;
+            $proportion[] = $street;
         }
         $arrayHandler = new ArrayHandler();
-        $arrayHandler->rsortTwoDimensional($streets, 'number');
+        $arrayHandler->rsortTwoDimensional($proportion, 'number');
 
-        return $this->success('获取成功', $streets);
+        return $this->success('获取成功', $proportion);
     }
 }

@@ -70,6 +70,8 @@ const init = async () => {
 window.onresize = () => {
   if (document.body.clientWidth < 768) {
     appStore.setSiderStatus(false);
+  } else {
+    appStore.setSiderStatus(true);
   }
 };
 
