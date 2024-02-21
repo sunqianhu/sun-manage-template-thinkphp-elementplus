@@ -3,7 +3,7 @@
 namespace app\manage\controller;
 
 use app\BaseController;
-use app\helper\ManageJwt;
+use app\helper\manage\Jwt;
 use app\model\Menu as MenuModel;
 use app\model\OperationLog as OperationLogModel;
 use app\model\Role as RoleModel;
@@ -95,8 +95,8 @@ class Base extends BaseController
             throw new Exception('token错误');
         }
 
-        $manageJwt = new ManageJwt();
-        $user = $manageJwt->resolverToken($token);
+        $jwt = new Jwt();
+        $user = $jwt->resolverToken($token);
         $this->user = $user;
 
         //权限

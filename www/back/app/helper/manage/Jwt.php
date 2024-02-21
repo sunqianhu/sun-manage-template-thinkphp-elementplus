@@ -3,15 +3,17 @@
  * 管理后台jwt
  */
 
-namespace app\helper;
+namespace app\helper\manage;
 
-use app\model\Token as TokenModel;
 use app\entity\User as UserEntity;
+use app\helper\token;
+use app\helper\用户id;
+use app\model\Token as TokenModel;
 use Exception;
 use Firebase\JWT\JWT as FirebaseJWT;
 use Firebase\JWT\Key;
 
-class ManageJwt
+class Jwt
 {
     private $key = 'axjeJXKlA836x7s@#';
     private $leeway = 180;

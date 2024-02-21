@@ -2,9 +2,9 @@
 
 namespace app\manage\controller;
 
-use app\manage\validate\Login as LoginValidate;
 use app\entity\User as UserEntity;
-use app\helper\ManageJwt;
+use app\helper\manage\Jwt;
+use app\manage\validate\Login as LoginValidate;
 use app\model\LoginLog as LoginLogModel;
 use app\model\User as UserModel;
 use think\exception\ValidateException;
@@ -52,12 +52,12 @@ class Login extends Base
             return $this->error("账号已停用");
         }
 
-        $manageJwt = new ManageJwt();
+        $jwt = new Jwt();
         $userEntity = new UserEntity();
         $userEntity->setId($userModel->id);
         $userEntity->setName($userModel->name);
         $userEntity->setDepartmentId($userModel->department_id);
-        $token = $manageJwt->getToken($userEntity);
+        $token = $jwt->getToken($userEntity);
 
         $userModel->login_time = time();
         $userModel->login_ip = $this->request->ip();
@@ -85,8 +85,8 @@ class Login extends Base
     public function logout()
     {
         $userModel = UserModel::find($this->user->id);
-        $manageJwt = new ManageJwt();
-        $manageJwt->deleteToken($userModel->id);
+        $jwt = new Jwt();
+        $jwt->deleteToken($userModel->id);
 
         return $this->success("退出成功");
     }
