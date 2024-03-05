@@ -45,7 +45,7 @@ const props = defineProps({
     default: false
   },
   accept: {
-    type: Array,
+    type: String,
     default: ""
   },
   disabled: {

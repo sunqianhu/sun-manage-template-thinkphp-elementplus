@@ -3,7 +3,7 @@
 namespace app\manage\controller;
 
 use app\manage\validate\UploadFile as UploadFileValidate;
-use app\helper\File;
+use app\helper\File as FileHelper;
 use think\exception\ValidateException;
 use think\facade\Filesystem;
 
@@ -30,7 +30,7 @@ class UploadFile extends Base
             return $this->error('模块参数不允许');
         }
 
-        $fileHelper = new File();
+        $fileHelper = new FileHelper();
         $file = $requestFile['file'];
         $path = Filesystem::putFile($module, $file);
         $path = str_replace('\\', '/', $path);
