@@ -64,8 +64,8 @@ class My extends Base
         }
         $url = $file->getUrl($path);
 
-        $rootDir = Config::get('filesystem.root_dir');
-        $fullPath = $rootDir . $path;
+        $rootPath = Config::get('filesystem.root_path');
+        $fullPath = $rootPath . $path;
         $image = new Image();
         try {
             $image->thumbnail($fullPath, $fullPath, 100, 100);

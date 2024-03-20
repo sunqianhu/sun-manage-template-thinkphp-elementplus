@@ -28,8 +28,8 @@ class File
         if($path === ''){
             return '';
         }
-        $rootDir = Config::get('filesystem.root_dir');
-        return $rootDir . $path;
+        $rootPath = Config::get('filesystem.root_path');
+        return $rootPath . $path;
     }
 
     /**
@@ -39,8 +39,8 @@ class File
      * @throws Exception
      */
     public function mkdir($module = ''){
-        $rootDir = Config::get('filesystem.root_dir'); // 磁盘根目录
-        if (empty($rootDir)) {
+        $rootPath = Config::get('filesystem.root_path'); // 磁盘根目录
+        if (empty($rootPath)) {
             throw new Exception('没有配置文件目录');
         }
 
@@ -48,7 +48,7 @@ class File
             $relativeDir = $module . '/';
         }
         $relativeDir .= date('Y/m/d') . '/'; // 目录
-        $fullDir = $rootDir . $relativeDir;
+        $fullDir = $rootPath . $relativeDir;
         if (!file_exists($fullDir)) {
             if (!@mkdir($fullDir, 0755, true)) {
                 throw new Exception('目录创建失败');
@@ -81,7 +81,7 @@ class File
             'image/gif'=>'gif',
             'text/plain'=>'txt'
         ];
-        $rootDir = ''; // 文件根目录
+        $rootPath = ''; // 文件根目录
         $relativeDir = ''; // 相对目录
         $fullDir = ''; // 全路径目录
         $path = ''; // 文件相对路径
@@ -106,14 +106,14 @@ class File
         }
         $base64ContentDecode = base64_decode($base64Content);
 
-        $rootDir = Config::get('filesystem.root_dir'); // 磁盘根目录
-        if (empty($rootDir)) {
+        $rootPath = Config::get('filesystem.root_path'); // 磁盘根目录
+        if (empty($rootPath)) {
             throw new Exception('没有配置文件目录');
         }
         $relativeDir = $this->mkdir($module);
         $fileName = md5(time() . rand(1000, 9999)) . '.' . $ext;
         $path = $relativeDir . $fileName; // 文件相对路径
-        $fullPath = $rootDir . '/' . $path; // 全文件路径
+        $fullPath = $rootPath . '/' . $path; // 全文件路径
 
         if (!file_put_contents($fullPath, $base64ContentDecode)) {
             throw new Exception('文件保存失败');

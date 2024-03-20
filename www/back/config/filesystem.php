@@ -21,7 +21,6 @@ return [
         ],
         // 更多的磁盘配置信息
     ],
-    'root_dir'=>app()->getRootPath() . 'public/file/', // 根目录
-    'access_prefix'=>'http://thinkphpvuemanagetemplate.sunqianhu123.cc/file/', // 访问前缀
-    'front_access_prefix'=>'/api/file/', // 访问前缀
+    'root_path'=>app()->getRootPath() . 'public/file/', // 根目录
+    'access_prefix'=>'/api/file/', // 访问前缀
 ];

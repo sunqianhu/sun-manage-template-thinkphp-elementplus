@@ -1,7 +1,7 @@
 <template>
   <el-upload
-    ref="uploadFileRef"
-    action="/api/manage/UploadFile/upload"
+    ref="uploadRef"
+    :action="action"
     v-model:file-list="files"
     :name="props.name"
     :headers="headers"
@@ -67,7 +67,8 @@ const files = ref([]);
 const data = {
   module: props.module
 };
-const uploadFileRef = ref(null);
+const uploadRef = ref(null);
+const action = config.proxyPrefix + "manage/UploadFile/upload";
 
 /**
  * 初始化
@@ -88,7 +89,7 @@ const success = (response, uploadFile, uploadFiles) => {
       message: response.message,
       type: "error"
     });
-    uploadFileRef.value.handleRemove(uploadFile);
+    uploadRef.value.handleRemove(uploadFile);
     return;
   }
 

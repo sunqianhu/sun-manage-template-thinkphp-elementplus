@@ -130,6 +130,6 @@ class User
         if($path === ''){
             $path = 'avatar.png';
         }
-        return Config::get('filesystem.front_access_prefix') . $path;
+        return Config::get('filesystem.access_prefix') . $path;
     }
 }
