@@ -1,9 +1,9 @@
 <?php
 namespace app\helper;
 
-use app\model\Config as ConfigModel;
+use app\model\Runtime as RuntimeModel;
 
-class Config
+class Runtime
 {
     /**
      * 得知值
@@ -12,7 +12,7 @@ class Config
      */
     public function getValue($key)
     {
-        return ConfigModel::where('key', $key)->value('value');
+        return RuntimeModel::where('key', $key)->value('value');
     }
 
     /**
@@ -22,9 +22,9 @@ class Config
      * @return void
      */
     public function setValue($key, $value){
-        $configModel = ConfigModel::where('key', $key)->find();
+        $configModel = RuntimeModel::where('key', $key)->find();
         if($configModel == null){
-            $configModel = new ConfigModel();
+            $configModel = new RuntimeModel();
         }
         $configModel->key = $key;
         $configModel->value = $value;

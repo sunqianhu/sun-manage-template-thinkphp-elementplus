@@ -4,7 +4,8 @@ namespace app\manage\controller\system;
 
 use app\manage\controller\Base;
 use app\manage\validate\Config as ConfigValidate;
-use app\model\Config as ConfigModel;
+use app\helper\Config as ConfigHelper;
+use think\exception\ValidateException;
 
 /**
  * 系统设置
@@ -20,10 +21,10 @@ class Config extends Base
      */
     public function init()
     {
-        $configModel = ConfigModel::field('*')
-            ->find(1);
-        $config = $configModel->toArray();
-
+        $configHelper = new ConfigHelper();
+        $config = [
+            'version'=>$configHelper->getValue('version')
+        ];
         $data = [
             'config' => $config
         ];
@@ -44,11 +45,10 @@ class Config extends Base
             return $this->error($exception->getError());
         }
 
-        $configModel = ConfigModel::find(1);
-        if (empty($configModel)) {
-            return $this->error('没有找到记录');
+        $configHelper = new ConfigHelper();
+        foreach($post as $key => $value){
+            $configHelper->setValue($key, $value);
         }
-        $configModel->save($post);
 
         return $this->success('保存成功');
     }

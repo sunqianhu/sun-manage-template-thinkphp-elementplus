@@ -2,8 +2,8 @@
 
 namespace app\manage\controller;
 
+use app\helper\Config as ConfigHelper;
 use sunqianhu\helper\ArrayHandler;
-use app\model\Config as ConfigModel;
 use app\model\Menu as MenuModel;
 use app\model\Role as RoleModel;
 use app\model\User as UserModel;
@@ -22,8 +22,10 @@ class Main extends Base
      */
     public function init()
     {
-        $configModel = ConfigModel::field('version')->find(1);
-        $config = $configModel->toArray();
+        $configHelper = new ConfigHelper();
+        $config = [
+            'version' => $configHelper->getValue('version')
+        ];
 
         $data = [
             'config' => $config
