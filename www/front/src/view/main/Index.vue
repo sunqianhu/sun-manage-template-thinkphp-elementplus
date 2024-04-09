@@ -3,7 +3,7 @@
     <el-container :class="{ close: !appStore.siderStatus }" class="container">
       <el-aside class="aside">
         <div class="system-name">
-          <img src="@/asset/image/logo.png" class="logo" />
+          <img src="@/asset/logo.png" class="logo" />
           <span class="name">vue管理系统模板</span>
         </div>
         <el-scrollbar class="menu-wrap"><Menu></Menu></el-scrollbar>

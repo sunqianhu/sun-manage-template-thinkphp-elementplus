@@ -5,7 +5,7 @@ import App from "./App.vue";
 import router from "./router";
 import permission from "./directive/permission";
 
-import "./asset/style/app.scss";
+import "./asset/app.scss";
 
 const pinia = createPinia();
 const app = createApp(App);
