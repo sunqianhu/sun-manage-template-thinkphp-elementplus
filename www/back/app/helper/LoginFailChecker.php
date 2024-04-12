@@ -3,6 +3,7 @@
 namespace app\helper;
 
 use app\model\LoginFailChecker as LoginFailCheckerModel;
+use sunqianhu\helper\Time as TimeHelper;
 use think\facade\Cache;
 use think\facade\Db;
 
@@ -46,6 +47,14 @@ class LoginFailChecker
     }
 
     /**
+     * 重设失败
+     * @return void
+     */
+    public function resetFail(){
+        Cache::delete($this->cacheKey);
+    }
+
+    /**
      * 检查
      * @return void
      * @throws \think\db\exception\DataNotFoundException
@@ -76,10 +85,11 @@ class LoginFailChecker
     }
 
     /**
-     * 重设失败
-     * @return void
+     * 得到重置可读时间
+     * @return string|null
      */
-    public function resetFail(){
-        Cache::delete($this->cacheKey);
+    public function getResetReadableTime(){
+        $timeHelper = new TimeHelper();
+        return $timeHelper->getSecondToReadableTime($this->time);
     }
 }

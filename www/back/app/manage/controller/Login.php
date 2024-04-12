@@ -8,9 +8,7 @@ use app\helper\manage\Jwt;
 use app\manage\validate\Login as LoginValidate;
 use app\model\LoginLog as LoginLogModel;
 use app\model\User as UserModel;
-use sunqianhu\helper\Time as TimeHelper;
 use think\exception\ValidateException;
-use think\facade\Cache;
 
 /**
  * 登录
@@ -36,9 +34,7 @@ class Login extends Base
         //登录次数
         $loginFailChecker = new LoginFailChecker($post['account']);
         if(!$loginFailChecker->check()){
-            $timeHelper = new TimeHelper();
-            $readableTime = $timeHelper->getSecondToReadableTime($loginFailChecker->time);
-            return $this->error('连续登录失败'.$loginFailChecker->number.'次，请'.$readableTime.'后再试');
+            return $this->error('连续登录失败'.$loginFailChecker->number.'次，请'.$loginFailChecker->getResetReadableTime().'后再试');
         }
 
         $userModel = UserModel::where('account', $post['account'])
@@ -48,7 +44,11 @@ class Login extends Base
         if (empty($userModel)) {
             $loginFailChecker->setFail();
             $availableNumber = $loginFailChecker->getAvailableNumber();
-            return $this->error('账号或密码错误，还能再试'.$availableNumber.'次');
+            if($availableNumber > 0){
+                return $this->error('账号或密码错误，还能再试'.$availableNumber.'次');
+            }else{
+                return $this->error('账号或密码错误，连续登录失败'.$loginFailChecker->number.'次，请'.$loginFailChecker->getResetReadableTime().'后再试');
+            }
         }
         $loginFailChecker->resetFail();
 
