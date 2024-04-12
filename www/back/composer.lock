@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6b71778981a75fff83ac449babd3007",
+    "content-hash": "658a1272ab43c517caffbd463e4e9e93",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -1197,23 +1197,17 @@
         },
         {
             "name": "sunqianhu/helper",
-            "version": "1.0.3",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunqianhu/helper.git",
-                "reference": "c91e46d7e9ad3abbfb3352ac15effd471f079f36"
+                "reference": "f58154a8e766209c9cd0a7fc4e059612d3e3ee8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/c91e46d7e9ad3abbfb3352ac15effd471f079f36",
-                "reference": "c91e46d7e9ad3abbfb3352ac15effd471f079f36",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "url": "https://api.github.com/repos/sunqianhu/helper/zipball/f58154a8e766209c9cd0a7fc4e059612d3e3ee8f",
+                "reference": "f58154a8e766209c9cd0a7fc4e059612d3e3ee8f",
+                "shasum": ""
             },
             "type": "library",
             "autoload": {
@@ -1231,12 +1225,12 @@
                     "email": "469661426@qq.com"
                 }
             ],
-            "description": "php助手类，包括数组、字符串、文件和图片等操作类",
+            "description": "php助手类包含项目开发过程中各种常用的类",
             "support": {
                 "issues": "https://github.com/sunqianhu/helper/issues",
-                "source": "https://github.com/sunqianhu/helper/tree/1.0.3"
+                "source": "https://github.com/sunqianhu/helper/tree/1.0.8"
             },
-            "time": "2024-01-17T10:30:35+00:00"
+            "time": "2024-04-12T02:57:41+00:00"
         },
         {
             "name": "symfony/polyfill-iconv",
@@ -2683,5 +2677,5 @@
         "php": ">=7.2.5"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
